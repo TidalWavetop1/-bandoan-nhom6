@@ -1,0 +1,133 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Admin Header */
+.admin-header {
+    background-color: #333;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.admin-header .logo img {
+    width: 150px;
+}
+
+.admin-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.admin-navbar ul li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Admin Sections */
+.admin-section {
+    padding: 40px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Admin Tables */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-table th {
+    background-color: #ff6347;
+    color: white;
+}
+
+.admin-table td {
+    background-color: #f4f4f4;
+}
+
+.edit-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.lock-btn, .delete-btn, .confirm-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.view-btn {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Stats Cards */
+.stats-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.stats-card {
+    background-color: #ff6347;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+}
+
+.stats-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+/* Admin Footer */
+.admin-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

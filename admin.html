@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Fast Food Store</title>
+    <link rel="stylesheet" type="text/css" href="css/admin-style.css">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="logo">
+            <img src="assets/images/admin-logo.png" alt="Admin Logo">
+        </div>
+        <nav class="admin-navbar">
+            <ul>
+                <li><a href="#dashboard">Bảng điều khiển</a></li>
+                <li><a href="#users">Quản lý người dùng</a></li>
+                <li><a href="#products">Quản lý sản phẩm</a></li>
+                <li><a href="#orders">Quản lý đơn hàng</a></li>
+                <li><a href="#stats">Thống kê</a></li>
+                <li><a href="#logout">Đăng xuất</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Admin Dashboard Section -->
+    <section id="dashboard" class="admin-section">
+        <h2>Bảng điều khiển</h2>
+        <p>Chào mừng bạn đến với bảng điều khiển của Admin.</p>
+    </section>
+
+    <!-- Users Management Section -->
+    <section id="users" class="admin-section">
+        <h2>Quản lý người dùng</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên người dùng</th>
+                    <th>Email</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>a@gmail.com</td>
+                    <td>Hoạt động</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="lock-btn">Khóa</button>
+                    </td>
+                </tr>
+                <!-- Thêm các hàng khác -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Products Management Section -->
+    <section id="products" class="admin-section">
+        <h2>Quản lý sản phẩm</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Burger phô mai</td>
+                    <td>50,000 VND</td>
+                    <td>Còn hàng</td>
+                    <td>
+                        <button class="edit-btn">Sửa</button>
+                        <button class="delete-btn">Xóa</button>
+                    </td>
+                </tr>
+                <!-- Thêm các hàng khác -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Orders Management Section -->
+    <section id="orders" class="admin-section">
+        <h2>Quản lý đơn hàng</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tình trạng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>Nguyễn Văn B</td>
+                    <td>12/10/2024</td>
+                    <td>Chưa xử lý</td>
+                    <td>
+                        <button class="view-btn">Xem</button>
+                        <button class="confirm-btn">Xác nhận</button>
+                    </td>
+                </tr>
+                <!-- Thêm các hàng khác -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="stats" class="admin-section">
+        <h2>Thống kê</h2>
+        <div class="stats-cards">
+            <div class="stats-card">
+                <h3>Sản phẩm bán chạy</h3>
+                <p>Burger phô mai - 1000 đơn</p>
+            </div>
+            <div class="stats-card">
+                <h3>Khách hàng lớn nhất</h3>
+                <p>Nguyễn Văn A - 20 triệu VND</p>
+            </div>
+            <div class="stats-card">
+                <h3>Tổng doanh thu</h3>
+                <p>200 triệu VND</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Footer -->
+    <footer class="admin-footer">
+        <p>&copy; 2024 Admin Panel - Fast Food Store.</p>
+    </footer>
+</body>
+</html>
