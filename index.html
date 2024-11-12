@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fast Food Store</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
-</head>
-<body><!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Food Store</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -168,93 +159,5 @@
 
     <script src="json/login.js"></script>
     <script src="json/filtermenu.js"></script>
-</body>
-</html>
-
-    <!-- Header Section -->
-    <header class="site-header">
-        <div class="logo">
-            <img src="assets/images/logo.png" alt="Fast Food Logo">
-        </div>
-        <nav class="navbar">
-            <ul>
-                <li><a href="#menu">Thực đơn</a></li>
-                <li><a href="#about">Về chúng tôi</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
-                <li><a href="#account">Đăng nhập</a></li>
-                <li><a href="#cart">Giỏ hàng</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="hero-content">
-            <h1>Chào mừng đến với cửa hàng đồ ăn nhanh</h1>
-            <p>Thưởng thức các món ngon từ burger, pizza và hơn thế nữa!</p>
-            <a href="#menu" class="btn-primary">Xem thực đơn</a>
-        </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section id="menu">
-        <h2>Thực đơn của chúng tôi</h2>
-        <div class="menu-category">
-            <button onclick="filterMenu('Burger')">Burger</button>
-            <button onclick="filterMenu('Pizza')">Pizza</button>
-            <button onclick="filterMenu('Đồ uống')">Đồ uống</button>
-            <button onclick="filterMenu('Tráng miệng')">Tráng miệng</button>
-            <button onclick="filterMenu('')">Tất cả</button>
-        </div>
-        <div class="menu-items">
-            <div class="item" data-category="Burger">
-                <img src="assets/images/burger.jpg" alt="Burger">
-                <h3>Burger phô mai</h3>
-                <p>Giá: 50,000 VND</p>
-            </div>
-            <div class="item" data-category="Pizza">
-                <img src="assets/images/pizza.jpg" alt="Pizza">
-                <h3>Pizza hải sản</h3>
-                <p>Giá: 150,000 VND</p>
-            </div>
-            <!-- Thêm các sản phẩm khác -->
-        </div>
-        <div class="pagination">
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2>Về chúng tôi</h2>
-        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an toàn.</p>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2>Liên hệ với chúng tôi</h2>
-        <form action="#" method="post">
-            <label for="name">Họ và tên:</label>
-            <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Nhập email" required>
-
-            <label for="message">Lời nhắn:</label>
-            <textarea id="message" name="message" rows="5" placeholder="Nhập lời nhắn của bạn" required></textarea>
-
-            <button type="submit">Gửi</button>
-        </form>
-    </section>
-
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 Fast Food Store. All rights reserved.</p>
-    </footer>
-
-    <script src="login.js"></script>
-    <script src="filtermenu.js"></script>
 </body>
 </html>

@@ -47,6 +47,11 @@ a:hover {
     list-style: none;
     display: flex;
     gap: 20px;
+    position: relative; /* Để các menu con có thể được định vị chính xác */
+}
+
+.navbar ul li {
+    position: relative; /* Để có thể định vị menu con */
 }
 
 .navbar ul li a {
@@ -60,6 +65,34 @@ a:hover {
     background-color: #ffebcd;
     color: #ff6347;
     border-radius: 5px;
+}
+
+/* Dropdown Menu */
+.navbar ul li .dropdown {
+    display: none; /* Ẩn menu con mặc định */
+    position: absolute; /* Định vị menu con */
+    top: 100%; /* Đặt menu con ngay bên dưới menu cha */
+    left: 0; /* Căn trái */
+    background-color: #ff6347; /* Màu nền cho menu con */
+    padding: 10px 0; /* Khoảng cách trên và dưới */
+    border-radius: 5px; /* Bo tròn góc */
+    z-index: 1000; /* Đảm bảo menu con nằm trên các phần tử khác */
+}
+
+.navbar ul li:hover .dropdown {
+    display: block; /* Hiển thị menu con khi hover vào menu cha */
+}
+
+.dropdown a {
+    display: block; /* Hiển thị các mục menu con thành khối */
+    padding: 8px 15px; /* Khoảng cách cho các mục menu con */
+    color: white; /* Màu chữ cho menu con */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+}
+
+.dropdown a:hover {
+    background-color: #ffebcd; /* Màu nền khi hover vào mục menu con */
+    color: #ff6347; /* Màu chữ khi hover vào mục menu con */
 }
 
 #loginOverlay {
