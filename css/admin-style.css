@@ -282,10 +282,9 @@ button {
 
 .product-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px; /* Adjust spacing between products */
-  }
-
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
 
 .product-menu > div {
     width: 100%;
@@ -481,3 +480,105 @@ input {
 }
 
 
+/* Khi màn hình nhỏ hơn 768px (tablet hoặc điện thoại), đổi layout */
+@media (max-width: 768px) {
+    .admin-navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-navbar ul li {
+        margin: 5px 0;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .admin-header .logo img {
+        width: 120px; /* Điều chỉnh logo cho nhỏ lại trên màn hình nhỏ */
+    }
+
+    .stats-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stats-card {
+        width: 80%; /* Đảm bảo các thẻ chiếm 80% chiều rộng */
+        margin-bottom: 20px;
+    }
+
+    .admin-table {
+        font-size: 14px;
+        overflow-x: auto; /* Thêm khả năng cuộn ngang cho bảng trên màn hình nhỏ */
+    }
+
+    .modal-content, .order-modal-content, .product-modal-content {
+        width: 90%; /* Mở rộng modal ra gần hết chiều rộng màn hình */
+        margin: 10% auto;
+    }
+
+    /* .form-container {
+        width: 100%;
+        padding: 10px;
+    } */
+
+    .product-menu button {
+        padding: 8px 16px; /* Giảm kích thước nút cho vừa với màn hình nhỏ */
+    }
+
+    .product-menu {
+        flex-direction: column; /* Chuyển từ dạng hàng ngang sang hàng dọc */
+        align-items: center; /* Căn giữa các sản phẩm */
+    }
+
+    .product-row {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Đảm bảo 1 sản phẩm mỗi hàng trên màn hình nhỏ */
+        gap: 10px; /* Tăng khoảng cách giữa các sản phẩm */
+    }
+
+    .product {
+        width: 100%; /* Sản phẩm chiếm toàn bộ chiều rộng của container */
+        margin: 10px 0; /* Khoảng cách giữa các sản phẩm */
+    }
+
+    .product img {
+        height: auto; /* Cho phép hình ảnh co giãn theo chiều rộng */
+        max-height: 200px; /* Đảm bảo hình ảnh không quá lớn */
+    }
+}
+
+/* Khi màn hình nhỏ hơn 480px (điện thoại nhỏ), giảm padding/margin */
+@media (max-width: 480px) {
+    .stats-card {
+        width: 100%; /* Thẻ chiếm toàn bộ chiều rộng */
+    }
+
+    .admin-table th, .admin-table td {
+        padding: 8px;
+    }
+
+    .product-menu button {
+        width: 100%; /* Đảm bảo nút chiếm toàn bộ chiều rộng */
+        padding: 10px;
+    }
+
+    .modal-content, .order-modal-content {
+        width: 100%; /* Mở rộng modal ra hết chiều rộng */
+    }
+
+    .product {
+        padding: 10px; /* Giảm padding sản phẩm */
+    }
+
+    .product h3, .product p {
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+    #pagination button {
+        padding: 5px; /* Giảm kích thước nút phân trang */
+        font-size: 12px;
+    }
+}
