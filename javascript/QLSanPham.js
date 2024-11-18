@@ -13,16 +13,26 @@ function paginateProducts(products, page) {
     const endIndex = startIndex + productsPerPage;
     return products.slice(startIndex, endIndex);
 }
+// Dành cho Responsive
+function getProductsPerRow() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 480) {
+        return 1; // 1 sản phẩm mỗi hàng trên điện thoại
+    } else if (screenWidth <= 768) {
+        return 2; // 2 sản phẩm mỗi hàng trên tablet
+    } else {
+        return 3; // 3 sản phẩm mỗi hàng trên màn hình lớn
+    }
+}
 
 // Hiển thị danh sách sản phẩm cùng với các chức năng quản lí sản phẩm
 function displayProducts(products = listSanPham, page = currentPage) {
     const productSection = document.getElementById('product-menu');
     productSection.innerHTML = '';
 
-    // Chia danh sách sản phẩm thành các trang
-    const paginatedProducts = paginateProducts(products, page);
-    // Hiển thị sản phẩm theo layout 3 sản phẩm mỗi hàng
-    paginatedProducts.forEach((item, index) => {
+    const productsPerRow = getProductsPerRow(); // Lấy số sản phẩm mỗi hàng
+    const paginatedProducts = paginateProducts(products, page);// Chia danh sách sản phẩm thành các trang
+    paginatedProducts.forEach((item, index) => {  // Hiển thị sản phẩm theo layout 3 sản phẩm mỗi hàng
         if (index % productsPerRow === 0) {
 
             const productRow = document.createElement('div');
@@ -46,6 +56,11 @@ function displayProducts(products = listSanPham, page = currentPage) {
     // Cập nhật các nút phân trang
     updatePaginationButtons(products.length);
 }
+
+// Gọi lại hàm displayProducts khi resize cửa sổ
+window.addEventListener('resize', () => {
+    displayProducts();
+});
 
 // Hiển thị thông tin chi tiết của sản phẩm
 function detailProduct(idproduct) { 
@@ -283,8 +298,6 @@ function updatePaginationButtons(totalProducts) {
         </button>`;
     }
 }
-
-
 
 // Hàm thay đổi trang
 function changePage(page) {
