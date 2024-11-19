@@ -35,33 +35,80 @@ a:hover {
 }
 
 .logo img {
-    width: 150px;
+    height: 80px;
     transition: transform 0.3s ease;
+    border-radius: 5px;
+    background-size: cover;
+    /* Hoặc contain tùy thuộc vào nhu cầu */
+    background-repeat: no-repeat;
+    max-width: 100%;
 }
 
 .logo img:hover {
     transform: scale(1.1);
 }
 
-.navbar ul {
+/* Navbar bên phải logo */
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right ul {
     list-style: none;
     display: flex;
     gap: 20px;
-    position: relative; /* Để các menu con có thể được định vị chính xác */
+    margin-right: calc(500px);
+    /* Khoảng cách giữa logo và navbar */
+}
+
+.navbar-right ul li a {
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-right ul li a:hover {
+    background-color: #ffebcd;
+    color: #ff6347;
+    border-radius: 5px;
+}
+
+/* Navbar chính */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar ul li {
-    position: relative; /* Để có thể định vị menu con */
+    position: relative;
 }
 
 .navbar ul li a {
     color: white;
     font-weight: bold;
-    padding: 8px 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
 }
 
-.navbar ul li a:hover {
+.navbar ul li a:hover,
+.navbar ul li:focus-within>a {
     background-color: #ffebcd;
     color: #ff6347;
     border-radius: 5px;
@@ -69,30 +116,71 @@ a:hover {
 
 /* Dropdown Menu */
 .navbar ul li .dropdown {
-    display: none; /* Ẩn menu con mặc định */
-    position: absolute; /* Định vị menu con */
-    top: 100%; /* Đặt menu con ngay bên dưới menu cha */
-    left: 0; /* Căn trái */
-    background-color: #ff6347; /* Màu nền cho menu con */
-    padding: 10px 0; /* Khoảng cách trên và dưới */
-    border-radius: 5px; /* Bo tròn góc */
-    z-index: 1000; /* Đảm bảo menu con nằm trên các phần tử khác */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff6347;
+    padding: 1px 0;
+    border-radius: 5px;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.navbar ul li:hover .dropdown {
-    display: block; /* Hiển thị menu con khi hover vào menu cha */
+.navbar ul li:hover>.dropdown,
+.navbar ul li:focus-within>.dropdown {
+    display: block;
 }
 
 .dropdown a {
-    display: block; /* Hiển thị các mục menu con thành khối */
-    padding: 8px 15px; /* Khoảng cách cho các mục menu con */
-    color: white; /* Màu chữ cho menu con */
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+    padding: 10px 15px;
+    color: white;
+    transition: all 0.3s ease;
+    display: block;
+    text-align: left;
 }
 
 .dropdown a:hover {
-    background-color: #ffebcd; /* Màu nền khi hover vào mục menu con */
-    color: #ff6347; /* Màu chữ khi hover vào mục menu con */
+    background-color: #ffebcd;
+    color: #ff6347;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar ul li {
+        width: 100%;
+    }
+
+    .navbar ul li .dropdown {
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .dropdown a {
+        text-align: center;
+    }
+}
+
+/* Icon */
+.navbar i,
+.navbar-right i {
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+.navbar a:hover i,
+.navbar-right a:hover i {
+    color: #ff6347;
+    /* Màu khi hover */
 }
 
 #loginOverlay {
@@ -159,7 +247,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -174,7 +262,8 @@ a:hover {
 }
 
 .login-container button:hover {
-    background-color: #d5001a;
+    background-color: #ffebcd;
+    color: #ff6347;
     /* Màu nền khi hover */
 }
 
@@ -186,7 +275,7 @@ a:hover {
 }
 
 .forgot-password-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -200,7 +289,7 @@ a:hover {
 }
 
 .register-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -270,7 +359,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -285,7 +374,8 @@ a:hover {
 }
 
 .register-container button:hover {
-    background-color: #d5001a;
+    background-color: #ffebcd;
+    color: #ff6347;
     /* Màu nền khi hover */
 }
 
@@ -297,7 +387,7 @@ a:hover {
 }
 
 .login-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -363,7 +453,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -378,27 +468,13 @@ a:hover {
 }
 
 .reset-password-container button:hover {
-    background-color: #d5001a;
+    background-color: #ff6347;
     /* Màu nền khi hover */
-}
-
-.login-link {
-    margin-top: 15px;
-    /* Khoảng cách trên */
-    font-size: 14px;
-    /* Kích thước chữ cho liên kết đăng nhập */
-}
-
-.login-link a {
-    color: #e60023;
-    /* Màu chữ liên kết */
-    text-decoration: none;
-    /* Không gạch chân */
 }
 
 /* Hero Section */
 #hero {
-    background-image: url('assets/images/hero-bg.jpg');
+    background-image: url('https://www.kikkoman.eu/fileadmin/user_upload/Recipes/Bilder_EU/183-recipe-page-classic-burger_desktop.jpg');
     background-size: cover;
     background-position: center;
     height: 80vh;
@@ -410,14 +486,6 @@ a:hover {
     overflow: hidden;
 }
 
-.hero-content {
-    text-align: center;
-    max-width: 600px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    animation: fadeIn 1s ease-out;
-}
 
 @keyframes fadeIn {
     from {
@@ -429,31 +497,6 @@ a:hover {
     }
 }
 
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-}
-
-.btn-primary {
-    background-color: #ff6347;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #ffebcd;
-    color: #ff6347;
-    transform: scale(1.05);
-}
 
 /* Menu Section */
 #menu {
@@ -502,7 +545,8 @@ a:hover {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     text-align: center;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -516,6 +560,7 @@ a:hover {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
+    height: auto;
 }
 
 .menu-items h3 {
@@ -622,24 +667,77 @@ a:hover {
 footer {
     background-color: #333;
     color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 0.9rem;
-    position: relative;
+    padding: 20px 0;
 }
 
-/* Responsive Design */
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-logo img {
+    max-width: 150px;
+}
+
+.footer-links,
+.footer-contact {
+    flex: 1;
+    margin: 0 20px;
+}
+
+.footer-links h3,
+.footer-contact h3 {
+    margin-bottom: 10px;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin: 5px 0;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .navbar ul {
         flex-direction: column;
-        gap: 10px;
+        align-items: center;
+    }
+
+    .navbar ul li {
+        width: 100%;
+        /* Đảm bảo các mục trong navbar chiếm 100% chiều rộng */
     }
 
     .menu-category {
         flex-direction: column;
+        /* Đặt các nút trong menu thành cột */
     }
 
     .menu-items .item {
         width: 100%;
+        /* Đảm bảo các mục menu chiếm 100% chiều rộng */
     }
 }
