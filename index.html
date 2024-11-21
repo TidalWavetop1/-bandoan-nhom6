@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fast Food Store</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-    <!-- Header Section -->
     <header class="site-header">
         <div class="logo">
-            <img src="assets/images/logo.png" alt="Fast Food Logo">
+            <img src="image/logonew.png" alt="Fast Food Logo">
+        </div>
+        <div class="navbar-right">
+            <ul>
+                <li><a href="#home"><i class="fa-regular fa-address-book"></i>Trang chủ</a></li>
+                <li><a href="#about"><i class="fa-solid fa-user"></i>Giới thiệu</a></li>
+                <li><a href="#menu"><i class="fa-solid fa-utensils"></i>Thực đơn</a></li>
+            </ul>
+        </div>
+        <div class="searching-bar">
+            <input class="input" type="text" placeholder="Tìm món ăn bạn muốn..." id="searchInput" />
+            <button class="search-button" onclick="performSearch()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </div>
         <nav class="navbar">
-            <ul>
-                <li><a href="#menu">Thực đơn</a></li>
-                <li><a href="#about">Về chúng tôi</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
+            <ul>   
                 <li>
-                    <a href="#account">Tài khoản</a>
+                    <a href="#account"><i class="fa-solid fa-caret-down"></i>Tài khoản</a>
                     <ul class="dropdown">
                         <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
                         <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
                     </ul>
                 </li>
-                <li><a href="#cart">Giỏ hàng</a></li>
+                <li><a href="#cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -32,71 +44,47 @@
     <!-- Form đăng nhập  --->
     <div id="loginOverlay" class="overlay">
         <div class="login-container">
-            <span class="close-btn" onclick="closeLogin()">×</span> <!-- Nút đóng -->
+            <span class="close-btn" onclick="closeLogin()">&times;</span> <!-- Nút đóng -->
             <h2>Đăng nhập</h2>
             <form class="login-form">
                 <input type="email" placeholder="Email" required>
+                <div id="loginMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Mật khẩu" required>
+                <div id="loginMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <button type="submit">Đăng nhập</button>
             </form>
-            <div class="forgot-password-link">
-                <p><a href="#" onclick="openResetPassword()">Quên mật khẩu?</a></p>
-            </div>
             <div class="register-link">
-                <p>Chưa có tài khoản? <a href="#" onclick="toggleRegister()">Đăng ký</a></p>
+                <p>Chưa có tài khoản? <a href="#" onclick="openRegister()">Đăng ký</a></p>
             </div>
         </div>
     </div>
     
+    <!-- Form đăng ký -->
     <div id="registerOverlay" class="overlay">
         <div class="register-container">
-            <span class="close-btn" onclick="closeRegister()">&times;</span>
+            <span class="close-btn" onclick="closeRegister()">&times;</span> <!-- Nút đóng -->
             <h2>Đăng ký</h2>
             <form class="register-form">
-                <div class="form-row">
-                    <input type="text" placeholder="Họ" required>
-                    <input type="text" placeholder="Tên" required>
-                </div>
-                <div class="form-row">
-                    <input type="date" placeholder="Ngày sinh" required>
-                    <input type="tel" placeholder="Số điện thoại" required>
-                </div>
-                <input type="text" placeholder="Địa chỉ" required>
+                <input type="text" placeholder="Họ" required>
+                <input type="text" placeholder="Tên" required>
                 <input type="email" placeholder="Email" required>
+                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Mật khẩu" required>
+                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Xác nhận mật khẩu" required>
+                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <button type="submit">Đăng ký</button>
             </form>
             <div class="login-link">
-                <p>Đã có tài khoản? <a href="#" onclick="toggleLogin()">Đăng nhập</a></p>
+                <p>Đã có tài khoản? <a href="#" onclick="openLogin()">Đăng nhập</a></p>
             </div>
         </div>
     </div>
-
-    <!-- Overlay Đặt Lại Mật Khẩu -->
-    <div id="resetPasswordOverlay" class="overlay">
-        <div class="reset-password-container">
-            <span class="close-btn" onclick="closeResetPassword()">×</span> <!-- Nút đóng -->
-            <h2>Đặt lại mật khẩu</h2>
-            <form class="reset-password-form">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu mới" required>
-                <input type="password" placeholder="Xác nhận mật khẩu" required>
-                <button type="submit">Đặt lại mật khẩu</button>
-            </form>
-            <div class="login-link">
-                <p>Đã có tài khoản? <a href="#" onclick="toggleLogin()">Đăng nhập</a></p>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-content">
-            <h1>Chào mừng đến với cửa hàng đồ ăn nhanh</h1>
-            <p>Thưởng thức các món ngon từ burger, pizza và hơn thế nữa!</p>
-            <a href="#menu" class="btn-primary">Xem thực đơn</a>
-        </div>
+        <div class="hero-content"></div>
     </section>
 
     <!-- Menu Section -->
@@ -132,7 +120,8 @@
     <!-- About Section -->
     <section id="about">
         <h2>Về chúng tôi</h2>
-        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an toàn.</p>
+        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an
+            toàn.</p>
     </section>
 
     <!-- Contact Section -->
@@ -141,7 +130,6 @@
         <form action="#" method="post">
             <label for="name">Họ và tên:</label>
             <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
-            
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Nhập email" required>
 
@@ -154,10 +142,34 @@
 
     <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 Fast Food Store. All rights reserved.</p>
+    <div class="footer-content">
+        <div class="footer-logo">
+            <img src="image/o_bg-remover-gen_2p1KvVtjmiiHO80L1wXQ0vupeR6.png" alt="Fast Food Logo">
+        </div>
+        <div class="footer-links">
+            <h3>Liên kết nhanh</h3>
+            <ul>
+                <li><a href="#about">Giới thiệu</a></li>
+                <li><a href="#menu">Thực đơn</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+                <li><a href="#" class="news-link">Tin tức</a></li>
+                <li><a href="#" class="terms-link">Điều khoản</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Liên hệ với chúng tôi</h3>
+            <p>Email: robinandsunday@info.com</p>
+            <p>Điện thoại: (033) 2299451</p>
+            <p>Địa chỉ: 273, Đường An Dương Vương, P.4, Q.5, TP. HCM</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Fast Food Store. Tất cả quyền được bảo lưu.</p>
+    </div>
     </footer>
 
-    <script src="login.js"></script>
-    <script src="filtermenu.js"></script>
+    <script src="json/base_function.js"></script>
+    <script src="json/login_and_register.js"></script>
 </body>
+
 </html>
