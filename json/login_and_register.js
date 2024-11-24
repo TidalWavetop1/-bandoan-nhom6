@@ -211,6 +211,12 @@ function handleLogout() {
     }
 }
 
+// Hàm cập nhật URL mà không tải lại trang
+function updateURL(hash) {
+    const newUrl = window.location.origin + window.location.pathname + hash;
+    window.history.replaceState({}, '', newUrl);
+}
+
 // Attach event listeners
 document.querySelector(".register-form").addEventListener("submit", handleRegister);
 document.querySelector(".login-form").addEventListener("submit", handleLogin);
