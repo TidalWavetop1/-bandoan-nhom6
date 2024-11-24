@@ -37,7 +37,7 @@ function openLogin() {
 function handleRegister(event) {
     event.preventDefault();
     const registerForm = document.querySelector(".register-form");
-    const [firstName, lastName, email, password, confirmPassword] = registerForm.elements;
+    const [name, number, address, email, userName, password, confirmPassword] = registerForm.elements;
 
     if (password.value !== confirmPassword.value) {
         alert("Mật khẩu xác nhận không khớp!");
@@ -51,9 +51,11 @@ function handleRegister(event) {
     }
 
     users.push({
-        firstName: firstName.value,
-        lastName: lastName.value,
+        name: name.value,
+        number: number.value,
+        address: address.value,
         email: email.value,
+        userName: userName.value,
         password: password.value,
         role: "user", // Default role
     });
@@ -67,10 +69,10 @@ function handleRegister(event) {
 function handleLogin(event) {
     event.preventDefault();
     const loginForm = document.querySelector(".login-form");
-    const [email, password] = loginForm.elements;
+    const [userName, password] = loginForm.elements;
 
     const user = users.find(
-        (user) => user.email === email.value && user.password === password.value
+        (user) => user.user === userName.value && user.password === password.value
     );
 
     if (!user) {
