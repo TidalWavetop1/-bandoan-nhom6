@@ -12,16 +12,30 @@
 <body>
     <header class="site-header">
         <div class="logo">
-            <img src="image/logonew.png" alt="Fast Food Logo">
+            <img src="image/LOGOFASTFOOD.png" alt="Fast Food Logo">
         </div>
         <div class="navbar-right">
-            <ul>
-                <li><a href="#home"><i class="fa-regular fa-address-book"></i>Trang chủ</a></li>
-                <li><a href="#about"><i class="fa-solid fa-user"></i>Giới thiệu</a></li>
-                <li><a href="#menu"><i class="fa-solid fa-utensils"></i>Thực đơn</a></li>
-            </ul>
+             <ul>
+                  <li><a href="#home"><i class="fa-regular fa-address-book"></i>Trang chủ</a></li>
+                  <li><a href="#about"><i class="fa-solid fa-user"></i>Giới thiệu</a></li>
+                  <li><a href="#menu"><i class="fa-solid fa-utensils"></i>Thực đơn</a></li>
         </div>
         <div class="searching-bar">
+            <button class="advanced-search-toggle" onclick="toggleAdvancedSearch()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+            <div class="advanced-search-menu" id="advancedSearchMenu">
+                <select id="categoryFilter">
+                    <option value="">Tất cả danh mục</option>
+                    <option value="Burger">Burger</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Đồ uống">Đồ uống</option>
+                    <option value="Tráng miệng">Tráng miệng</option>
+                </select>
+                <input type="number" id="minPrice" placeholder="Giá thấp nhất">
+                <input type="number" id="maxPrice" placeholder="Giá cao nhất">
+                <button onclick="performAdvancedSearch()">Tìm kiếm</button>
+            </div>
             <input class="input" type="text" placeholder="Tìm món ăn bạn muốn..." id="searchInput" />
             <button class="search-button" onclick="performSearch()">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -30,10 +44,10 @@
         <nav class="navbar">
             <ul>   
                 <li>
-                    <a href="#account"><i class="fa-solid fa-caret-down"></i>Tài khoản</a>
+                    <a href="#account" id="account"><i class="fa-solid fa-caret-down"></i>Tài khoản</a>
                     <ul class="dropdown">
-                        <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
-                        <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
+                        <li><a href="javascript:void(0);" onclick="toggleLogin()" id="login">Đăng nhập</a></li>
+                        <li><a href="javascript:void(0);" onclick="toggleRegister()" id="signin">Đăng ký</a></li>
                     </ul>
                 </li>
                 <li><a href="#cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
@@ -48,9 +62,7 @@
             <h2>Đăng nhập</h2>
             <form class="login-form">
                 <input type="email" placeholder="Email" required>
-                <div id="loginMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Mật khẩu" required>
-                <div id="loginMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <button type="submit">Đăng nhập</button>
             </form>
             <div class="register-link">
@@ -68,11 +80,8 @@
                 <input type="text" placeholder="Họ" required>
                 <input type="text" placeholder="Tên" required>
                 <input type="email" placeholder="Email" required>
-                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Mật khẩu" required>
-                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <input type="password" placeholder="Xác nhận mật khẩu" required>
-                <div id="registerMessage" class="message"></div> <!-- Thông báo lỗi -->
                 <button type="submit">Đăng ký</button>
             </form>
             <div class="login-link">
@@ -85,6 +94,37 @@
     <!-- Hero Section -->
     <section id="hero">
         <div class="hero-content"></div>
+    </section>
+
+    <section id="promotions">
+        <h2>Khuyến Mãi Đặc Biệt</h2>
+    
+        <div class="promotion-item">
+            <img src="image/promotion1.jpg" alt="Khuyến mãi 1">
+            <div class="promotion-details">
+                <h3>Combo Siêu Tiết Kiệm</h3>
+                <p>Nhận ngay 20% giảm giá khi mua combo 2 món.</p>
+                <p class="discount">Giá chỉ từ 99.000 VNĐ!</p>
+            </div>
+        </div>
+    
+        <div class="promotion-item">
+            <img src="image/promotion2.jpg" alt="Khuyến mãi 2">
+            <div class="promotion-details">
+                <h3>Giảm Giá 30% Cho Món Ăn Chọn Lọc</h3>
+                <p>Chỉ áp dụng cho các món ăn trong tuần này.</p>
+                <p class="discount">Giá chỉ từ 79.000 VNĐ!</p>
+            </div>
+        </div>
+    
+        <div class="promotion-item">
+            <img src="image/promotion3.jpg" alt="Khuyến mãi 3">
+            <div class="promotion-details">
+                <h3>Mua 1 Tặng 1</h3>
+                <p>Mua bất kỳ món nào, tặng ngay một món tương tự.</p>
+                <p class="discount">Chỉ áp dụng cho đơn hàng online!</p>
+            </div>
+        </div>
     </section>
 
     <!-- Menu Section -->
@@ -118,10 +158,28 @@
     </section>
 
     <!-- About Section -->
-    <section id="about">
-        <h2>Về chúng tôi</h2>
-        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an
-            toàn.</p>
+    <section id="about" style="padding: 20px; background-color: #ffffff;">
+    <h2 style="text-align: center; color: #ff6347;">Về Chúng Tôi</h2>
+    <p style="text-align: center; font-size: 1.1em; color: #666;">
+        Chúng tôi là một cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh chóng và an toàn. Đội ngũ của chúng tôi luôn sẵn sàng phục vụ bạn với sự tận tâm và chuyên nghiệp.
+    </p>
+
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h3 style="color: #ff6347;">Lịch Sử</h3>
+        <p>Cửa hàng của chúng tôi được thành lập vào năm 2010 với sứ mệnh mang đến cho khách hàng những món ăn ngon nhất. Từ những ngày đầu, chúng tôi đã không ngừng phát triển và cải tiến thực đơn của mình để phục vụ khách hàng tốt hơn.</p>
+
+        <h3 style="color: #ff6347;">Sứ Mệnh</h3>
+        <p>Sứ mệnh của chúng tôi là cung cấp những món ăn chất lượng cao với giá cả phải chăng. Chúng tôi cam kết sử dụng nguyên liệu tươi ngon và an toàn để đảm bảo sức khỏe cho khách hàng.</p>
+
+        <h3 style="color: #ff6347;">Đội Ngũ</h3>
+        <p>Đội ngũ nhân viên của chúng tôi là những người có kinh nghiệm và đam mê trong ngành ẩm thực. Họ luôn sẵn sàng lắng nghe và đáp ứng nhu cầu của khách hàng.</p>
+
+        <h3 style="color: #ff6347;">Hình Ảnh</h3>
+        <div class="gallery" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+            <img src="image1.jpg" alt="Hình ảnh món ăn 1" style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <img src="image2.jpg" alt="Hình ảnh món ăn 2" style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <img src="image3.jpg" alt="Hình ảnh món ăn 3" style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        </div>
     </section>
 
     <!-- Contact Section -->
@@ -144,7 +202,7 @@
     <footer>
     <div class="footer-content">
         <div class="footer-logo">
-            <img src="image/o_bg-remover-gen_2p1KvVtjmiiHO80L1wXQ0vupeR6.png" alt="Fast Food Logo">
+            <img src="image/LOGOFASTFOOD.png" alt="Fast Food Logo">
         </div>
         <div class="footer-links">
             <h3>Liên kết nhanh</h3>
@@ -158,18 +216,19 @@
         </div>
         <div class="footer-contact">
             <h3>Liên hệ với chúng tôi</h3>
-            <p>Email: robinandsunday@info.com</p>
+            <p>Email: panicfastfood@info.com</p>
             <p>Điện thoại: (033) 2299451</p>
             <p>Địa chỉ: 273, Đường An Dương Vương, P.4, Q.5, TP. HCM</p>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2024 Fast Food Store. Tất cả quyền được bảo lưu.</p>
+        <p>&copy; 2024 Panic Fast Food. Tất cả quyền được bảo lưu và cấp phé<p></p>.</p>
     </div>
     </footer>
 
     <script src="json/base_function.js"></script>
     <script src="json/login_and_register.js"></script>
+    <script src="json/searching.js"></script>
+    <script src="json/pagination.js"></script>
 </body>
-
 </html>

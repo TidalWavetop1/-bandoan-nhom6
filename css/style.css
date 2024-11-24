@@ -125,6 +125,60 @@ a:hover {
     /* Kích thước icon */
 }
 
+.advanced-search-menu {
+    position: absolute;
+    left: -250px;
+    /* Điều chỉnh khoảng cách từ thanh tìm kiếm */
+    top: 100%;
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: none;
+    /* Mặc định ẩn */
+}
+
+
+.advanced-search-menu select,
+.advanced-search-menu input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.advanced-search-menu button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.advanced-search-menu button:hover {
+    background-color: #ff7f50;
+}
+
+.searching-bar {
+    position: relative;
+    /* Để có thể định vị menu tìm kiếm nâng cao */
+}
+
+.advanced-search-toggle {
+    background: none;
+    border: none;
+    color: #ff6347;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 10px;
+}
+
 /* Navbar bên phải logo */
 .navbar-right {
     display: flex;
@@ -215,9 +269,7 @@ a:hover {
 .navbar ul li:focus-within>.dropdown {
     display: block;
     opacity: 1;
-    /* Độ mờ thành 1 khi hiển thị */
     transform: translateX(-50%) translateY(0);
-    /* Trở về vị trí ban đầu */
 }
 
 .dropdown a {
@@ -317,18 +369,6 @@ a:hover {
     box-sizing: border-box;
 }
 
-/* Định dạng cho dòng chữ thông báo */
-.message {
-    color: #d9534f;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-}
-
-/* Khi có thông báo, hiển thị nó */
-.show {
-    display: block;
-}
 
 .login-container button {
     width: 100%;
@@ -431,7 +471,66 @@ a:hover {
 }
 
 .login-link a:hover {
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+/*Form Account*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.profile-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.profile-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.profile-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.profile-form button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.profile-form button:hover {
+    background-color: #e5533c;
 }
 
 /* Hero Section */
@@ -459,6 +558,54 @@ a:hover {
     }
 }
 
+#promotions {
+    padding: 20px;
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#promotions h2 {
+    color: #ff6347;
+    text-align: center;
+}
+
+.promotion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ff6347;
+    border-radius: 8px;
+}
+
+.promotion-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.promotion-details {
+    flex-grow: 1;
+    padding-left: 15px;
+}
+
+.promotion-details h3 {
+    margin: 0;
+    color: #ff6347;
+}
+
+.promotion-details p {
+    margin: 5px 0;
+}
+
+.promotion-details .discount {
+    font-weight: bold;
+    color: green;
+}
 
 /* Menu Section */
 #menu {
@@ -507,8 +654,7 @@ a:hover {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
-    width: 100%;
-    max-width: 300px;
+    width: 300px;
     text-align: center;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -522,7 +668,6 @@ a:hover {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
-    height: auto;
 }
 
 .menu-items h3 {
@@ -569,6 +714,69 @@ a:hover {
 #about p {
     font-size: 1.2rem;
 }
+
+#about {
+    padding: 50px;
+    background-color: #ffffff;
+    /* Màu nền cho phần giới thiệu */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
+    /* Căn giữa phần giới thiệu */
+}
+
+#about h2 {
+    font-size: 2.5rem;
+    color: #ff6347;
+    /* Màu cho tiêu đề chính */
+    margin-bottom: 30px;
+}
+
+#about h3 {
+    color: #ff6347;
+    /* Màu cho tiêu đề phụ */
+    margin-top: 20px;
+}
+
+#about p {
+    font-size: 1.2rem;
+    color: #666;
+    /* Màu chữ cho đoạn văn */
+    margin-bottom: 15px;
+}
+
+.gallery {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 32%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+a {
+    color: #ff6347;
+    /* Màu cho liên kết */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    /* Hiệu ứng khi di chuột qua liên kết */
+}
+
 
 /* Contact Section */
 #contact {
@@ -671,7 +879,7 @@ footer {
 }
 
 .footer-links a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .footer-bottom {
