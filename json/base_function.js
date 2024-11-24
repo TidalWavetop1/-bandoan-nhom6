@@ -22,7 +22,11 @@ termsLink.addEventListener('click', function (event) {
     window.location.href = 'index.html';
 });
 
-
+// Hàm cập nhật URL mà không tải lại trang
+function updateURL(hash) {
+    const newUrl = window.location.origin + window.location.pathname + hash;
+    window.history.replaceState({}, '', newUrl);
+}
 
 
 
