@@ -1,6 +1,7 @@
 // Thông tin đăng nhập giả lập
 const USER_CREDENTIALS = {
-    username: "admin web",
+    firstName="admin",
+    lastName="web",
     email: admin@gmail.com,
     password: "1234"
 };
