@@ -3,7 +3,7 @@ let loggedInUser = null;
 
 // Mock database
 const users = [
-    { email: "admin@gmail.com", password: "1234", firstName: "admin", lastName: "web", role: "admin" }, // Admin user
+    { email: "admin@gmail.com", password: "1234", username: "admin", role: "admin" }, // Admin user
 ];
 
 // Open and close login/register modals
