@@ -5,37 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fast Food Store</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="image/favicon.png" type="image/x-icon">
 </head>
 <body>
     <!-- Header Section -->
     <header class="site-header">
         <div class="logo">
-            <img src="assets/images/logo.png" alt="Fast Food Logo">
+            <img src="image/logo.png" alt="Fast Food Logo">
+        </div>
+        <div class="navbar-right">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-solid fa-user"></i><span>Trang chủ</span></a></li>
+                <li><a href="#contact"><i class="far fa-regular fa-address-book"></i><span>Liên hệ</span></a></li>
+                <li><a href="#menu"  ><i class="fas fa-solid fa-utensils"></i><span>Thực đơn</span></a></li>
+            </ul>
         </div>
         <nav class="navbar">
             <ul>
                 <li>
-                    <a href="#menu">Thực đơn</a>
-                    <ul class="dropdown">
-                        <li><a href="#fried-chicken">Fried Chicken</a></li>
-                        <li><a href="#burger">Burger</a></li>
-                        <li><a href="#pasta">Pasta</a></li>
-                        <li><a href="#combo-items">Combo Items</a></li>
-                    </ul>
-                </li>
-                <li><a href="#about">Về chúng tôi</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
-                <li>
-                    <a href="#account">Tài khoản</a>
+                    <a href="#account"><i class="fas fa-solid fa-caret-down"></i><span>Tài khoản</span></a>
                     <ul class="dropdown">
                         <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
                         <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
                     </ul>
                 </li>
-                <li><a href="#cart">Giỏ hàng</a></li>
+                <li>
+                    <a href="javascript:void(0);" onclick="openCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="cart-count">0</span>
+                    </a>
+                </li>
+                <li><a href="#search"><i class="fas fa-search"></i></a></li> 
             </ul>
         </nav>
     </header>
+    <div id="pageOverlay" class="overlay_modal"></div>
+    <!--Modal giỏ hàng-->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
+            <hr>
+            <div class="empty-cart">
+                <i class="fas fa-solid fa-cart-arrow-down"></i>
+                <p>Vui lòng thêm sản phẩm vào giỏ hàng</p>
+            </div>
+            <div class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="total">
+                    <span class="total-label">Tổng tiền:</span>
+                    <span id="total-price">0₫</span> <!-- Đã sửa: Sử dụng đúng id 'total-price' -->
+                </div>
+                <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled>Thanh toán</button> <!-- Đã sửa: Sử dụng đúng id 'checkout-btn' -->
+            </div>
+        </div>
+    </div>
 
     <!-- Form đăng nhập  --->
     <div id="loginOverlay" class="overlay">
@@ -99,7 +124,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section id="hero">
+    <section id="hero" class="scroll-offset">
         <div class="hero-content">
             <h1>Chào mừng đến với cửa hàng đồ ăn nhanh</h1>
             <p>Thưởng thức các món ngon từ burger, pizza và hơn thế nữa!</p>
@@ -109,28 +134,22 @@
 
     <!-- Menu Section -->
     <section id="menu">
-        <h2>Thực đơn của chúng tôi</h2>
+        <h2 >Thực đơn của chúng tôi</h2>
         <div class="menu-category">
-            <button onclick="filterMenu('Burger')">Burger</button>
-            <button onclick="filterMenu('Pizza')">Pizza</button>
-            <button onclick="filterMenu('Đồ uống')">Đồ uống</button>
-            <button onclick="filterMenu('Tráng miệng')">Tráng miệng</button>
-            <button onclick="filterMenu('')">Tất cả</button>
+            <button onclick="filterMenu('burger')">Burger</button>
+            <button onclick="filterMenu('ga')">Gà rán</button>
+            <button onclick="filterMenu('nuoc')">Đồ uống</button>
+            <button onclick="filterMenu('combo')">Combo</button>
+            <button onclick="filterMenu('pizza')">pizza</button>
         </div>
         <div id="product-container" class="menu-items">
             <!-- Các sản phẩm sẽ được hiển thị ở đây -->
         </div>
         <div id="pagination-controls" class="pagination-controls">
-            <button onclick="prevPage()">Previous</button>
-            <span id="page-numbers"></span>
-            <button onclick="nextPage()">Next</button>
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2>Về chúng tôi</h2>
-        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an toàn.</p>
+            <span id="page-numbers"></span>
+
+        </div>
     </section>
 
     <!-- Contact Section -->
@@ -152,11 +171,52 @@
 
     <!-- Footer Section -->
     <footer>
+        <section class="footer-section">
+            <div class="section_div">
+                <h1>VỀ CHÚNG TÔI</h1>
+                <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an toàn.</p>
+            </div>
+            <div class ="section_div">
+                <h1>DANH MỤC MÓN ĂN</h1>
+                <ul>
+                    <li><a href="#">Burger</a></li>
+                    <li><a href="#">Gà rán</a></li>
+                    <li><a href="#">Đồ uống</a></li>
+                    <li><a href="#">Combo</a></li>
+                    <li><a href="#">Pizza</a></li>
+                </ul>
+            </div>
+            <div class="section_div">
+                <h1>CHÍNH SÁCH</h1>
+                <ul>
+                    <li><a href="#">Chính sách hoạt động</a></li>
+                    <li><a href="#">Chính sách và quy định</a></li>
+                    <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                </ul>
+             </div>
+             <div class="section_div">
+                <h1>LIÊN HỆ</h1>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>273 An Dương Vương, Phường 3, Quận 5, TP Hồ Chí Minh</li>
+                    <li><i class="fas fa-phone"></i>0123 456 789</li>
+                    <li><i class="fas fa-envelope"></i>abc@doamin.com</li>
+                </ul>
+                <div class="social-icons">
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-whatsapp"></i></a>
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                </div>
+             </div>
+        </section>
         <p>&copy; 2024 Fast Food Store. All rights reserved.</p>
     </footer>
 
-    <script src="js/login.js"></script>
+    <script src="json/login_and_register.js"></script>
     <script src="js/filtermenu.js"></script>
     <script src="js/pagination.js"></script>
+    <script src="json/base_function.js"></script>
+    <script src="json/Cart.js"></script>
+
 </body>
 </html>

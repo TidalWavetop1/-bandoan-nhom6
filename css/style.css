@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
+    flex-wrap: wrap;
 }
 
 a {
@@ -25,43 +26,95 @@ a:hover {
 /* Header */
 .site-header {
     background-color: #ff6347;
-    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
+    overflow: hidden;
+    height: 100px;
 }
-
+.logo {
+    flex-shrink: 0; /* Đảm bảo logo không bị thu nhỏ */
+}
 .logo img {
-    width: 150px;
+    height: 100px;
     transition: transform 0.3s ease;
+    border-radius: 5px;
+    background-size: cover;
+    /* Hoặc contain tùy thuộc vào nhu cầu */
+    background-repeat: no-repeat;
+    margin-left: 50px;
 }
 
 .logo img:hover {
     transform: scale(1.1);
 }
 
-.navbar ul {
+/* Navbar bên phải logo */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.navbar-right ul {
     list-style: none;
     display: flex;
     gap: 20px;
-    position: relative; /* Để các menu con có thể được định vị chính xác */
+    margin: 0
+    /* Khoảng cách giữa logo và navbar */
+}
+
+.navbar-right ul li a {
+    margin-left: 2px;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-right ul li a:hover {
+    background-color: #ffebcd;
+    color: #ff6347;
+    border-radius: 5px;
+}
+
+/* Navbar chính */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar ul li {
-    position: relative; /* To position the dropdown menu */
+    position: relative;
 }
 
 .navbar ul li a {
     color: white;
     font-weight: bold;
-    padding: 8px 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
 }
 
-.navbar ul li a:hover {
+.navbar ul li a:hover,
+.navbar ul li:focus-within>a {
     background-color: #ffebcd;
     color: #ff6347;
     border-radius: 5px;
@@ -69,30 +122,49 @@ a:hover {
 
 /* Dropdown Menu */
 .navbar ul li .dropdown {
-    display: none; /* Hide the dropdown menu by default */
-    position: absolute; /* Position it absolutely */
-    top: 100%; /* Position it below the parent menu item */
-    left: 0; /* Align it to the left */
-    background-color: #ff6347; /* Background color for the dropdown */
-    padding: 10px 0; /* Padding for the dropdown */
-    border-radius: 5px; /* Rounded corners */
-    z-index: 1000; /* Ensure it appears above other elements */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff6347;
+    padding: 1px 0;
+    border-radius: 5px;
+    z-index: 1000;
+    min-width: 150px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.navbar ul li:hover .dropdown {
-    display: block; /* Show the dropdown menu on hover */
+.navbar ul li:hover>.dropdown,
+.navbar ul li:focus-within>.dropdown {
+    display: block;
 }
 
-.navbar ul li .dropdown a {
-    display: block; /* Display dropdown items as block elements */
-    padding: 8px 15px; /* Padding for dropdown items */
-    color: white; /* Text color for dropdown items */
-    transition: background-color 0.3s ease; /* Transition effect */
+.dropdown a {
+    padding: 10px 15px;
+    color: white;
+    transition: all 0.3s ease;
+    display: block;
+    text-align: left;
 }
 
-.navbar ul li .dropdown a:hover {
-    background-color: #ffebcd; /* Background color on hover */
-    color: #ff6347; /* Text color on hover */
+.dropdown a:hover {
+    background-color: #ffebcd;
+    color: #ff6347;
+}
+
+
+/* Icon */
+.navbar i,
+.navbar-right i {
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+.navbar a:hover i,
+.navbar-right a:hover i {
+    color: #ff6347;
+    /* Màu khi hover */
 }
 
 #loginOverlay {
@@ -159,7 +231,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -174,7 +246,8 @@ a:hover {
 }
 
 .login-container button:hover {
-    background-color: #d5001a;
+    background-color: #ffebcd;
+    color: #ff6347;
     /* Màu nền khi hover */
 }
 
@@ -186,7 +259,7 @@ a:hover {
 }
 
 .forgot-password-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -200,7 +273,7 @@ a:hover {
 }
 
 .register-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -270,7 +343,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -285,7 +358,8 @@ a:hover {
 }
 
 .register-container button:hover {
-    background-color: #d5001a;
+    background-color: #ffebcd;
+    color: #ff6347;
     /* Màu nền khi hover */
 }
 
@@ -297,7 +371,7 @@ a:hover {
 }
 
 .login-link a {
-    color: #e60023;
+    color: #ff6347;
     /* Màu chữ liên kết */
     text-decoration: none;
     /* Không gạch chân */
@@ -363,7 +437,7 @@ a:hover {
     /* Chiếm 100% chiều rộng */
     padding: 12px;
     /* Khoảng cách bên trong */
-    background-color: #e60023;
+    background-color: #ff6347;
     /* Màu nền nút */
     color: white;
     /* Màu chữ nút */
@@ -378,108 +452,10 @@ a:hover {
 }
 
 .reset-password-container button:hover {
-    background-color: #d5001a;
+    background-color: #ff6347;
     /* Màu nền khi hover */
 }
 
-.login-link {
-    margin-top: 15px;
-    /* Khoảng cách trên */
-    font-size: 14px;
-    /* Kích thước chữ cho liên kết đăng nhập */
-}
-
-.login-link a {
-    color: #e60023;
-    /* Màu chữ liên kết */
-    text-decoration: none;
-    /* Không gạch chân */
-}
-
-/* Hero Section */
-#hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 80vh;
-    overflow: hidden;
-}
-
-#hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 400%;
-    height: 100%;
-    background: url('/img/Banner/aicook_bxv_29023_commercial_photography_plate_of_fried_chicken__31a63dc8-6bbd-4e03-8f48-b3c6af6899da\ \(1\).png') 0 0 / 25% 100%,
-                url('/img/Banner/aicook_bxv_29023_commercial_photography_Spicy_Chicken_Wings_sho_14bc7088-8ea8-4d37-9c98-57e8a13c2293.png') 25% 0 / 25% 100%,
-                url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 50% 0 / 25% 100%,
-                url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 75% 0 / 25% 100%;
-                animation: scrollBackground 20s linear infinite;
-
-    }
-
-@keyframes scrollBackground {
-    0% { transform: translateX(0); } /* Bắt đầu ở ảnh đầu tiên */
-    16% { transform: translateX(0); } /* Chờ ở ảnh đầu tiên (6-7s) */
-    33% { transform: translateX(-25%); } /* Chuyển đến ảnh thứ hai */
-    49% { transform: translateX(-25%); } /* Chờ ở ảnh thứ hai (6-7s) */
-    66% { transform: translateX(-50%); } /* Chuyển đến ảnh thứ ba */
-    82% { transform: translateX(-50%); } /* Chờ ở ảnh thứ ba (6-7s) */
-    100% { transform: translateX(-75%); } /* Chuyển đến ảnh cuối cùng */
-}
-
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    max-width: 600px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    animation: fadeIn 1s ease-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-    color: white;
-}
-
-.btn-primary {
-    background-color: #ff6347;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #ffebcd;
-    color: #ff6347;
-    transform: scale(1.05);
-}
 
 /* Menu Section */
 #menu {
@@ -491,6 +467,10 @@ a:hover {
 #menu h2 {
     font-size: 2.5rem;
     margin-bottom: 30px;
+}
+.scroll-offset {
+    padding-top: 20px; /* Điều chỉnh giá trị này theo ý muốn */
+    margin-top: -20px; /* Điều chỉnh giá trị này theo ý muốn */
 }
 
 .menu-category {
@@ -528,7 +508,8 @@ a:hover {
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     text-align: center;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -542,6 +523,12 @@ a:hover {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 10px;
+    height: auto;
+}
+#menu img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
 }
 
 .menu-items h3 {
@@ -552,6 +539,26 @@ a:hover {
 .menu-items p {
     font-size: 1.2rem;
     color: #ff6347;
+}
+/*add to cart button*/
+.add-to-cart-button {
+    background-color: #ff6347; /* Màu nền của nút */
+    color: white; /* Màu chữ của nút */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Thêm hiệu ứng chuyển động */
+    margin-top: 50px; /* Khoảng cách trên của nút */
+}
+
+.add-to-cart-button:hover {
+    background-color: #e5533d; /* Màu nền của nút khi hover */
+}
+
+.add-to-cart-button:active {
+    transform: scale(0.95); /* Hiệu ứng thu nhỏ khi nhấp vào nút */
 }
 
 /* Pagination */
@@ -653,22 +660,324 @@ footer {
     font-size: 0.9rem;
     position: relative;
 }
+.footer-section {
+    display: flex;
+    justify-content: flex-start; /* Đặt khoảng cách đều giữa các mục */
+    align-items: flex-start; /* Căn chỉnh các mục theo chiều dọc */
+    text-align: left; /* Căn chỉnh văn bản sang trái */
+    margin: 0 auto;
+    gap: 30px;
+    margin-bottom: 30px;
+    border-bottom: white 0px solid;
+}
+.section_div{
+    justify-content: left;
+    align-items: left;
+    text-align: left;
+    max-width: max-content;
+    margin: 0;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-bottom: 30px;
 
-/* Responsive Design */
+}
+div ul{
+    list-style-type: none; /* Loại bỏ dấu chấm */
+
+}
+.section_div ul li i {
+    margin-right: 10px; /* Khoảng cách giữa icon và văn bản */
+}
+.section_div ul li a {
+    color: rgba(255, 255, 255, 0.7); /* Màu chữ nhạt hơn */
+    text-decoration: none;
+    transition: color 0.3s, opacity 0.3s; /* Thêm hiệu ứng chuyển đổi mượt mà */
+}
+.section_div ul li a:hover {
+    color: #ff6347; /* Màu khi trỏ vào */
+
+}
+.section_div p{
+    color: rgba(255, 255, 255, 0.7); /* Màu chữ nhạt hơn */
+    text-decoration: none;
+    transition: color 0.3s, opacity 0.3s; /* Thêm hiệu ứng chuyển đổi mượt mà */
+    max-width: 300px;
+}
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin-right: 20px;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+/*overlay*/
+.overlay_modal {
+    display: none; /* Ẩn overlay mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ (đen với độ mờ 50%) */
+    z-index: 1000; /* Đảm bảo overlay nằm dưới modal */
+}
+
+/* Add these styles to your style.css */
+@keyframes modalOpen {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalClose {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-50px); }
+}
+.modal.show .modal-content {
+    animation: modalOpen 0.3s forwards;
+}
+
+.modal.hide .modal-content {
+    animation: modalClose 0.3s forwards;
+}
+
+/*modal giỏ hàng*/
+.modal{
+    display: none; /*ẩn modal mặc định*/
+    position: fixed;
+    z-index: 1001; /*modal nằm trên các phần tử khác*/
+    right: 0; /*đặt giỏ hàng ở bên phải*/
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30%;
+    height: 95%;
+    overflow: hidden; /*thêm thanh cuộn nếu nội dung vượt quá chiều cao màn hình*/
+    transition: right 0.3s ease; /*hiệu ứng chuyển động*/
+    margin-right: 10px;
+}
+
+
+.modal-content {
+    background-color: #fefefe; /* Màu nền của nội dung modal */
+    margin: 0; /* Không thêm khoảng cách bên ngoài nội dung modal */
+    padding: 20px; /* Thêm khoảng đệm bên trong nội dung modal */
+    border: 1px solid #888; /* Đường viền của nội dung modal */
+    border-radius: 15px; /* Bo tròn các góc */
+    height: 100%; /* Chiều cao của nội dung modal chiếm toàn bộ chiều cao modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ để tạo hiệu ứng nổi */
+    overflow-y: auto; /* Thêm thanh cuộn dọc nếu nội dung vượt quá chiều cao modal */
+}
+.modal-content h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
+}
+
+.modal-content h2 i {
+    font-size: 1em; /* Kích thước của biểu tượng giỏ hàng */
+    color: #ff6347; /* Màu của biểu tượng giỏ hàng */
+}
+
+.modal-content hr {
+    border: none;
+    border-top: 1px solid #888; /* Đường gạch chân phân cách */
+    margin: 10px 0; /* Khoảng cách trên và dưới của đường gạch chân */
+}
+/*giỏ hàng trống*/
+.empty-cart {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.empty-cart i {
+    font-size: 3em; /* Kích thước của biểu tượng giỏ hàng gạch chéo */
+    color: black; /* Màu của biểu tượng giỏ hàng gạch chéo */
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.empty-cart p {
+    font-size: 1em; /* Kích thước của câu thông báo */
+    color: #333; /* Màu của câu thông báo */
+}
+ 
+/*cart thanh toán*/
+
+.cart-footer {
+    margin-top: 110%;
+    padding-top: 10px;
+    border-top: 1px solid #888; /* Đường gạch chân phân cách */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-items {
+    margin-top: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.total {
+    font-size: 1.2em;
+    color: #333;
+}
+.total-label{
+    font-weight: bold;
+}
+#total-price{
+    color: #ff6347;
+}
+
+.checkout-btn {
+    background-color: #ff6347; /* Màu nền của nút thanh toán */
+    color: white; /* Màu chữ của nút thanh toán */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    transition: background-color 0.3s ease;
+}
+
+.checkout-btn:disabled {
+    background-color: #ccc; /* Màu nền của nút thanh toán khi bị mờ */
+    cursor: not-allowed; /* Con trỏ chuột khi nút bị mờ */
+}
+
+.close{
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}.close:hover,
+.close:focus{
+    color: black;
+    text-decoration: none; /*bỏ gạch chân*/
+    cursor: pointer; /*thay đổi con trỏ thành bàn tay*/
+}
+
+.cart-count{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 100%;
+    padding: 3px 5px;
+    font-size: 12px;
+    line-height: 1;
+    margin-top: -7px;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
-    .navbar ul {
+    .site-header {
         flex-direction: column;
-        gap: 10px;
+        align-items: flex-start;
     }
 
-    .menu-category {
+    .navbar-right ul, .navbar ul {
         flex-direction: column;
-    }
-
-    .menu-items .item {
         width: 100%;
     }
+
+    .navbar-right ul li, .navbar ul li {
+        margin: 5px 0;
+    }
+
+    .menu-item {
+        width: calc(50% - 20px); /* Adjust width to fit 2 items per row */
+    }
 }
+
+@media (max-width: 480px) {
+    .menu-item {
+        width: calc(100% - 20px); /* Adjust width to fit 1 item per row */
+    }
+}
+
+/* Hero Section */
+#hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 80vh;
+    overflow: hidden;
+}
+
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400%;
+    height: 100%;
+    background: url('/img/Banner/aicook_bxv_29023_commercial_photography_plate_of_fried_chicken__31a63dc8-6bbd-4e03-8f48-b3c6af6899da\ \(1\).png') 0 0 / 25% 100%,
+                url('/img/Banner/aicook_bxv_29023_commercial_photography_Spicy_Chicken_Wings_sho_14bc7088-8ea8-4d37-9c98-57e8a13c2293.png') 25% 0 / 25% 100%,
+                url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 50% 0 / 25% 100%,
+                url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 75% 0 / 25% 100%;
+                animation: scrollBackground 20s linear infinite;
+
+    }
+
+@keyframes scrollBackground {
+    0% { transform: translateX(0); } /* Bắt đầu ở ảnh đầu tiên */
+    16% { transform: translateX(0); } /* Chờ ở ảnh đầu tiên (6-7s) */
+    33% { transform: translateX(-25%); } /* Chuyển đến ảnh thứ hai */
+    49% { transform: translateX(-25%); } /* Chờ ở ảnh thứ hai (6-7s) */
+    66% { transform: translateX(-50%); } /* Chuyển đến ảnh thứ ba */
+    82% { transform: translateX(-50%); } /* Chờ ở ảnh thứ ba (6-7s) */
+    100% { transform: translateX(-75%); } /* Chuyển đến ảnh cuối cùng */
+}
+
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: white;
+}
+
+
+
+
+
+
 
 /* CSS for product container */
 #product-container {
@@ -893,16 +1202,4 @@ footer {
 
 .btn-add-to-cart:hover {
     background-color: #e03e00;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .details-content {
-        flex-direction: column;
-    }
-
-    .details-image, .details-info {
-        flex: none;
-        width: 100%;
-    }
 }

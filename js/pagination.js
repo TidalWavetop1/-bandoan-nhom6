@@ -1,22 +1,26 @@
 const products = [
-    { name: "Combo Gà Rán Giảm Giá", price: "99,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Burger Gà", price: "75,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Quay", price: "89,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Cay", price: "95,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Không Xương", price: "85,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Nướng", price: "105,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Chiên Xù", price: "110,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt BBQ", price: "120,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Cay", price: "130,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Mật Ong", price: "140,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Tỏi", price: "150,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Chanh", price: "160,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Me", price: "170,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dứa", price: "180,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Xoài", price: "190,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dâu", price: "200,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Việt Quất", price: "210,000 VND", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dừa", price: "220,000 VND", img: "https://via.placeholder.com/300" }
+    { name: "Combo Gà Rán Giảm Giá", price: 99000, category:"combo" ,img: "image/img1.jpg" },
+    { name: "Combo Đầy Đủ", price: 59000,category:"combo", img: "image/img2.png" },
+    { name: "Combo Siêu Hời", price: 40000, category:"combo", img: "image/img3.png" },
+    { name: "Combo Burger, Khoai Tây Chiên", price: 65000, category:"combo", img: "image/img4.jpg" },
+    { name: "Combo Gà Rán, Khoai Tây Chiên", price: 59000, category:"combo", img: "image/img5.jpg" },
+    { name: "Combo Siêu Cấp", price: 199000, category:"combo", img: "image/img6.jpg" },
+    { name: "Burger Gà ", price: 59000, category:"burger", img: "image/img7.webp" },
+    { name: "Burger Phô Mai", price: 40000, category:"burger", img: "image/img8.png" },
+    { name: "Burger Cá", price: 49000,category:"burger", img: "image/img9.jpg" },
+    { name: "Burger Big Mac", price: 79000, category:"burger",img: "image/img10.png" },
+    { name: "Gà Sốt Cay", price: 39000, category:"ga", img: "image/img11.png" },
+    { name: "Gà Rán", price: 30000, category:"ga", img: "image/img12.jpg" },
+    { name: "Gà Viên", price: 49000, category:"ga", img: "image/img13.jpg" },
+    { name: "Gà Sốt Phô Mai", price: 49000, category:"ga", img: "image/img14.jpg" },
+    { name: "Pizza Hải Sản", price: 200000, category:"pizza", img: "image/img15.png" },
+    { name: "Pizza Chay", price: 139000, category:"pizza", img: "image/img16.jpg" },
+    { name: "Pizza Bò", price: 179000, category:"pizza", img: "image/img17.jpg" },
+    { name: "Pizza Phô Mai", price: 159000 ,category:"pizza", img: "image/img18.jpg" },
+    { name: "CoCa-CoLa", price: 15000 , category:"nuoc", img: "image/img19.webp" },
+    { name: "Sprite", price: 15000 , category:"nuoc", img: "image/ing20.webp" },
+    { name: "7UP", price: 15000 , category:"nuoc", img: "image/img21.webp" },
+    { name: "Pepsi", price: 15000 , category:"nuoc", img: "image/img22.webp" },
 ];
 
 const itemsPerPage = 6;
@@ -45,8 +49,8 @@ function displayProducts() {
         productElement.innerHTML = `
             <img src="${product.img}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p class="price">${product.price}</p>
-            <a href="#" class="btn-order">Thêm</a>
+             <p class="price">${product.price.toLocaleString()} VND</p> <!-- Đã sửa: Thêm đơn vị tiền tệ đúng cách -->
+            <button class="btn-order" onclick="addToCart(event, { id: ${product.id}, name: '${product.name}', price: ${product.price} })">Thêm</button>
             <button class="btn-details" onclick="showDetails('${product.name}')">Chi tiết</button>
         `;
         productContainer.appendChild(productElement);
