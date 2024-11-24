@@ -1,9 +1,9 @@
 // State management
-let loggedInUser = null;
+let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser ')) || null;
 
 // Mock database
-const users = [
-    { email: "admin@gmail.com", password: "1234", username: "admin", role: "admin" }, // Admin user
+const users = JSON.parse(localStorage.getItem('users')) || [
+    { email: "admin@gmail.com", password: "1234", username: "admin", role: "admin", status: "active" }, // Admin user
 ];
 
 // Open and close login/register modals
@@ -50,19 +50,26 @@ function handleRegister(event) {
         return;
     }
 
-    users.push({
+    const newUser = {
         name: name.value,
         number: number.value,
         address: address.value,
         email: email.value,
         userName: userName.value,
-        password: password.value,
+        password: password.value, // Lưu mật khẩu (nên mã hóa trong thực tế)
         role: "user", // Default role
-    });
+        status: "active" // Trạng thái người dùng
+    };
+
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
 
     alert("Đăng ký thành công! Vui lòng đăng nhập.");
     closeRegister();
-    toggleLogin(); // Chuyển sang form đăng nhập
+    toggleLogin();
+
+    // Clear input fields
+    registerForm.reset();
 }
 
 // Handle user login
@@ -72,7 +79,7 @@ function handleLogin(event) {
     const [userName, password] = loginForm.elements;
 
     const user = users.find(
-        (user) => user.user === userName.value && user.password === password.value
+        (user) => user.userName === userName.value && user.password === password.value
     );
 
     if (!user) {
@@ -80,7 +87,14 @@ function handleLogin(event) {
         return;
     }
 
+    // Kiểm tra trạng thái người dùng
+    if (user.status === "loggedOut") {
+        alert("Bạn đã đăng xuất. Vui lòng đăng nhập lại.");
+        return;
+    }
+
     loggedInUser = user;
+    localStorage.setItem('loggedInUser ', JSON.stringify(loggedInUser));
 
     // Redirect to admin page if role is admin
     if (user.role === "admin") {
@@ -89,16 +103,19 @@ function handleLogin(event) {
         return;
     }
 
-    alert(`Chào mừng, ${user.firstName} ${user.lastName}!`);
+    alert(`Chào mừng, ${user.name}!`);
     closeLogin();
     updateAccountInfo();
+
+    // Clear input fields
+    loginForm.reset();
 }
 
 // Update account info display
 function updateAccountInfo() {
     const accountLink = document.getElementById("account");
     if (loggedInUser) {
-        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.firstName} ${loggedInUser.lastName}`;
+        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.name}`;
         const dropdown = document.querySelector(".dropdown");
         dropdown.innerHTML = `
             <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
@@ -107,102 +124,55 @@ function updateAccountInfo() {
     }
 }
 
+// View user profile
 function viewProfile() {
     if (!loggedInUser) {
         alert("Bạn chưa đăng nhập!");
         return;
     }
 
-    // Tạo nội dung HTML cho form thông tin tài khoản
+    // Create HTML content for the profile form
     const profileHTML = `
         <div class="overlay" id="profileOverlay">
             <div class="profile-container">
                 <span class="close-btn" onclick="closeProfile()">&times;</span>
                 <h2>Thông tin tài khoản</h2>
                 <form id="profileForm" class="profile-form">
-                    <label for="firstName">Họ:</label>
-                    <input type="text" id="firstName" name="firstName" value="${loggedInUser.firstName}" required />
-
-                    <label for="lastName">Tên:</label>
-                    <input type="text" id="lastName" name="lastName" value="${loggedInUser.lastName}" required />
-
+                    <label for="name">Họ và tên:</label>
+                    <input type="text" id="name" name="name " value="${loggedInUser.name}" required>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="${loggedInUser.email}" readonly />
-
-                    <label for="birthDate">Ngày sinh:</label>
-                    <input type="date" id="birthDate" name="birthDate" value="${loggedInUser.birthDate || ''}" />
-
-                    <label for="phone">Số điện thoại:</label>
-                    <input type="tel" id="phone" name="phone" value="${loggedInUser.phone || ''}" pattern="[0-9]{10}" placeholder="0123456789" />
-
-                    <button type="submit">Lưu thay đổi</button>
+                    <input type="email" id="email" name="email" value="${loggedInUser.email}" required>
+                    <label for="number">Số điện thoại:</label>
+                    <input type="text" id="number" name="number" value="${loggedInUser.number}" required>
+                    <label for="address">Địa chỉ:</label>
+                    <input type="text" id="address" name="address" value="${loggedInUser.address}" required>
+                    <button type="submit">Cập nhật thông tin</button>
                 </form>
             </div>
         </div>
     `;
-
-    // Chèn HTML vào DOM
-    document.body.insertAdjacentHTML("beforeend", profileHTML);
-
-    // Thêm sự kiện xử lý form
-    document.getElementById("profileForm").addEventListener("submit", saveProfileChanges);
+    document.body.insertAdjacentHTML('beforeend', profileHTML);
 }
 
-// Đóng form thông tin tài khoản
+// Close profile overlay
 function closeProfile() {
-    const overlay = document.getElementById("profileOverlay");
-    if (overlay) {
-        overlay.remove();
+    const profileOverlay = document.getElementById("profileOverlay");
+    if (profileOverlay) {
+        profileOverlay.remove();
     }
 }
 
-// Lưu thay đổi thông tin tài khoản
-function saveProfileChanges(event) {
-    event.preventDefault();
-
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const email = document.getElementById("email").value;
-    const birthDate = document.getElementById("birthDate").value;
-    const phone = document.getElementById("phone").value;
-
-    if (phone && !/^[0-9]{10}$/.test(phone)) {
-        alert("Số điện thoại không hợp lệ! Vui lòng nhập đúng định dạng 10 chữ số.");
-        return;
-    }
-
-    // Cập nhật thông tin người dùng
-    loggedInUser.firstName = firstName;
-    loggedInUser.lastName = lastName;
-    loggedInUser.email = email;
-    loggedInUser.birthDate = birthDate;
-    loggedInUser.phone = phone;
-
-    alert("Thông tin tài khoản đã được cập nhật!");
-    closeProfile();
-    updateAccountInfo();
-}
-
-// Cập nhật thanh tài khoản
-function updateAccountInfo() {
-    const accountLink = document.getElementById("account");
-    if (loggedInUser) {
-        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.firstName} ${loggedInUser.lastName}`;
-        const dropdown = document.querySelector(".dropdown");
-        dropdown.innerHTML = `
-            <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
-            <li><a href="javascript:void(0);" onclick="handleLogout()">Đăng xuất</a></li>
-        `;
-    }
-}
-
-// Handle logout
+// Handle user logout
 function handleLogout() {
     if (!loggedInUser) return;
 
     const confirmLogout = confirm("Bạn có chắc chắn muốn đăng xuất?");
     if (confirmLogout) {
-        loggedInUser = null;
+        // Thay đổi trạng thái người dùng thành "loggedOut"
+        loggedInUser.status = "loggedOut";
+        localStorage.setItem('loggedInUser  ', JSON.stringify(loggedInUser));
+
+        // Cập nhật giao diện người dùng
         document.getElementById("account").innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
         const dropdown = document.querySelector(".dropdown");
         dropdown.innerHTML = `
@@ -213,11 +183,11 @@ function handleLogout() {
     }
 }
 
-// Hàm cập nhật URL mà không tải lại trang
-function updateURL(hash) {
-    const newUrl = window.location.origin + window.location.pathname + hash;
-    window.history.replaceState({}, '', newUrl);
-}
+// Initialize account info on page load
+window.onload = function () {
+    loggedInUser = JSON.parse(localStorage.getItem('loggedInUser  ')) || null;
+    updateAccountInfo();
+};
 
 // Attach event listeners
 document.querySelector(".register-form").addEventListener("submit", handleRegister);
