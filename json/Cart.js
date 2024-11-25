@@ -24,23 +24,30 @@ function closeCart() {
 }
 
 function isLoggedIn() {
-    // Giả sử có một hàm kiểm tra đăng nhập
-    return !!localStorage.getItem('user');
+    return !!localStorage.getItem('loggedInUser');
 }
 
-function addToCart(product) {
-    if (!isLoggedIn()) {
+
+function addToCart(productId) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
         alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         return;
     }
 
-    const existingProduct = cart.find(item => item.id === product.id);
-    if (existingProduct) {
-        existingProduct.quantity += 1;
+    const product = getProductById(productId); // Giả sử bạn có một hàm để lấy thông tin sản phẩm
+    if (product) {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1
+        });
+        updateCart();
+        alert('Sản phẩm đã được thêm vào giỏ hàng.');
     } else {
-        cart.push({ ...product, quantity: 1 });
+        alert('Sản phẩm không tồn tại.');
     }
-    updateCart();
 }
 
 function updateCart() {
@@ -94,8 +101,156 @@ function checkout() {
         return;
     }
 
+     // Hiển thị tóm tắt hóa đơn
+     displayOrderSummary();
+
+     // Hiển thị tùy chọn thanh toán
+     displayPaymentOptions();
+
     alert(`Thông tin khách hàng:\nTên: ${user.name}\nEmail: ${user.email}`);
 }
+function displayOrderSummary() {
+    const orderSummary = document.getElementById('order-summary');
+    orderSummary.innerHTML = '<h2>Tóm tắt hóa đơn</h2>';
+    cart.forEach(item => {
+        orderSummary.innerHTML += `
+            <p>Sản phẩm: ${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price} VND</p>
+        `;
+    });
+    orderSummary.innerHTML += `<p>Tổng tiền: ${calculateTotal()} VND</p>`;
+    orderSummary.style.display = 'block';
+}
+
+function displayPaymentOptions() {
+    const paymentOptions = document.getElementById('payment-options');
+    paymentOptions.innerHTML = `
+        <h2>Chọn phương thức thanh toán</h2>
+        <button onclick="payByCash()">Thanh toán tiền mặt</button>
+        <button onclick="payByBankTransfer()">Chuyển khoản</button>
+        <button onclick="payByCard()">Thanh toán qua thẻ</button>
+    `;
+    paymentOptions.style.display = 'block';
+}
+
+function payByCash() {
+    alert('Bạn đã chọn thanh toán tiền mặt.');
+    completeCheckout('cash');
+}
+
+function payByBankTransfer() {
+    alert('Bạn đã chọn chuyển khoản.');
+    completeCheckout('bank_transfer');
+}
+
+function payByCard() {
+    const paymentGateway = document.getElementById('payment-gateway');
+    paymentGateway.innerHTML = `
+        <h2>Nhập thông tin thẻ</h2>
+        <form id="card-payment-form">
+            <input type="text" placeholder="Số thẻ" required>
+            <input type="text" placeholder="Tên chủ thẻ" required>
+            <input type="text" placeholder="Ngày hết hạn" required>
+            <input type="text" placeholder="CVV" required>
+            <button type="submit">Thanh toán</button>
+        </form>
+    `;
+    paymentGateway.style.display = 'block';
+
+    document.getElementById('card-payment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('Thanh toán qua thẻ thành công.');
+        completeCheckout('card');
+    });
+}
+
+function completeCheckout(paymentMethod) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const order = {
+        user: user,
+        cart: cart,
+        total: calculateTotal(),
+        paymentMethod: paymentMethod,
+        date: new Date().toLocaleString()
+    };
+
+    let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    orderHistory.push(order);
+    localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+    alert('Thanh toán thành công!');
+    cart = [];
+    updateCart();
+    document.getElementById('order-summary').style.display = 'none';
+    document.getElementById('payment-options').style.display = 'none';
+    document.getElementById('payment-gateway').style.display = 'none';
+}
+
+function calculateTotal() {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
+function viewOrderHistory() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        alert('Bạn cần đăng nhập để xem lịch sử mua hàng.');
+        return;
+    }
+
+    const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    const userOrders = orderHistory.filter(order => order.user.email === user.email);
+
+    const orderHistoryDiv = document.getElementById('order-history');
+    const historyDetails = orderHistoryDiv.querySelector('.history-details');
+    historyDetails.innerHTML = '<h2>Lịch sử mua hàng</h2>';
+    userOrders.forEach(order => {
+         historyDetails.innerHTML += `
+            <div>
+                <p>Ngày: ${order.date}</p>
+                <p>Phương thức thanh toán: ${order.paymentMethod}</p>
+                <p>Tổng tiền: ${order.total} VND</p>
+                <h3>Sản phẩm:</h3>
+                ${order.cart.map(item => `<p>${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price} VND</p>`).join('')}
+                <hr>
+            </div>
+        `;
+    });
+    orderHistoryDiv.style.display = 'block';
+}
+
+function closeOrderSummary() {
+    document.getElementById('order-summary').style.display = 'none';
+}
+
+function closePaymentOptions() {
+    document.getElementById('payment-options').style.display = 'none';
+}
+
+function closePaymentGateway() {
+    document.getElementById('payment-gateway').style.display = 'none';
+}
+
+function closeOrderHistory() {
+    document.getElementById('order-history').style.display = 'none';
+}
+    function togglePurchaseHistoryButton(show) {
+        var button = document.getElementById('view-order-history-btn');
+        if (show) {
+            button.style.display = 'block';
+        } else {
+            button.style.display = 'none';
+        }
+    }
+
+    function viewAccountInfo() {
+        // Mã hiện tại của bạn để hiển thị thông tin tài khoản
+        togglePurchaseHistoryButton(true);
+    }
+
+    function closeAccountInfo() {
+        // Mã hiện tại của bạn để ẩn thông tin tài khoản
+        togglePurchaseHistoryButton(false);
+    }
+
 // Đảm bảo các phần tử tồn tại trước khi thêm sự kiện
 document.addEventListener('DOMContentLoaded', () => {
     const cartButton = document.querySelector('.fa-shopping-cart').parentElement;

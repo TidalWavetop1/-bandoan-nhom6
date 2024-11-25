@@ -876,6 +876,68 @@ div ul{
     line-height: 1;
     margin-top: -7px;
 }
+/* Order Summary styles */
+#order-summary .order-details {
+    margin-top: 20px;
+}
+
+/* Payment Options styles */
+#payment-options button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#payment-options button:hover {
+    background-color: #45a049;
+}
+
+/* Payment Gateway styles */
+#payment-gateway form {
+    display: flex;
+    flex-direction: column;
+}
+
+#payment-gateway input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#payment-gateway button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#payment-gateway button:hover {
+    background-color: #45a049;
+}
+
+/* Order History styles */
+#order-history .history-details {
+    margin-top: 20px;
+}
+
+#view-order-history-btn {
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#view-order-history-btn:hover {
+    background-color: #45a049;
+}
 
 /* Responsive styles */
 @media (max-width: 768px) {

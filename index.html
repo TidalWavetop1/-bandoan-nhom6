@@ -24,6 +24,7 @@
         <nav class="navbar">
             <ul>
                 <li>
+                    <div id="account"></div>
                     <a href="#account"><i class="fas fa-solid fa-caret-down"></i><span>Tài khoản</span></a>
                     <ul class="dropdown">
                         <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
@@ -40,7 +41,9 @@
             </ul>
         </nav>
     </header>
+
     <div id="pageOverlay" class="overlay_modal"></div>
+
     <!--Modal giỏ hàng-->
     <div id="cartModal" class="modal">
         <div class="modal-content">
@@ -61,50 +64,87 @@
             </div>
         </div>
     </div>
+      <!-- Order Summary -->
+      <div id="order-summary" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderSummary()">&times;</span>
+            <h2>Tóm tắt hóa đơn</h2>
+            <div class="order-details"></div>
+        </div>
+    </div>
 
-    <!-- Form đăng nhập  --->
-    <div id="loginOverlay" class="overlay">
-        <div class="login-container">
-            <span class="close-btn" onclick="closeLogin()">×</span> <!-- Nút đóng -->
-            <h2>Đăng nhập</h2>
-            <form class="login-form">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu" required>
-                <button type="submit">Đăng nhập</button>
-            </form>
-            <div class="forgot-password-link">
-                <p><a href="#" onclick="openResetPassword()">Quên mật khẩu?</a></p>
-            </div>
-            <div class="register-link">
-                <p>Chưa có tài khoản? <a href="#" onclick="toggleRegister()">Đăng ký</a></p>
-            </div>
+    <!-- Payment Options -->
+    <div id="payment-options" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentOptions()">&times;</span>
+            <h2>Chọn phương thức thanh toán</h2>
+            <button onclick="payByCash()">Thanh toán tiền mặt</button>
+            <button onclick="payByBankTransfer()">Chuyển khoản</button>
+            <button onclick="payByCard()">Thanh toán qua thẻ</button>
         </div>
     </div>
+
+    <!-- Payment Gateway -->
+    <div id="payment-gateway" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentGateway()">&times;</span>
+            <h2>Nhập thông tin thẻ</h2>
+            <form id="card-payment-form">
+                <input type="text" placeholder="Số thẻ" required>
+                <input type="text" placeholder="Tên chủ thẻ" required>
+                <input type="text" placeholder="Ngày hết hạn" required>
+                <input type="text" placeholder="CVV" required>
+                <button type="submit">Thanh toán</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order History -->
+    <div id="order-history" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderHistory()">&times;</span>
+            <h2>Lịch sử mua hàng</h2>
+            <div class="history-details"></div>
+        </div>
+    </div>
+    <button id="view-order-history-btn">Xem lịch sử mua hàng</button>
+
+        <!-- Form đăng nhập  --->
+        <div id="loginOverlay" class="overlay">
+            <div class="login-container">
+                <span class="close-btn" onclick="closeLogin()">&times;</span> <!-- Nút đóng -->
+                <h2>Đăng nhập</h2>
+                <form class="login-form">
+                    <input type="username" placeholder="Username" required>
+                    <input type="password" placeholder="Mật khẩu" required>
+                    <button type="submit">Đăng nhập</button>
+                </form>
+                <div class="register-link">
+                    <p>Chưa có tài khoản? <a href="#" onclick="openRegister()">Đăng ký</a></p>
+                </div>
+            </div>
+        </div>
     
-    <div id="registerOverlay" class="overlay">
-        <div class="register-container">
-            <span class="close-btn" onclick="closeRegister()">&times;</span>
-            <h2>Đăng ký</h2>
-            <form class="register-form">
-                <div class="form-row">
-                    <input type="text" placeholder="Họ" required>
-                    <input type="text" placeholder="Tên" required>
+        <!-- Form đăng ký -->
+        <div id="registerOverlay" class="overlay">
+            <div class="register-container">
+                <span class="close-btn" onclick="closeRegister()">&times;</span> <!-- Nút đóng -->
+                <h2>Đăng ký</h2>
+                <form class="register-form">
+                    <input type="text" placeholder="Họ và Tên" required>
+                    <input type="text" placeholder="Số điện thoại" required>
+                    <input type="text" placeholder="Địa chỉ" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="username" placeholder="Username" required>
+                    <input type="password" placeholder="Mật khẩu" required>
+                    <input type="password" placeholder="Xác nhận mật khẩu" required>
+                    <button type="submit">Đăng ký</button>
+                </form>
+                <div class="login-link">
+                    <p>Đã có tài khoản? <a href="#" onclick="openLogin()">Đăng nhập</a></p>
                 </div>
-                <div class="form-row">
-                    <input type="date" placeholder="Ngày sinh" required>
-                    <input type="tel" placeholder="Số điện thoại" required>
-                </div>
-                <input type="text" placeholder="Địa chỉ" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu" required>
-                <input type="password" placeholder="Xác nhận mật khẩu" required>
-                <button type="submit">Đăng ký</button>
-            </form>
-            <div class="login-link">
-                <p>Đã có tài khoản? <a href="#" onclick="toggleLogin()">Đăng nhập</a></p>
             </div>
         </div>
-    </div>
 
     <!-- Overlay Đặt Lại Mật Khẩu -->
     <div id="resetPasswordOverlay" class="overlay">
