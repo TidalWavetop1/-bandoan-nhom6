@@ -46,8 +46,8 @@
             <li>
                 <a href="#account" id="account"><i class="fa-solid fa-caret-down"></i>Tài khoản</a>
                 <ul class="dropdown">
-                    <li><a href="javascript:void(0);" onclick="toggleLogin()" id="login">Đăng nhập</a></li>
-                    <li><a href="javascript:void(0);" onclick="toggleRegister()" id="signin">Đăng ký</a></li>
+                    <li><a href="javascript:void(0);" onclick="openLogin()" id="login">Đăng nhập</a></li>
+                    <li><a href="javascript:void(0);" onclick="openRegister()" id="signin">Đăng ký</a></li>
                 </ul>
             </li>
             <li>
@@ -71,7 +71,7 @@
                 <button type="submit">Đăng nhập</button>
             </form>
             <div class="register-link">
-                <p>Chưa có tài khoản? <a href="#" onclick="openRegister()">Đăng ký</a></p>
+                <p>Chưa có tài khoản? <a href="#" onclick="toggleRegister()">Đăng ký</a></p>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
                 <button type="submit">Đăng ký</button>
             </form>
             <div class="login-link">
-                <p>Đã có tài khoản? <a href="#" onclick="openLogin()">Đăng nhập</a></p>
+                <p>Đã có tài khoản? <a href="#" onclick="toggleLogin()">Đăng nhập</a></p>
             </div>
         </div>
     </div>

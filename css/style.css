@@ -293,7 +293,7 @@ a:hover {
     width: 100%;
     position: relative;
     text-align: center;
-    margin: 10% 0 0 25%;
+    margin: 0 auto;
 }
 
 .login-container h2 {
@@ -368,8 +368,7 @@ a:hover {
     width: 100%;
     position: relative;
     text-align: center;
-    margin-top: 1%;
-    margin-left: 28%;
+    margin: 0 auto;
 }
 
 .register-container h2 {
@@ -488,29 +487,22 @@ a:hover {
 /*add to cart button*/
 .add-to-cart-button {
     background-color: #ff6347;
-    /* Màu nền của nút */
     color: white;
-    /* Màu chữ của nút */
     border: none;
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-    /* Bo tròn các góc của nút */
     transition: background-color 0.3s ease, transform 0.1s ease;
-    /* Thêm hiệu ứng chuyển động */
     margin-top: 50px;
-    /* Khoảng cách trên của nút */
 }
 
 .add-to-cart-button:hover {
     background-color: #e5533d;
-    /* Màu nền của nút khi hover */
 }
 
 .add-to-cart-button:active {
     transform: scale(0.95);
-    /* Hiệu ứng thu nhỏ khi nhấp vào nút */
 }
 
 .modal.show .modal-content {
@@ -620,23 +612,18 @@ a:hover {
 
 .checkout-btn {
     background-color: #ff6347;
-    /* Màu nền của nút thanh toán */
     color: white;
-    /* Màu chữ của nút thanh toán */
     border: none;
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-    /* Bo tròn các góc của nút */
     transition: background-color 0.3s ease;
 }
 
 .checkout-btn:disabled {
     background-color: #ccc;
-    /* Màu nền của nút thanh toán khi bị mờ */
     cursor: not-allowed;
-    /* Con trỏ chuột khi nút bị mờ */
 }
 
 .close {
@@ -650,9 +637,7 @@ a:hover {
 .close:focus {
     color: black;
     text-decoration: none;
-    /*bỏ gạch chân*/
     cursor: pointer;
-    /*thay đổi con trỏ thành bàn tay*/
 }
 
 .cart-count {
@@ -682,6 +667,58 @@ a:hover {
     overflow: hidden;
 }
 
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400%;
+    height: 100%;
+    background: url('/img/Banner/aicook_bxv_29023_commercial_photography_plate_of_fried_chicken__31a63dc8-6bbd-4e03-8f48-b3c6af6899da\ \(1\).png') 0 0 / 25% 100%,
+        url('/img/Banner/aicook_bxv_29023_commercial_photography_Spicy_Chicken_Wings_sho_14bc7088-8ea8-4d37-9c98-57e8a13c2293.png') 25% 0 / 25% 100%,
+        url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 50% 0 / 25% 100%,
+        url('/img/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png') 75% 0 / 25% 100%;
+    animation: scrollBackground 20s linear infinite;
+
+}
+
+@keyframes scrollBackground {
+    0% {
+        transform: translateX(0);
+    }
+
+    /* Bắt đầu ở ảnh đầu tiên */
+    16% {
+        transform: translateX(0);
+    }
+
+    /* Chờ ở ảnh đầu tiên (6-7s) */
+    33% {
+        transform: translateX(-25%);
+    }
+
+    /* Chuyển đến ảnh thứ hai */
+    49% {
+        transform: translateX(-25%);
+    }
+
+    /* Chờ ở ảnh thứ hai (6-7s) */
+    66% {
+        transform: translateX(-50%);
+    }
+
+    /* Chuyển đến ảnh thứ ba */
+    82% {
+        transform: translateX(-50%);
+    }
+
+    /* Chờ ở ảnh thứ ba (6-7s) */
+    100% {
+        transform: translateX(-75%);
+    }
+
+    /* Chuyển đến ảnh cuối cùng */
+}
 
 @keyframes fadeIn {
     from {
@@ -693,6 +730,7 @@ a:hover {
     }
 }
 
+/* Thông tin khuyến mãi */
 #promotions {
     padding: 20px;
     background-color: #ffffff;
@@ -1139,14 +1177,20 @@ div ul {
         width: 30%;
     }
 
-    /* Form đăng nhập */
-    #loginOverlay {
-        width: 90%;
+    /*Các form cần thiết */
+    .login-container {
+        width: 100%;
+        margin: 0 auto;
     }
 
-    /* Form đăng ký */
-    #registerOverlay {
-        width: 90%;
+    .register-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .account-container {
+        width: 100%;
+        margin: 0 auto;
     }
 
     /* Account section */
