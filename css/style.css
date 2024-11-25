@@ -251,83 +251,6 @@ a:hover {
     color: #ff6347;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-
-    /* Header */
-    .site-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .navbar {
-        width: 100%;
-        order: 1;
-    }
-
-    .navbar ul {
-        flex-direction: column;
-        width: 100%;
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background-color: #ff6347;
-        z-index: 1000;
-    }
-
-    .navbar.active ul {
-        display: flex;
-    }
-
-    .searching-bar {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .searching-bar input {
-        width: 70%;
-        margin-right: 10px;
-    }
-
-    .search-button {
-        width: 30%;
-    }
-
-    /* Form đăng nhập */
-    #loginOverlay {
-        width: 90%;
-        margin: auto;
-    }
-
-    /* Form đăng ký */
-    #registerOverlay {
-        width: 90%;
-        margin: auto;
-    }
-
-    /* Account section */
-    .account {
-        width: 100%;
-        order: 2;
-        text-align: center;
-    }
-
-    .menu-toggle {
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .menu-toggle span {
-        height: 3px;
-        width: 25px;
-        background: white;
-        margin: 4px 0;
-    }
-}
-
 /* Show account section on larger screens */
 @media (min-width: 769px) {
     .account {
@@ -347,7 +270,7 @@ a:hover {
     color: #ff6347;
 }
 
-/*Login Form*/
+/* Login Form */
 #loginOverlay {
     display: none;
     position: fixed;
@@ -370,7 +293,7 @@ a:hover {
     width: 100%;
     position: relative;
     text-align: center;
-    margin: 12% 0 0 29%;
+    margin: 10% 0 0 25%;
 }
 
 .login-container h2 {
@@ -561,6 +484,190 @@ a:hover {
     background-color: #e5533c;
 }
 
+/* Giỏ hàng */
+/*add to cart button*/
+.add-to-cart-button {
+    background-color: #ff6347;
+    /* Màu nền của nút */
+    color: white;
+    /* Màu chữ của nút */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    /* Bo tròn các góc của nút */
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    /* Thêm hiệu ứng chuyển động */
+    margin-top: 50px;
+    /* Khoảng cách trên của nút */
+}
+
+.add-to-cart-button:hover {
+    background-color: #e5533d;
+    /* Màu nền của nút khi hover */
+}
+
+.add-to-cart-button:active {
+    transform: scale(0.95);
+    /* Hiệu ứng thu nhỏ khi nhấp vào nút */
+}
+
+.modal.show .modal-content {
+    animation: modalOpen 0.3s forwards;
+}
+
+.modal.hide .modal-content {
+    animation: modalClose 0.3s forwards;
+}
+
+/*modal giỏ hàng*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30%;
+    height: 95%;
+    overflow: hidden;
+    transition: right 0.3s ease;
+    margin-right: 10px;
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-content h2 i {
+    font-size: 1em;
+    color: #ff6347;
+}
+
+.modal-content hr {
+    border: none;
+    border-top: 1px solid #888;
+    margin: 10px 0;
+}
+
+/*giỏ hàng trống*/
+.empty-cart {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.empty-cart i {
+    font-size: 3em;
+    color: black;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.empty-cart p {
+    font-size: 1em;
+    color: #333;
+}
+
+/*cart thanh toán*/
+
+.cart-footer {
+    margin-top: 110%;
+    padding-top: 10px;
+    border-top: 1px solid #888;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-items {
+    margin-top: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.total {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.total-label {
+    font-weight: bold;
+}
+
+#total-price {
+    color: #ff6347;
+}
+
+.checkout-btn {
+    background-color: #ff6347;
+    /* Màu nền của nút thanh toán */
+    color: white;
+    /* Màu chữ của nút thanh toán */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    /* Bo tròn các góc của nút */
+    transition: background-color 0.3s ease;
+}
+
+.checkout-btn:disabled {
+    background-color: #ccc;
+    /* Màu nền của nút thanh toán khi bị mờ */
+    cursor: not-allowed;
+    /* Con trỏ chuột khi nút bị mờ */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    /*bỏ gạch chân*/
+    cursor: pointer;
+    /*thay đổi con trỏ thành bàn tay*/
+}
+
+.cart-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 100%;
+    padding: 3px 5px;
+    font-size: 12px;
+    line-height: 1;
+    margin-top: -7px;
+}
+
 /* Hero Section */
 #hero {
     background-image: url('https://www.kikkoman.eu/fileadmin/user_upload/Recipes/Bilder_EU/183-recipe-page-classic-burger_desktop.jpg');
@@ -635,6 +742,8 @@ a:hover {
     color: #ff6347;
 }
 
+
+/* Menu Section */
 #menu {
     padding: 50px;
     background-color: white;
@@ -864,77 +973,200 @@ a:hover {
 footer {
     background-color: #333;
     color: white;
-    padding: 20px 0;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.footer-logo img {
-    max-width: 150px;
-}
-
-.footer-links,
-.footer-contact {
-    flex: 1;
-    margin: 0 20px;
-}
-
-.footer-links h3,
-.footer-contact h3 {
-    margin-bottom: 10px;
-}
-
-.footer-links ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links ul li {
-    margin: 5px 0;
-}
-
-.footer-links a {
-    color: white;
-    text-decoration: none;
-}
-
-.footer-links a:hover {
-    text-decoration: none;
-}
-
-.footer-bottom {
     text-align: center;
-    margin-top: 20px;
-    border-top: 1px solid #444;
-    padding-top: 10px;
+    padding: 20px;
+    font-size: 0.9rem;
+    position: relative;
 }
 
-/* Responsive adjustments */
+.footer-section {
+    display: flex;
+    justify-content: flex-start;
+    /* Đặt khoảng cách đều giữa các mục */
+    align-items: flex-start;
+    /* Căn chỉnh các mục theo chiều dọc */
+    text-align: left;
+    /* Căn chỉnh văn bản sang trái */
+    margin: 0 auto;
+    gap: 30px;
+    margin-bottom: 30px;
+    border-bottom: white 0px solid;
+}
+
+.section_div {
+    justify-content: left;
+    align-items: left;
+    text-align: left;
+    max-width: max-content;
+    margin: 0;
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-bottom: 30px;
+
+}
+
+div ul {
+    list-style-type: none;
+    /* Loại bỏ dấu chấm */
+
+}
+
+.section_div ul li i {
+    margin-right: 10px;
+    /* Khoảng cách giữa icon và văn bản */
+}
+
+.section_div ul li a {
+    color: rgba(255, 255, 255, 0.7);
+    /* Màu chữ nhạt hơn */
+    text-decoration: none;
+    transition: color 0.3s, opacity 0.3s;
+    /* Thêm hiệu ứng chuyển đổi mượt mà */
+}
+
+.section_div ul li a:hover {
+    color: #ff6347;
+    /* Màu khi trỏ vào */
+
+}
+
+.section_div p {
+    color: rgba(255, 255, 255, 0.7);
+    /* Màu chữ nhạt hơn */
+    text-decoration: none;
+    transition: color 0.3s, opacity 0.3s;
+    /* Thêm hiệu ứng chuyển đổi mượt mà */
+    max-width: 300px;
+}
+
+.social-icons {
+    margin-top: 10px;
+}
+
+.social-icons a {
+    margin-right: 20px;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+/*overlay*/
+.overlay_modal {
+    display: none;
+    /* Ẩn overlay mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu nền mờ (đen với độ mờ 50%) */
+    z-index: 1000;
+    /* Đảm bảo overlay nằm dưới modal */
+}
+
+/* Add these styles to your style.css */
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes modalClose {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+
+@media (max-width: 480px) {
+    .menu-item {
+        width: calc(100% - 20px);
+    }
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
+
+    /* Header */
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar {
+        width: 100%;
+        order: 1;
+    }
+
     .navbar ul {
         flex-direction: column;
-        align-items: center;
-    }
-
-    .navbar ul li {
         width: 100%;
-        /* Đảm bảo các mục trong navbar chiếm 100% chiều rộng */
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: #ff6347;
+        z-index: 1000;
     }
 
-    .menu-category {
+    .navbar.active ul {
+        display: flex;
+    }
+
+    .searching-bar {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .searching-bar input {
+        width: 70%;
+        margin-right: 10px;
+    }
+
+    .search-button {
+        width: 30%;
+    }
+
+    /* Form đăng nhập */
+    #loginOverlay {
+        width: 90%;
+    }
+
+    /* Form đăng ký */
+    #registerOverlay {
+        width: 90%;
+    }
+
+    /* Account section */
+    .account {
+        width: 100%;
+        order: 2;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: flex;
         flex-direction: column;
-        /* Đặt các nút trong menu thành cột */
+        cursor: pointer;
+        margin-top: 10px;
     }
 
-    .menu-items .item {
-        width: 100%;
-        /* Đảm bảo các mục menu chiếm 100% chiều rộng */
+    .menu-toggle span {
+        height: 3px;
+        width: 25px;
+        background: white;
+        margin: 4px 0;
     }
 }

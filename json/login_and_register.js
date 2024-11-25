@@ -6,31 +6,36 @@ const users = JSON.parse(localStorage.getItem('users')) || [
     { email: "admin@gmail.com", password: "1234", username: "admin", role: "admin", status: "active" }, // Admin user
 ];
 
-// Open and close login/register modals
-function toggleLogin() {
-    document.getElementById("loginOverlay").style.display = "block";
-}
-
-function toggleRegister() {
-    document.getElementById("registerOverlay").style.display = "block";
-}
-
+// Hàm đóng overlay đăng nhập
 function closeLogin() {
-    document.getElementById("loginOverlay").style.display = "none";
+    document.getElementById('loginOverlay').style.display = 'none';
 }
 
-function closeRegister() {
-    document.getElementById("registerOverlay").style.display = "none";
-}
-
-function openRegister() {
-    closeLogin();
-    toggleRegister();
-}
-
+// Hàm mở overlay đăng nhập
 function openLogin() {
-    closeRegister();
-    toggleLogin();
+    document.getElementById('loginOverlay').style.display = 'flex';
+}
+
+// Hàm đóng overlay đăng ký
+function closeRegister() {
+    document.getElementById('registerOverlay').style.display = 'none';
+}
+
+// Hàm mở overlay đăng ký
+function openRegister() {
+    document.getElementById('registerOverlay').style.display = 'flex';
+}
+
+// Hàm chuyển đổi giữa form đăng nhập và đăng ký
+function toggleRegister() {
+    closeLogin(); // Đóng form đăng nhập
+    openRegister(); // Mở form đăng ký
+}
+
+// Hàm chuyển đổi giữa form đăng ký và đăng nhập
+function toggleLogin() {
+    closeRegister(); // Đóng form đăng ký
+    openLogin(); // Mở form đăng nhập
 }
 
 // Hàm kiểm tra định dạng email

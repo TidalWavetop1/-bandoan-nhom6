@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<header class="site-header">
+    <header class="site-header">
     <div class="logo">
         <img src="image/LOGOFASTFOOD.png" alt="Fast Food Logo">
     </div>
@@ -50,10 +50,15 @@
                     <li><a href="javascript:void(0);" onclick="toggleRegister()" id="signin">Đăng ký</a></li>
                 </ul>
             </li>
-            <li><a href="#cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+            <li>
+                <a href="javascript:void(0);" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-count">0</span>
+                </a>
+            </li>
         </ul>
     </nav>
-</header>
+    </header>
 
     <!-- Form đăng nhập  --->
     <div id="loginOverlay" class="overlay">
@@ -88,6 +93,28 @@
             </form>
             <div class="login-link">
                 <p>Đã có tài khoản? <a href="#" onclick="openLogin()">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal giỏ hàng-->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
+            <hr>
+            <div class="empty-cart">
+                <i class="fas fa-solid fa-cart-arrow-down"></i>
+                <p>Vui lòng thêm sản phẩm vào giỏ hàng</p>
+            </div>
+            <div class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="total">
+                    <span class="total-label">Tổng tiền:</span>
+                    <span id="total-price">0₫</span> <!-- Đã sửa: Sử dụng đúng id 'total-price' -->
+                </div>
+                <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled>Thanh toán</button>
+                <!-- Đã sửa: Sử dụng đúng id 'checkout-btn' -->
             </div>
         </div>
     </div>
@@ -210,37 +237,53 @@
 
     <!-- Footer Section -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="image/LOGOFASTFOOD.png" alt="Fast Food Logo">
+        <section class="footer-section">
+            <div class="section_div">
+                <h1>VỀ CHÚNG TÔI</h1>
+                <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và
+                    an toàn.</p>
             </div>
-            <div class="footer-links">
-                <h3>Liên kết nhanh</h3>
+            <div class="section_div">
+                <h1>DANH MỤC MÓN ĂN</h1>
                 <ul>
-                    <li><a href="#about">Giới thiệu</a></li>
-                    <li><a href="#menu">Thực đơn</a></li>
-                    <li><a href="#contact">Liên hệ</a></li>
-                    <li><a href="#" class="news-link">Tin tức</a></li>
-                    <li><a href="#" class="terms-link">Điều khoản</a></li>
+                    <li><a href="#">Burger</a></li>
+                    <li><a href="#">Gà rán</a></li>
+                    <li><a href="#">Đồ uống</a></li>
+                    <li><a href="#">Combo</a></li>
+                    <li><a href="#">Pizza</a></li>
                 </ul>
             </div>
-            <div class="footer-contact">
-                <h3>Liên hệ với chúng tôi</h3>
-                <p>Email: panicfastfood@info.com</p>
-                <p>Điện thoại: (033) 2299451</p>
-                <p>Địa chỉ: 273, Đường An Dương Vương, P.4, Q.5, TP. HCM</p>
+            <div class="section_div">
+                <h1>CHÍNH SÁCH</h1>
+                <ul>
+                    <li><a href="#">Chính sách hoạt động</a></li>
+                    <li><a href="#">Chính sách và quy định</a></li>
+                    <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                </ul>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Panic Fast Food. Tất cả quyền được bảo lưu và cấp phé
-            <p></p>.</p>
-        </div>
+            <div class="section_div">
+                <h1>LIÊN HỆ</h1>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>273 An Dương Vương, Phường 3, Quận 5, TP Hồ Chí Minh</li>
+                    <li><i class="fas fa-phone"></i>0123 456 789</li>
+                    <li><i class="fas fa-envelope"></i>abc@doamin.com</li>
+                </ul>
+                <div class="social-icons">
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-whatsapp"></i></a>
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </section>
+        <p>&copy; 2024 Fast Food Store. All rights reserved.</p>
     </footer>
 
     <script src="json/base_function.js"></script>
     <script src="json/login_and_register.js"></script>
     <script src="json/searching.js"></script>
     <script src="json/pagination.js"></script>
+    <script src="json/Cart.js"></script>
 </body>
 
 </html>
