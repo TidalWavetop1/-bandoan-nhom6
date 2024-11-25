@@ -160,7 +160,6 @@ a:hover {
     display: flex;
     gap: 20px;
     margin-right: calc(200px);
-    /* Khoảng cách giữa logo và navbar */
 }
 
 .navbar-right ul li a {
@@ -258,95 +257,67 @@ a:hover {
     /* Header */
     .site-header {
         flex-direction: column;
-        /* Xếp chồng các phần tử trong header */
         align-items: flex-start;
-        /* Căn trái các phần tử */
     }
 
     .navbar {
         width: 100%;
-        /* Chiếm toàn bộ chiều rộng */
         order: 1;
-        /* Đặt navbar ở trên cùng */
     }
 
     .navbar ul {
         flex-direction: column;
-        /* Xếp chồng các mục trong navbar */
         width: 100%;
-        /* Chiếm toàn bộ chiều rộng */
         display: none;
-        /* Ẩn navbar items */
         position: absolute;
-        /* Đặt vị trí tuyệt đối */
         top: 70px;
-        /* Đặt vị trí dưới header */
         left: 0;
-        /* Căn trái */
         background-color: #ff6347;
-        /* Màu nền cho menu */
         z-index: 1000;
-        /* Đảm bảo menu nằm trên các phần tử khác */
     }
 
     .navbar.active ul {
         display: flex;
-        /* Hiển thị navbar items khi active */
     }
 
     .searching-bar {
         width: 100%;
-        /* Chiếm toàn bộ chiều rộng */
         margin-top: 10px;
-        /* Thêm khoảng cách phía trên */
     }
 
     .searching-bar input {
         width: 70%;
-        /* Điều chỉnh chiều rộng cho input */
         margin-right: 10px;
-        /* Thêm khoảng cách giữa input và button */
     }
 
     .search-button {
         width: 30%;
-        /* Đặt chiều rộng cho nút tìm kiếm */
     }
 
     /* Form đăng nhập */
     #loginOverlay {
         width: 90%;
-        /* Đặt chiều rộng cho form đăng nhập */
         margin: auto;
-        /* Căn giữa */
     }
 
     /* Form đăng ký */
     #registerOverlay {
         width: 90%;
-        /* Đặt chiều rộng cho form đăng ký */
         margin: auto;
-        /* Căn giữa */
     }
 
     /* Account section */
     .account {
         width: 100%;
-        /* Chiếm toàn bộ chiều rộng */
         order: 2;
-        /* Đặt account ở dưới cùng */
         text-align: center;
-        /* Căn giữa text */
     }
 
     .menu-toggle {
         display: flex;
-        /* Hiển thị menu toggle */
         flex-direction: column;
-        /* Xếp chồng các nút */
         cursor: pointer;
         margin-top: 10px;
-        /* Thêm khoảng cách phía trên */
     }
 
     .menu-toggle span {
@@ -361,7 +332,6 @@ a:hover {
 @media (min-width: 769px) {
     .account {
         display: block;
-        /* Hiển thị phần tài khoản */
     }
 }
 
@@ -375,7 +345,6 @@ a:hover {
 .navbar a:hover i,
 .navbar-right a:hover i {
     color: #ff6347;
-    /* Màu khi hover */
 }
 
 /*Login Form*/
@@ -401,7 +370,7 @@ a:hover {
     width: 100%;
     position: relative;
     text-align: center;
-    margin: 14% 0 0 28%;
+    margin: 12% 0 0 29%;
 }
 
 .login-container h2 {
@@ -476,7 +445,8 @@ a:hover {
     width: 100%;
     position: relative;
     text-align: center;
-    margin: 7% 0 0 28%;
+    margin-top: 1%;
+    margin-left: 28%;
 }
 
 .register-container h2 {
@@ -553,6 +523,7 @@ a:hover {
     width: 90%;
     max-width: 400px;
     text-align: left;
+    margin: auto;
 }
 
 .close-btn {
@@ -661,10 +632,9 @@ a:hover {
 
 .promotion-details .discount {
     font-weight: bold;
-    color: green;
+    color: #ff6347;
 }
 
-/* Menu Section */
 #menu {
     padding: 50px;
     background-color: white;

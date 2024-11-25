@@ -33,11 +33,46 @@ function openLogin() {
     toggleLogin();
 }
 
-// Handle user registration
+// Hàm kiểm tra định dạng email
+function validateEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+
+// Hàm kiểm tra định dạng số điện thoại
+function validatePhoneNumber(number) {
+    const phonePattern = /^[0-9]{10,15}$/; // Giả sử số điện thoại có từ 10 đến 15 chữ số
+    return phonePattern.test(number);
+}
+
+// Hàm kiểm tra định dạng mật khẩu
+function validatePassword(password) {
+    return password.length >= 6; // Độ dài tối thiểu là 6 ký tự
+}
+
+// Cập nhật hàm handleRegister
 function handleRegister(event) {
     event.preventDefault();
     const registerForm = document.querySelector(".register-form");
     const [name, number, address, email, userName, password, confirmPassword] = registerForm.elements;
+
+    // Kiểm tra định dạng email
+    if (!validateEmail(email.value)) {
+        alert("Email không hợp lệ! Vui lòng nhập lại.");
+        return;
+    }
+
+    // Kiểm tra định dạng số điện thoại
+    if (!validatePhoneNumber(number.value)) {
+        alert("Số điện thoại không hợp lệ! Vui lòng nhập lại.");
+        return;
+    }
+
+    // Kiểm tra định dạng mật khẩu
+    if (!validatePassword(password.value)) {
+        alert("Mật khẩu phải có ít nhất 6 ký tự! Vui lòng nhập lại.");
+        return;
+    }
 
     if (password.value !== confirmPassword.value) {
         alert("Mật khẩu xác nhận không khớp!");
@@ -56,9 +91,9 @@ function handleRegister(event) {
         address: address.value,
         email: email.value,
         userName: userName.value,
-        password: password.value, // Lưu mật khẩu (nên mã hóa trong thực tế)
-        role: "user", // Default role
-        status: "active" // Trạng thái người dùng
+        password: password.value,
+        role: "user",
+        status: "active"
     };
 
     users.push(newUser);
