@@ -1,76 +1,99 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Food Store</title>
+    <title>Panic Fast Food</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-    <!-- Header Section -->
     <header class="site-header">
-        <div class="logo">
-            <img src="assets/images/logo.png" alt="Fast Food Logo">
+    <div class="logo">
+        <img src="image/LOGOFASTFOOD.png" alt="Fast Food Logo">
+    </div>
+    <div class="navbar-right">
+        <ul>
+            <li><a href="#home"><i class="fa-regular fa-address-book"></i>Trang chủ</a></li>
+            <li><a href="#about"><i class="fa-solid fa-user"></i>Giới thiệu</a></li>
+            <li><a href="#menu"><i class="fa-solid fa-utensils"></i>Thực đơn</a></li>
+        </ul>    
+    </div>
+    <div class="searching-bar">
+        <button class="advanced-search-toggle" onclick="toggleAdvancedSearch()">
+            <i class="fa-solid fa-sliders"></i>
+        </button>
+        <div class="advanced-search-menu" id="advancedSearchMenu">
+            <select id="categoryFilter">
+                <option value="">Tất cả danh mục</option>
+                <option value="Burger">Burger</option>
+                <option value="Pizza">Gà chiên</option>
+                <option value="Đồ uống">Đồ uống</option>
+                <option value="Tráng miệng">Tráng miệng</option>
+            </select>
+            <select id="priceRange">
+                <option value="">Chọn khoảng giá</option>
+                <option value="0-50">Dưới 50.000 VNĐ</option>
+                <option value="50-100">50.000 - 100.000 VNĐ</option>
+                <option value="100-150">100.000 - 150.000 VNĐ</option>
+                <option value="150-200">150.000 - 200.000 VNĐ</option>
+                <option value="200+">Trên 200.000 VNĐ</option>
+            </select>
+            <button onclick="performAdvancedSearch()">Tìm kiếm</button>
         </div>
-        <nav class="navbar">
-            <ul>
-                <li>
-                    <a href="#menu">Thực đơn</a>
-                    <ul class="dropdown">
-                        <li><a href="#fried-chicken">Fried Chicken</a></li>
-                        <li><a href="#burger">Burger</a></li>
-                        <li><a href="#pasta">Pasta</a></li>
-                        <li><a href="#combo-items">Combo Items</a></li>
-                    </ul>
-                </li>
-                <li><a href="#about">Về chúng tôi</a></li>
-                <li><a href="#contact">Liên hệ</a></li>
-                <li>
-                    <a href="#account">Tài khoản</a>
-                    <ul class="dropdown">
-                        <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
-                        <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
-                    </ul>
-                </li>
-                <li><a href="#cart">Giỏ hàng</a></li>
-            </ul>
-        </nav>
+        <input class="input" type="text" placeholder="Tìm món ăn bạn muốn..." id="searchInput" />
+        <button class="search-button" onclick="performSearch()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+    <nav class="navbar">
+        <ul>
+            <li>
+                <a href="#account" id="account"><i class="fa-solid fa-caret-down"></i>Tài khoản</a>
+                <ul class="dropdown">
+                    <li><a href="javascript:void(0);" onclick="openLogin()" id="login">Đăng nhập</a></li>
+                    <li><a href="javascript:void(0);" onclick="openRegister()" id="signin">Đăng ký</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0);" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-count">0</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     </header>
 
     <!-- Form đăng nhập  --->
     <div id="loginOverlay" class="overlay">
         <div class="login-container">
-            <span class="close-btn" onclick="closeLogin()">×</span> <!-- Nút đóng -->
+            <span class="close-btn" onclick="closeLogin()">&times;</span> <!-- Nút đóng -->
             <h2>Đăng nhập</h2>
             <form class="login-form">
-                <input type="email" placeholder="Email" required>
+                <input type="username" placeholder="Username" required>
                 <input type="password" placeholder="Mật khẩu" required>
                 <button type="submit">Đăng nhập</button>
             </form>
-            <div class="forgot-password-link">
-                <p><a href="#" onclick="openResetPassword()">Quên mật khẩu?</a></p>
-            </div>
             <div class="register-link">
                 <p>Chưa có tài khoản? <a href="#" onclick="toggleRegister()">Đăng ký</a></p>
             </div>
         </div>
     </div>
-    
+
+    <!-- Form đăng ký -->
     <div id="registerOverlay" class="overlay">
         <div class="register-container">
-            <span class="close-btn" onclick="closeRegister()">&times;</span>
+            <span class="close-btn" onclick="closeRegister()">&times;</span> <!-- Nút đóng -->
             <h2>Đăng ký</h2>
             <form class="register-form">
-                <div class="form-row">
-                    <input type="text" placeholder="Họ" required>
-                    <input type="text" placeholder="Tên" required>
-                </div>
-                <div class="form-row">
-                    <input type="date" placeholder="Ngày sinh" required>
-                    <input type="tel" placeholder="Số điện thoại" required>
-                </div>
+                <input type="text" placeholder="Họ và Tên" required>
+                <input type="text" placeholder="Số điện thoại" required>
                 <input type="text" placeholder="Địa chỉ" required>
                 <input type="email" placeholder="Email" required>
+                <input type="username" placeholder="Username" required>
                 <input type="password" placeholder="Mật khẩu" required>
                 <input type="password" placeholder="Xác nhận mật khẩu" required>
                 <button type="submit">Đăng ký</button>
@@ -80,30 +103,64 @@
             </div>
         </div>
     </div>
-
-    <!-- Overlay Đặt Lại Mật Khẩu -->
-    <div id="resetPasswordOverlay" class="overlay">
-        <div class="reset-password-container">
-            <span class="close-btn" onclick="closeResetPassword()">×</span> <!-- Nút đóng -->
-            <h2>Đặt lại mật khẩu</h2>
-            <form class="reset-password-form">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Mật khẩu mới" required>
-                <input type="password" placeholder="Xác nhận mật khẩu" required>
-                <button type="submit">Đặt lại mật khẩu</button>
-            </form>
-            <div class="login-link">
-                <p>Đã có tài khoản? <a href="#" onclick="toggleLogin()">Đăng nhập</a></p>
+    
+    <div id="pageOverlay" class="overlay_modal"></div>
+    <!--Modal giỏ hàng-->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
+            <hr>
+            <div class="empty-cart">
+                <i class="fas fa-solid fa-cart-arrow-down"></i>
+                <p>Vui lòng thêm sản phẩm vào giỏ hàng</p>
+            </div>
+            <div class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="total">
+                    <span class="total-label">Tổng tiền:</span>
+                    <span id="total-price">0₫</span> <!-- Đã sửa: Sử dụng đúng id 'total-price' -->
+                </div>
+                <button class="checkout-btn" id="checkout-btn" onclick="checkout()" disabled>Thanh toán</button>
+                <!-- Đã sửa: Sử dụng đúng id 'checkout-btn' -->
             </div>
         </div>
     </div>
 
+
     <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-content">
-            <h1>Chào mừng đến với cửa hàng đồ ăn nhanh</h1>
-            <p>Thưởng thức các món ngon từ burger, pizza và hơn thế nữa!</p>
-            <a href="#menu" class="btn-primary">Xem thực đơn</a>
+        <div class="hero-content"></div>
+    </section>
+
+    <section id="promotions">
+        <h2>Khuyến Mãi Đặc Biệt</h2>
+
+        <div class="promotion-item">
+            <img src="image/promotion1.jpg" alt="Khuyến mãi 1">
+            <div class="promotion-details">
+                <h3>Combo Siêu Tiết Kiệm</h3>
+                <p>Nhận ngay 20% giảm giá khi mua combo 2 món.</p>
+                <p class="discount">Giá chỉ từ 99.000 VNĐ!</p>
+            </div>
+        </div>
+
+        <div class="promotion-item">
+            <img src="image/promotion2.jpg" alt="Khuyến mãi 2">
+            <div class="promotion-details">
+                <h3>Giảm Giá 30% Cho Món Ăn Chọn Lọc</h3>
+                <p>Chỉ áp dụng cho các món ăn trong tuần này.</p>
+                <p class="discount">Giá chỉ từ 79.000 VNĐ!</p>
+            </div>
+        </div>
+
+        <div class="promotion-item">
+            <img src="image/promotion3.jpg" alt="Khuyến mãi 3">
+            <div class="promotion-details">
+                <h3>Mua 1 Tặng 1</h3>
+                <p>Mua bất kỳ món nào, tặng ngay một món tương tự.</p>
+                <p class="discount">Chỉ áp dụng cho đơn hàng online!</p>
+            </div>
         </div>
     </section>
 
@@ -112,11 +169,10 @@
         <h2>Thực đơn của chúng tôi</h2>
         <div class="menu-category">
             <button onclick="filterMenu('Burger')">Burger</button>
-            <button onclick="filterMenu('Pizza')">Pizza</button>
-            <button onclick="filterMenu('Đồ uống')">Đồ uống</button>
-            <button onclick="filterMenu('Tráng miệng')">Tráng miệng</button>
+            <button onclick="filterMenu('Gà Rán')">Gà Rán</button>
+            <button onclick="filterMenu('Combo')">Combo</button>
+            <button onclick="filterMenu('Thức ăn nhẹ')">Thức ăn nhẹ</button>
             <button onclick="filterMenu('')">Tất cả</button>
-        </div>
         <div id="product-container" class="menu-items">
             <!-- Các sản phẩm sẽ được hiển thị ở đây -->
         </div>
@@ -128,9 +184,36 @@
     </section>
 
     <!-- About Section -->
-    <section id="about">
-        <h2>Về chúng tôi</h2>
-        <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và an toàn.</p>
+    <section id="about" style="padding: 20px; background-color: #ffffff;">
+        <h2 style="text-align: center; color: #ff6347;">Về Chúng Tôi</h2>
+        <p style="text-align: center; font-size: 1.1em; color: #666;">
+            Chúng tôi là một cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh
+            chóng và an toàn. Đội ngũ của chúng tôi luôn sẵn sàng phục vụ bạn với sự tận tâm và chuyên nghiệp.
+        </p>
+
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h3 style="color: #ff6347;">Lịch Sử</h3>
+            <p>Cửa hàng của chúng tôi được thành lập vào năm 2010 với sứ mệnh mang đến cho khách hàng những món ăn ngon
+                nhất. Từ những ngày đầu, chúng tôi đã không ngừng phát triển và cải tiến thực đơn của mình để phục vụ
+                khách hàng tốt hơn.</p>
+
+            <h3 style="color: #ff6347;">Sứ Mệnh</h3>
+            <p>Sứ mệnh của chúng tôi là cung cấp những món ăn chất lượng cao với giá cả phải chăng. Chúng tôi cam kết sử
+                dụng nguyên liệu tươi ngon và an toàn để đảm bảo sức khỏe cho khách hàng.</p>
+
+            <h3 style="color: #ff6347;">Đội Ngũ</h3>
+            <p>Đội ngũ nhân viên của chúng tôi là những người có kinh nghiệm và đam mê trong ngành ẩm thực. Họ luôn sẵn
+                sàng lắng nghe và đáp ứng nhu cầu của khách hàng.</p>
+
+            <h3 style="color: #ff6347;">Hình Ảnh</h3>
+            <div class="gallery" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <img src="image1.jpg" alt="Hình ảnh món ăn 1"
+                    style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <img src="image2.jpg" alt="Hình ảnh món ăn 2"
+                    style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <img src="image3.jpg" alt="Hình ảnh món ăn 3"
+                    style="width: 32%; height: auto; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            </div>
     </section>
 
     <!-- Contact Section -->
@@ -139,7 +222,6 @@
         <form action="#" method="post">
             <label for="name">Họ và tên:</label>
             <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required>
-            
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" placeholder="Nhập email" required>
 
@@ -152,11 +234,53 @@
 
     <!-- Footer Section -->
     <footer>
+        <section class="footer-section">
+            <div class="section_div">
+                <h1>VỀ CHÚNG TÔI</h1>
+                <p>Chúng tôi là cửa hàng đồ ăn nhanh với nhiều năm kinh nghiệm trong việc cung cấp các món ăn ngon, nhanh và
+                    an toàn.</p>
+            </div>
+            <div class="section_div">
+                <h1>DANH MỤC MÓN ĂN</h1>
+                <ul>
+                    <li><a href="#">Burger</a></li>
+                    <li><a href="#">Gà rán</a></li>
+                    <li><a href="#">Đồ uống</a></li>
+                    <li><a href="#">Combo</a></li>
+                    <li><a href="#">Pizza</a></li>
+                </ul>
+            </div>
+            <div class="section_div">
+                <h1>CHÍNH SÁCH</h1>
+                <ul>
+                    <li><a href="#">Chính sách hoạt động</a></li>
+                    <li><a href="#">Chính sách và quy định</a></li>
+                    <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                </ul>
+            </div>
+            <div class="section_div">
+                <h1>LIÊN HỆ</h1>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i>273 An Dương Vương, Phường 3, Quận 5, TP Hồ Chí Minh</li>
+                    <li><i class="fas fa-phone"></i>0123 456 789</li>
+                    <li><i class="fas fa-envelope"></i>abc@doamin.com</li>
+                </ul>
+                <div class="social-icons">
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-whatsapp"></i></a>
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </section>
         <p>&copy; 2024 Fast Food Store. All rights reserved.</p>
     </footer>
 
-    <script src="js/login.js"></script>
-    <script src="js/filtermenu.js"></script>
-    <script src="js/pagination.js"></script>
+    <script src="json/base_function.js"></script>
+    <script src="json/login_and_register.js"></script>
+    <!--<script src="json/searching.js"></script>-->
+    <script src="json/pagination.js"></script>
+    <script src="json/Cart.js"></script>
 </body>
+
 </html>
