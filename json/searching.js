@@ -1,117 +1,119 @@
 const products = [
-    { name: "Combo Gà Rán Giảm Giá", price: 99000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Burger Khoai Tây Chiên", price: 75000, category: "Burger", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Quay", price: 89000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Cay", price: 95000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Không Xương", price: 85000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Nướng", price: 105000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Chiên Xù", price: 110000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt BBQ", price: 120000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Cay", price: 130000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Mật Ong", price: 140000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Tỏi", price: 150000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Chanh", price: 160000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Me", price: 170000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dứa", price: 180000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Xoài", price: 190000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dâu", price: 200000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Việt Quất", price: 210000, category: "Combo", img: "https://via.placeholder.com/300" },
-    { name: "Combo Gà Sốt Dừa", price: 220000, category: "Combo", img: "https://via.placeholder.com/300" }
+    { name: "Gà Rán", price: "99,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Burger Gà", price: "75,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Quay", price: "89,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Phi-lê Gà Quay", price: "95,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Không Xương", price: "85,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Đùi Gà Quay", price: "105,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Chiên Xù", price: "110,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt BBQ", price: "120,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt Cay", price: "130,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt Mật Ong", price: "140,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Mì Ý Gà Zinger", price: "150,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt Chanh", price: "160,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Nghiền (Vừa)", price: "170,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt Dứa", price: "180,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Nghiền (Lớn)", price: "190,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Gà Sốt Dâu", price: "200,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Nghiền (Đại)", price: "210,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Chiên (Vừa)", price: "80,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Chiên (Lớn)", price: "85,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Khoai Tây Chiên (Đại)", price: "90,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Burger Bò", price: "95,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Burger Phô Mai", price: "100,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Burger Cá", price: "105,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Mì Ý Sốt Bò)", price: "110,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Nướng", price: "130,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt BBQ", price: "140,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt Cay", price: "145,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Salad Hạt", price: "150,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Salad Pop", price: "155,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Mì Ý Gà Rán", price: "160,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "3 Cá Thanh", price: "165,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt Dứa", price: "170,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt Xoài", price: "175,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt Dâu", price: "180,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "4 Phô Mai Viên", price: "185,000 VND", img: "https://via.placeholder.com/300" },
+    { name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "https://via.placeholder.com/300" }
 ];
 
 let currentPage = 1;
-const itemsPerPage = 6;
-let filteredProducts = [];
+const itemsPerPage = 5; // Số sản phẩm hiển thị trên mỗi trang
 
 function performSearch() {
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const category = document.getElementById("categoryFilter").value;
-    const minPrice = parseInt(document.getElementById("minPrice").value) || 0;
-    const maxPrice = parseInt(document.getElementById("maxPrice").value) || Infinity;
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = ''; // Xóa kết quả trước đó
+    currentPage = 1; // Reset trang hiện tại
 
-    filteredProducts = products.filter(product => {
-        const nameMatch = product.name.toLowerCase().includes(searchInput);
-        const categoryMatch = category === "" || product.category === category;
-        const priceMatch = product.price >= minPrice && product.price <= maxPrice;
-        return nameMatch && categoryMatch && priceMatch;
-    });
-
-    currentPage = 1;
-    displayProducts();
-    setupPagination();
+    const filteredItems = products.filter(product => product.name.toLowerCase().includes(input));
+    displayResults(filteredItems);
 }
 
-function displayProducts() {
-    const productContainer = document.getElementById("product-container");
-    productContainer.innerHTML = "";
+function performAdvancedSearch() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const category = document.getElementById('categoryFilter').value;
+    const priceRange = document.getElementById('priceRange').value;
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = ''; // Xóa kết quả trước đó
+    currentPage = 1; // Reset trang hiện tại
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+    const filteredItems = products.filter(product => {
+        const matchesName = product.name.toLowerCase().includes(input);
+        const matchesCategory = category ? product.category === category : true;
+        const matchesPrice = getPriceRange(product.price, priceRange);
+        return matchesName && matchesCategory && matchesPrice;
+    });
 
-    if (paginatedProducts.length > 0) {
-        paginatedProducts.forEach(product => {
-            const productElement = document.createElement("div");
-            productElement.className = "menu-item";
-            productElement.innerHTML = `
-                <img src="${product.img}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>${product.category}</p>
-                <span>${product.price.toLocaleString('vi-VN')} VND</span>
-            `;
-            productContainer.appendChild(productElement);
-        });
+    displayResults(filteredItems);
+}
+
+function getPriceRange(price, priceRange) {
+    if (!priceRange) return true; // Nếu không chọn khoảng giá, trả về true
+
+    const [min, max] = priceRange.split('-').map(Number);
+    if (max) {
+        return price >= min && price <= max;
     } else {
-        productContainer.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+        return price > min; // Trên một mức giá nhất định
     }
 }
 
-function setupPagination() {
-    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-    const paginationContainer = document.getElementById("pagination");
-    paginationContainer.innerHTML = "";
+function displayResults(items) {
+    const resultsContainer = document.getElementById('searchResults');
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedItems = items.slice(start, end);
+
+    paginatedItems.forEach(item => {
+        const div = document.createElement('div');
+        div.textContent = `${item.name} - ${item.category} - ${item.price} VNĐ`;
+        resultsContainer.appendChild(div);
+    });
+
+    // Hiển thị phân trang
+    displayPagination(totalPages);
+}
+
+function displayPagination(totalPages) {
+    const paginationContainer = document.getElementById('pagination-controls');
+    paginationContainer.innerHTML = ''; // Xóa phân trang trước đó
 
     for (let i = 1; i <= totalPages; i++) {
-        const pageLink = document.createElement("a");
-        pageLink.href = "#";
-        pageLink.textContent = i;
-        pageLink.addEventListener("click", (e) => {
-            e.preventDefault();
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.onclick = () => {
             currentPage = i;
-            displayProducts();
-            updatePaginationActive();
-        });
-        paginationContainer.appendChild(pageLink);
+            performSearch();
+        };
+        paginationContainer.appendChild(button);
     }
-
-    updatePaginationActive();
 }
 
-function updatePaginationActive() {
-    const paginationLinks = document.querySelectorAll("#pagination a");
-    paginationLinks.forEach((link, index) => {
-        if (index + 1 === currentPage) {
-            link.classList.add("active");
-        } else {
-            link.classList.remove("active");
-        }
-    });
-}
-
-function toggleAdvancedSearch() {
-    const advancedSearchMenu = document.getElementById('advancedSearchMenu');
-    advancedSearchMenu.style.display = advancedSearchMenu.style.display === 'none' ? 'block' : 'none';
-}
-
-// Thêm sự kiện lắng nghe cho các trường tìm kiếm
-document.getElementById("searchInput").addEventListener("input", performSearch);
-document.getElementById("categoryFilter").addEventListener("change", performSearch);
-document.getElementById("minPrice").addEventListener("input", performSearch);
-document.getElementById("maxPrice").addEventListener("input", performSearch);
-
-// Hiển thị tất cả sản phẩm khi trang được tải
-window.onload = function () {
-    filteredProducts = [...products];
-    displayProducts();
-    setupPagination();
-};
+// Gọi hàm này khi người dùng nhấn nút tìm kiếm nâng cao
+document.getElementById('advancedSearchButton').onclick = performAdvancedSearch;
