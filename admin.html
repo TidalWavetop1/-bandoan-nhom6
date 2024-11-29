@@ -24,7 +24,7 @@
                 <img src="assets/images/admin-logo.png" alt="Admin Logo">
             </div>
             <nav class="admin-navbar">
-                <ul> 
+                <ul>
                     <li><a href="#dashboard" onclick="showDashboard()">Bảng điều khiển</a></li>
                     <li><a href="#users" onclick="userOn()">Quản lý người dùng</a></li>
                     <li><a href="#products" onclick="productOn()">Quản lý sản phẩm</a></li>
@@ -32,11 +32,11 @@
                     <li> 
                         <a href="#stats">Thống kê</a> 
                         <ul> 
-                            <li><a href="#product-stats" class="submenu-product-stats" onclick="productStatsOn()">Thống kê sản phẩm</a></li> 
-                            <li><a href="#customer-stats" class="submenu-customer-stats" onclick="customerStatsOn()">Thống kê khách hàng</a></li> 
+                            <li><a href="#product-stats" onclick="productStatsOn()">Thống kê sản phẩm</a></li> 
+                            <li><a href="#customer-stats" onclick="customerStatsOn()">Thống kê khách hàng</a></li> 
                         </ul> 
                     </li>
-                    <li><a href="#login" onclick="logout()">Đăng xuất</a></li>
+                    <li><a href="#logout" onclick="logout()">Đăng xuất</a></li>
                 </ul>
             </nav>
         </header>
@@ -45,6 +45,9 @@
         <section id="dashboard" class="admin-section">
             <h2>Bảng điều khiển</h2>
             <p>Chào mừng bạn đến với bảng điều khiển của Admin.</p>
+            <p>Thông tin đăng nhập của người quản trị:</p>
+            <p id="account-name"></p>
+            <p id="account-password"></p>
         </section>
 
         <!-- Users Management Section -->
@@ -54,7 +57,6 @@
                 <label for="searchCustomerKey">Tìm kiếm khách hàng:</label> 
                 <input type="search" id="searchCustomerKey" placeholder="Hãy nhập mã khách hoặc tên khách" oninput="searchUser()"> 
             </div>
-            <button onclick="openAddUserModal()" class="add-user-button">Thêm người dùng</button>
             <table id="usertable" class="admin-table">
                 <thead>
                     <tr>
@@ -66,7 +68,7 @@
                         <th>Chức vụ</th>
                         <th>Trạng thái</th>
                         <th>Hành động</th>
-                        
+                        <button onclick="openAddUserModal()" class="add-user-button">Thêm người dùng</button>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,7 +100,7 @@
                 <label for="searchOrderKey">Tìm kiếm đơn hàng:</label> 
                 <input type="search" id="searchOrderKey" placeholder="Hãy nhập mã đơn hàng hoặc mã khách hàng" oninput="searchOrder()"> 
             </div>
-            <!-- <form id="filterForm" onsubmit="applyFilters(event)"> 
+            <form id="filterForm"> 
                 <label for="startDate">Start Date:</label> 
                 <input type="date" id="startDate" name="startDate"> 
                 <label for="endDate">End Date:</label> 
@@ -111,20 +113,8 @@
                     <option value="Đã giao thành công">Đã giao thành công</option> 
                     <option value="Đã hủy">Đã hủy</option> 
                 </select> 
-                <button id="filterButton" onclick="applyFilters()">Lọc</button>
-            </form> -->
-            <form id="filterForm" onsubmit="applyFilters(event)">
-                <input type="date" id="startDate" name="startDate" placeholder="Ngày bắt đầu"> 
-                <input type="date" id="endDate" name="endDate" placeholder="Ngày kết thúc"> 
-                <label for="statusFilter">Order Status:</label>
-                <select id="statusFilter" name="statusFilter"> 
-                    <option value="">Tất cả</option> 
-                    <option value="Chưa xử lí">Chưa xử lí</option> 
-                    <option value="Đã xác nhận">Đã xác nhận</option> 
-                    <option value="Đã giao thành công">Đã giao thành công</option> 
-                    <option value="Đã hủy">Đã hủy</option> 
-                </select> 
                 <button type="submit" id="filterButton" class="filter-button">Lọc</button> 
+
             </form>
             <table id="ordertable" class="admin-table">
                 <thead>
@@ -132,30 +122,16 @@
                         <th>ID đơn hàng</th>
                         <th>Mã khách hàng</th>
                         <th>Mã nhân viên</th>
-                        <th>Ngày lập</th>   
+                        <th>Ngày lập</th>
                         <th>Tình trạng</th>
                         <th>Hành động</th>
                     </tr>
-                </thead>    
+                </thead>
                 <tbody>
                     
                     <!-- Thêm các hàng khác -->
                 </tbody>
             </table>
-            <!-- Modal chi tiết hóa đơn --> 
-            <!-- <div id="detailOrderModal" style="display:none;"> 
-                <div> 
-                    <span onclick="closeOrderDetailModal()">Đóng</span> 
-                    <p id="Madon"></p> 
-                    <p id="Makhach"></p> 
-                    <p id="Manhanvien"></p> 
-                    <p id="Thoigian"></p> 
-                    <p id="Thanhtien"></p> 
-                    <p id="PTTT"></p> 
-                    <p id="Diachi"></p> 
-                    <div id="sanPhamMua"></div> 
-                </div> 
-            </div> -->
         </section>
         
         <!-- Thống kê sản phẩm -->
@@ -211,6 +187,16 @@
                 <input type="text" id="addSDT"><br>
                 <label for="addDiachi">Địa chỉ:</label>
                 <input type="text" id="addDiachi"><br>
+                <form action="#" class="form-role"></form>
+                    <div>
+                        <label for="addRole">Chức vụ:</label>
+                        <select id="addRole" name="role">
+                            <option value="Nhân viên">Nhân viên</option>
+                            <option value="Khách hàng">Khách hàng</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </form>
                 <label for="addUsername">Username:</label>
                 <input type="text" id="addUsername"><br>
                 <label for="addPassword">Password:</label>
@@ -233,6 +219,16 @@
                 <input type="text" id="editSDT"><br>
                 <label for="editDiachi">Địa chỉ:</label>
                 <input type="text" id="editDiachi"><br>
+                <form action="#" class="form-role"></form>
+                    <div>
+                        <label for="editRole">Chức vụ:</label>
+                        <select id="editRole" name="role">
+                            <option value="Nhân viên">Nhân viên</option>
+                            <option value="Khách hàng">Khách hàng</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </form>
                 <label for="editPassword">Password:</label>
                 <input type="text" id="editPassword"><br>
 
@@ -309,6 +305,7 @@
             </div>
         </div>
         
+
         <!-- Tạo cửa sổ hiển thị thông tin chi tiết của đơn hàng -->
         <div id="detailOrderModal" class="ordermodal">
             <div class="order-modal-content">
@@ -318,9 +315,9 @@
                     <div class="info-order-row"><label for="Madon">Mã đơn: </label><span id="Madon"></span></div>
                     <div class="info-order-row"><label for="Makhach">Mã khách: </label><span id="Makhach"></span></div>
                     <div class="info-order-row"><label for="Manhanvien">Mã nhân viên: </label><span id="Manhanvien"></span></div>
-                    <div class="info-order-row"><label for="Thoigian">Ngày lập: </label><span id="Thoigian"></span></div>
+                    <div class="info-order-row"><label for="Thoigian">Thời gian: </label><span id="Thoigian"></span></div>
                     <div id="sanPhamMua"></div>
-                    <div class="info-order-row"><label for="Thanhtien">Tổng tiền: </label><span id="Thanhtien"></span></div>
+                    <div class="info-order-row"><label for="Thanhtien">Thành tiền: </label><span id="Thanhtien"></span></div>
                     <div class="info-order-row"><label for="PTTT">Phương thức thanh toán: </label><span id="PTTT"></span></div>
                     <div class="info-order-row"><label for="Diachi">Địa chỉ giao: </label><span id="Diachi"></span></div>
                 </div>
