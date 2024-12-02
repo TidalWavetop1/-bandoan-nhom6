@@ -1,48 +1,82 @@
 // State management
-let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser ')) || null;
+let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
 
 // Mock database
-const users = JSON.parse(localStorage.getItem('users')) || [
-    { email: "admin@gmail.com", password: "1234", username: "admin", role: "admin", status: "active" }, // Admin user
+let users = JSON.parse(localStorage.getItem('users')) || [
+    { email: "admin@gmail.com", password: "1234", username: "admin", name: "Admin User", role: "admin", status: "active" } // Admin user
 ];
 
-// Open and close login/register modals
-function toggleLogin() {
-    document.getElementById("loginOverlay").style.display = "block";
-}
+// Hàm lưu danh sách người dùng vào LocalStorage
+function saveUsers(user) {
+    // Lấy danh sách người dùng hiện tại từ localStorage
+    let storedUsers = localStorage.getItem('users');
+    storedUsers = storedUsers ? JSON.parse(storedUsers) : [];
+ 
+    // Kiểm tra và loại bỏ các tham chiếu vòng lặp
+    if (!storedUsers.some(u => u.email === user.email)) {
+        storedUsers.push(user);
+ 
+        // Lưu lại danh sách người dùng vào localStorage
+        localStorage.setItem('users', JSON.stringify(storedUsers));
+    }
+ }
+ 
+ // Hàm lưu trạng thái người dùng hiện tại vào LocalStorage
+ function saveLoggedInUser() {
+     localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+ }
+ 
 
-function toggleRegister() {
-    document.getElementById("registerOverlay").style.display = "block";
-}
 
-function closeLogin() {
-    document.getElementById("loginOverlay").style.display = "none";
-}
+// Hàm khôi phục trạng thái tài khoản khi tải lại trang
+function restoreAccountState() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedIsUser'));
+    const accountLink = document.querySelector("#account");
+    
+    if (!accountLink) {
+        console.error("Element with ID 'account' not found.");
+        return;
+    }
 
-function closeRegister() {
-    document.getElementById("registerOverlay").style.display = "none";
-}
-
-function openRegister() {
-    closeLogin();
-    toggleRegister();
-}
-
-function openLogin() {
-    closeRegister();
-    toggleLogin();
-}
-function login(username, password) {
-    // Giả sử bạn có một hàm để xác thực người dùng
-    const user = authenticateUser(username, password);
-    if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        alert('Đăng nhập thành công!');
-        // Các hành động khác sau khi đăng nhập thành công
+    if (loggedInUser) {
+        // Người dùng đã đăng nhập, cập nhật giao diện người dùng
+        updateUIAfterLogin(loggedInUser);
     } else {
-        alert('Tên đăng nhập hoặc mật khẩu không đúng.');
+        // Người dùng chưa đăng nhập, hiển thị tùy chọn đăng nhập/đăng ký
+        const accountLink = document.querySelector("#account");
+        accountLink.innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.innerHTML = `
+            <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
+            <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
+        `;
     }
 }
+
+window.onload = restoreAccountState;
+
+// Hàm cập nhật giao diện tài khoản
+function updateAccountInfo() {
+    const accountLink = document.getElementById("account");
+    if (loggedInUser) {
+        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.name}`;
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.innerHTML = `
+            <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
+            <li><a href="javascript:void(0);" onclick="handleLogout()">Đăng xuất</a></li>
+        `;
+    } else {
+        accountLink.innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.innerHTML = `
+            <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
+            <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
+        `;
+    }
+}
+
+window.onload = restoreAccountState;
+
 // Hàm kiểm tra định dạng email
 function validateEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,27 +94,14 @@ function validatePassword(password) {
     return password.length >= 6; // Độ dài tối thiểu là 6 ký tự
 }
 
-// Cập nhật hàm handleRegister
+// Hàm đăng ký
 function handleRegister(event) {
     event.preventDefault();
     const registerForm = document.querySelector(".register-form");
     const [name, number, address, email, userName, password, confirmPassword] = registerForm.elements;
 
-    // Kiểm tra định dạng email
-    if (!validateEmail(email.value)) {
-        alert("Email không hợp lệ! Vui lòng nhập lại.");
-        return;
-    }
-
-    // Kiểm tra định dạng số điện thoại
-    if (!validatePhoneNumber(number.value)) {
-        alert("Số điện thoại không hợp lệ! Vui lòng nhập lại.");
-        return;
-    }
-
-    // Kiểm tra định dạng mật khẩu
-    if (!validatePassword(password.value)) {
-        alert("Mật khẩu phải có ít nhất 6 ký tự! Vui lòng nhập lại.");
+    if (!validateEmail(email.value) || !validatePhoneNumber(number.value) || !validatePassword(password.value)) {
+        alert("Vui lòng kiểm tra lại thông tin nhập vào!");
         return;
     }
 
@@ -88,10 +109,12 @@ function handleRegister(event) {
         alert("Mật khẩu xác nhận không khớp!");
         return;
     }
+    // Lấy danh sách người dùng từ Local Storage
+    let users = JSON.parse(localStorage.getItem('users')) || [];
 
-    const existingUser = users.find((user) => user.email === email.value);
+    const existingUser = users.find((user) => user.email === email.value || user.userName === userName.value);
     if (existingUser) {
-        alert("Email này đã được đăng ký!");
+        alert("Email hoặc tên người dùng đã tồn tại!");
         return;
     }
 
@@ -103,25 +126,39 @@ function handleRegister(event) {
         userName: userName.value,
         password: password.value,
         role: "user",
-        status: "active"
+        status: "active",
+        cart: []
     };
+     
+
+
 
     users.push(newUser);
+
+    // Lưu danh sách người dùng cập nhật vào Local Storage
     localStorage.setItem('users', JSON.stringify(users));
+
+     // Cập nhật giao diện người dùng hoặc chuyển hướng
+     console.log('User registered:', newUser);
+
+    saveUsers(newUser);
 
     alert("Đăng ký thành công! Vui lòng đăng nhập.");
     closeRegister();
     toggleLogin();
-
-    // Clear input fields
     registerForm.reset();
 }
 
-// Handle user login
+document.querySelector(".register-form").addEventListener("submit", handleRegister);
+
+// Hàm đăng nhập
 function handleLogin(event) {
     event.preventDefault();
     const loginForm = document.querySelector(".login-form");
     const [userName, password] = loginForm.elements;
+
+  // Lấy danh sách người dùng từ Local Storage
+  let users = JSON.parse(localStorage.getItem('users')) || [];
 
     const user = users.find(
         (user) => user.userName === userName.value && user.password === password.value
@@ -132,51 +169,35 @@ function handleLogin(event) {
         return;
     }
 
-    // Kiểm tra trạng thái người dùng
-    if (user.status === "loggedOut") {
-        alert("Bạn đã đăng xuất. Vui lòng đăng nhập lại.");
-        return;
-    }
-
     loggedInUser = user;
-    localStorage.setItem('loggedInUser ', JSON.stringify(loggedInUser));
-
-    // Redirect to admin page if role is admin
-    if (user.role === "admin") {
-        alert("Chào mừng Admin!");
-        window.location.href = "admin.html"; // Chuyển đến trang admin
-        return;
-    }
-
+    saveLoggedInUser();
     alert(`Chào mừng, ${user.name}!`);
     closeLogin();
     updateAccountInfo();
-
-    // Clear input fields
     loginForm.reset();
 }
+document.querySelector(".login-form").addEventListener("submit", handleLogin);
 
-// Update account info display
-function updateAccountInfo() {
-    const accountLink = document.getElementById("account");
-    if (loggedInUser) {
-        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.name}`;
-        const dropdown = document.querySelector(".dropdown");
-        dropdown.innerHTML = `
-            <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
-            <li><a href="javascript:void(0);" onclick="handleLogout()">Đăng xuất</a></li>
-        `;
+// Hàm đăng xuất
+function handleLogout() {
+    if (!loggedInUser) return;
+
+    const confirmLogout = confirm("Bạn có chắc chắn muốn đăng xuất?");
+    if (confirmLogout) {
+        loggedInUser = null;
+        saveLoggedInUser();
+        alert("Bạn đã đăng xuất.");
+        updateAccountInfo();
     }
 }
 
-// View user profile
+// Hàm hiển thị thông tin tài khoản
 function viewProfile() {
     if (!loggedInUser) {
         alert("Bạn chưa đăng nhập!");
         return;
     }
 
-    // Create HTML content for the profile form
     const profileHTML = `
         <div class="overlay" id="profileOverlay">
             <div class="profile-container">
@@ -184,7 +205,7 @@ function viewProfile() {
                 <h2>Thông tin tài khoản</h2>
                 <form id="profileForm" class="profile-form">
                     <label for="name">Họ và tên:</label>
-                    <input type="text" id="name" name="name " value="${loggedInUser.name}" required>
+                    <input type="text" id="name" name="name" value="${loggedInUser.name}" required>
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" value="${loggedInUser.email}" required>
                     <label for="number">Số điện thoại:</label>
@@ -193,14 +214,13 @@ function viewProfile() {
                     <input type="text" id="address" name="address" value="${loggedInUser.address}" required>
                     <button type="submit">Cập nhật thông tin</button>
                 </form>
-                <button id="view-purchase-history" style="display: block;">Xem lịch sử mua hàng</button>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', profileHTML);
 }
 
-// Close profile overlay
+// Hàm đóng overlay tài khoản
 function closeProfile() {
     const profileOverlay = document.getElementById("profileOverlay");
     if (profileOverlay) {
@@ -208,71 +228,65 @@ function closeProfile() {
     }
 }
 
-// Handle user logout
-function handleLogout() {
-    if (!loggedInUser) return;
+// Hàm đóng overlay đăng nhập
+function closeLogin() {
+    document.getElementById('loginOverlay').style.display = 'none';
+}
 
-    const confirmLogout = confirm("Bạn có chắc chắn muốn đăng xuất?");
-    if (confirmLogout) {
-        // Thay đổi trạng thái người dùng thành "loggedOut"
-        loggedInUser.status = "loggedOut";
-        localStorage.setItem('loggedInUser  ', JSON.stringify(loggedInUser));
+// Hàm mở overlay đăng nhập
+function openLogin() {
+    document.getElementById('loginOverlay').style.display = 'flex';
+}
 
-        // Cập nhật giao diện người dùng
-        document.getElementById("account").innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
-        const dropdown = document.querySelector(".dropdown");
-        dropdown.innerHTML = `
-            <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
-            <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
-        `;
-        alert("Bạn đã đăng xuất.");
+// Hàm đóng overlay đăng ký
+function closeRegister() {
+    document.getElementById('registerOverlay').style.display = 'none';
+}
+
+// Hàm mở overlay đăng ký
+function openRegister() {
+    document.getElementById('registerOverlay').style.display = 'flex';
+}
+
+// Hàm chuyển đổi giữa form đăng nhập và đăng ký
+function toggleRegister() {
+    closeLogin(); // Đóng form đăng nhập
+    openRegister(); // Mở form đăng ký
+}
+
+// Hàm chuyển đổi giữa form đăng ký và đăng nhập
+function toggleLogin() {
+    closeRegister(); // Đóng form đăng ký
+    openLogin(); // Mở form đăng nhập
+}
+
+window.onload = restoreAccountState;
+
+
+function login(username, password) {
+    // Giả sử bạn có một hàm để xác thực người dùng
+    const user = authenticateUser(username, password);
+    if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('User logged in:', user);
+    } else {
+        alert('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');
     }
 }
 
-function togglePurchaseHistoryButton(show) {
-    var button = document.getElementById('view-purchase-history');
-    if (button) {
-        if (show) {
-            button.style.display = 'block';
-        } else {
-            button.style.display = 'none';
-        }
-    }
+function authenticateUser(username, password) {
+    // Giả sử bạn có một hàm để xác thực người dùng
+    const user = users.find(user => user.username === username && user.password === password);
+    return user;
+}
+function logout() {
+    localStorage.removeItem('user');
+    console.log('User logged out');
 }
 
-function viewAccountInfo() {
-    // Mã hiện tại của bạn để hiển thị thông tin tài khoản
-    togglePurchaseHistoryButton(true);
-}
+// Khởi tạo trạng thái khi tải trang
+window.onload = restoreAccountState;
 
-function closeAccountInfo() {
-    // Mã hiện tại của bạn để ẩn thông tin tài khoản
-    togglePurchaseHistoryButton(false);
-}
-
-// Các hàm hiện tại của bạn
-function closeOrderSummary() {
-    document.getElementById('order-summary').style.display = 'none';
-}
-
-function closePaymentOptions() {
-    document.getElementById('payment-options').style.display = 'none';
-}
-
-function closePaymentGateway() {
-    document.getElementById('payment-gateway').style.display = 'none';
-}
-
-function closeOrderHistory() {
-    document.getElementById('order-history').style.display = 'none';
-}
-
-// Initialize account info on page load
-window.onload = function () {
-    loggedInUser = JSON.parse(localStorage.getItem('loggedInUser  ')) || null;
-    updateAccountInfo();
-};
-
-// Attach event listeners
+// Đăng ký sự kiện
 document.querySelector(".register-form").addEventListener("submit", handleRegister);
 document.querySelector(".login-form").addEventListener("submit", handleLogin);
