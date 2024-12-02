@@ -1,8 +1,56 @@
+localStorage.setItem('products', JSON.stringify([
+    { ID: 1, name: "Gà Rán", price: "99,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 2, name: "Burger Gà", price: "75,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 3, name: "Gà Quay", price: "89,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 4, name: "Phi-lê Gà Quay", price: "95,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 5, name: "Gà Không Xương", price: "85,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 6, name: "Đùi Gà Quay", price: "105,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 7, name: "Gà Chiên Xù", price: "110,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 8, name: "Gà Sốt BBQ", price: "120,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 9, name: "Gà Sốt Cay", price: "130,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 10, name: "Gà Sốt Mật Ong", price: "140,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 11, name: "Mì Ý Gà Zinger", price: "150,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 12, name: "Gà Sốt Chanh", price: "160,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 13, name: "Khoai Tây Nghiền (Vừa)", price: "170,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 14, name: "Gà Sốt Dứa", price: "180,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 15, name: "Khoai Tây Nghiền (Lớn)", price: "190,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 16, name: "Gà Sốt Dâu", price: "200,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 17, name: "Khoai Tây Nghiền (Đại)", price: "210,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 18, name: "Khoai Tây Chiên (Vừa)", price: "80,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 19, name: "Khoai Tây Chiên (Lớn)", price: "85,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 20, name: "Khoai Tây Chiên (Đại)", price: "90,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 21, name: "Burger Bò", price: "95,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 22, name: "Burger Phô Mai", price: "100,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 23, name: "Burger Cá", price: "105,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 24, name: "Mì Ý Sốt Bò)", price: "110,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 25, name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 27, name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 28, name: "Combo Gà Nướng", price: "130,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 29, name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 30, name: "Combo Gà Sốt BBQ", price: "140,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 31, name: "Combo Gà Sốt Cay", price: "145,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 32, name: "Salad Hạt", price: "150,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 33, name: "Salad Pop", price: "155,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 34, name: "Mì Ý Gà Rán", price: "160,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 35, name: "3 Cá Thanh", price: "165,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 36, name: "Combo Gà Sốt Dứa", price: "170,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 37, name: "Combo Gà Sốt Xoài", price: "175,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 38, name: "Combo Gà Sốt Dâu", price: "180,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 39, name: "4 Phô Mai Viên", price: "185,000 VND", img: "https://via.placeholder.com/300" },
+    { ID: 40, name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "https://via.placeholder.com/300" }
+]));
+
 let cart = [];
 
 function openCart() {
     const cartModal = document.getElementById('cartModal');
     const overlay = document.getElementById('pageOverlay');
+
+    if(cartModal){
+        cartModal.style.display ='block';
+    }
+
     cartModal.style.display = 'block';
     overlay.style.display = 'block';
     cartModal.classList.remove('hide');
@@ -24,235 +72,267 @@ function closeCart() {
 }
 
 function isLoggedIn() {
-    return !!localStorage.getItem('loggedInUser');
+    const user = localStorage.getItem('loggedInUser');
+    console.log('User in localStorage:', user); // Thêm dòng này để kiểm tra giá trị của user
+    return !!user;
 }
 
 
-function addToCart(productId) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+// Hàm lưu sản phẩm vào LocalStorage
+function saveProduct(product) {
+    let products = localStorage.getItem('products');
+    products = products ? JSON.parse(products) : [];
+
+    products.push(product);
+    localStorage.setItem('products', JSON.stringify(products));
+}
+
+
+function addToCart(productId, quantity) {
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+    if (!isLoggedIn()) {
         alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         return;
     }
 
-    const product = getProductById(productId); // Giả sử bạn có một hàm để lấy thông tin sản phẩm
-    if (product) {
-        cart.push({
-            id: product.id,
+    // Lấy danh sách sản phẩm từ localStorage
+    let products = localStorage.getItem('products');
+    products = products ? JSON.parse(products) : [];
+
+    // Tìm sản phẩm dựa trên productId
+    const product = products.find(p => p.ID === parseInt(productId));
+    if (!product) {
+        alert('Sản phẩm không tồn tại.');
+        console.log('Không tìm thấy sản phẩm với ID:', productId); // In ra để debug
+        return;
+    }
+
+    // Lấy thông tin người dùng đang đăng nhập từ localStorage
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser) {
+        alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
+        return;
+    }
+
+    // Khởi tạo giỏ hàng nếu chưa có
+    if (!loggedInUser.cart) {
+        loggedInUser.cart = [];
+    }
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+    let existingProduct = loggedInUser.cart.find(item => item.ID === product.ID);
+    if (existingProduct) {
+        // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+        existingProduct.soluong += quantity;
+    } else {
+        // Nếu chưa có, thêm sản phẩm mới vào giỏ hàng
+        loggedInUser.cart.push({
+            ID: product.ID,
             name: product.name,
             price: product.price,
-            quantity: 1
+            img: product.img,
+            soluong: quantity,
+            note: "Không có ghi chú" // Thêm ghi chú mặc định
         });
-        updateCart();
-        alert('Sản phẩm đã được thêm vào giỏ hàng.');
-    } else {
-        alert('Sản phẩm không tồn tại.');
     }
+
+    // Lưu lại thông tin người dùng vào localStorage
+    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+    // Cập nhật thông báo cho người dùng
+    alert('Sản phẩm đã được thêm vào giỏ hàng.');
+
+    updateCart();
 }
 
+// Khởi tạo mảng sản phẩm nếu chưa tồn tại trong localStorage
+if (!localStorage.getItem('products')) {
+    localStorage.setItem('products', JSON.stringify([]));
+}
+
+
+//cập nhật giỏ hàng
 function updateCart() {
     const cartItems = document.getElementById('cart-items');
-    const emptyCart = document.getElementById('empty-cart');
     const cartCount = document.getElementById('cart-count');
+    const totalPriceElement = document.getElementById('total-price');
+    const checkoutButton = document.getElementById('checkout-btn');
+    const gioHangTrong = document.getElementById('empty-cart');
+
     cartItems.innerHTML = '';
     let total = 0;
     let totalItems = 0;
 
-    if (cart.length === 0) {
-        emptyCart.style.display = 'block';
-    } else {
-        emptyCart.style.display = 'none';
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.cart || loggedInUser.cart.length === 0) {
+        if (gioHangTrong) {
+            gioHangTrong.style.display = 'block';  // Kiểm tra trước khi thay đổi style
+        }
+        totalPriceElement.innerText = '0₫';
+        checkoutButton.disabled = true;
+        cartCount.innerText = 0;  // Đảm bảo cartCount là 0 khi giỏ hàng rỗng
+        return;
     }
 
-    cart.forEach(item => {
+    loggedInUser.cart.forEach(item => {
+        const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, "").replace(",", ""));
         const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
         itemElement.innerHTML = `
-            <span>${item.name}</span>
-            <span>${item.price.toLocaleString()} VND</span> <!-- Đã sửa: Thêm đơn vị tiền tệ đúng cách -->
-            <span>${item.quantity}</span>
-            <button onclick="removeFromCart(${item.id})">Xóa</button>
+        <div class="product-container">
+           <div class="product-img">
+               <img src="${item.img}" alt="${item.name}">
+           </div>
+           <div class="product-detail">
+               <span>${item.name}</span>
+               <span>${numericPrice.toLocaleString()}₫</span>
+               <span>SL: ${item.soluong}</span>
+           </div>
+           <div class="remove-btn">
+               <button onclick="removeFromCart(${item.ID})">Xóa</button>
+           </div>       
+        </div>
         `;
         cartItems.appendChild(itemElement);
-        total += item.price * item.quantity;
-        totalItems += item.quantity;
+
+        total += numericPrice * item.soluong;
+        totalItems += item.soluong;
+        cartCount.innerText = totalItems; // Cập nhật lại số lượng giỏ hàng
     });
 
-    document.getElementById('total-amount').innerText = `${total}₫`; // Đã sửa: Thêm đơn vị tiền tệ đúng cách
-    document.getElementById('total-price').innerText = `${total}₫`;
-    document.getElementById('checkout-button').disabled = cart.length === 0;
-     // Cập nhật số lượng sản phẩm khác nhau trong giỏ hàng
-     cartCount.innerText = cart.length;
+    totalPriceElement.innerText = `${total.toLocaleString()}₫`;
+    if (gioHangTrong) {
+        gioHangTrong.style.display = 'none';  // Kiểm tra trước khi thay đổi style
+    }
+
+    // Kích hoạt lại nút thanh toán nếu có sản phẩm trong giỏ hàng
+    if (checkoutButton && loggedInUser.cart.length > 0) {
+        checkoutButton.disabled = false;
+    }
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.cart) {
+        console.error("No logged-in user or cart found.");
+        return;
+    }
+
+    // Lọc bỏ sản phẩm khỏi giỏ hàng của loggedInUser dựa trên productId
+    loggedInUser.cart = loggedInUser.cart.filter(item => item.ID !== productId);
+
+    // Lưu lại thông tin người dùng đã cập nhật vào localStorage
+    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+    // Cập nhật giỏ hàng trên giao diện
     updateCart();
 }
 
+// Hàm mở form thông tin giao hàng
+function showShippingForm() {
+    const cartModal = document.querySelector('#cartModal');
+    const shippingModal = document.querySelector('#shippingFormModal');
+    if (cartModal && shippingModal) {
+        cartModal.classList.remove('show');
+        shippingModal.classList.add('show');
+    }
+}
+
+// Hàm đóng form thông tin giao hàng
+function closeShippingForm() {
+    const shippingModal = document.querySelector('#shippingFormModal');
+    const overlay = document.querySelector('#pageOverlay');
+    if (shippingModal && overlay) {
+        shippingModal.classList.remove('show');
+        overlay.classList.remove('show');
+    }
+}
+
+// Hàm trở về giỏ hàng từ form thông tin giao hàng
+function backToCart() {
+    const cartModal = document.querySelector('#cartModal');
+    const shippingModal = document.querySelector('#shippingFormModal');
+    if (cartModal && shippingModal) {
+        shippingModal.classList.remove('show');
+        cartModal.classList.add('show');
+    }
+}
+
+// Hàm hiển thị hoặc ẩn thông tin thẻ tín dụng
+function toggleCreditCardFields() {
+    const paymentMethod = document.getElementById('payment-method').value;
+    const creditCardInfo = document.getElementById('credit-card-info');
+    if (paymentMethod === 'credit-card') {
+        creditCardInfo.style.display = 'block';
+    } else {
+        creditCardInfo.style.display = 'none';
+    }
+}
+
+// Handle the shipping form submission
+document.getElementById('shipping-form').addEventListener('Đặt hàng', function(event) {
+    event.preventDefault();
+
+    const fullName = document.getElementById('full-name').value;
+    const phoneNumber = document.getElementById('phone-number').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+    const province = document.getElementById('province').value;
+    const district = document.getElementById('district').value;
+    const ward = document.getElementById('ward').value;
+
+    // Handle the form data as needed, e.g., send it to the server or store it in localStorage
+    console.log({
+        fullName,
+        phoneNumber,
+        email,
+        address,
+        paymentMethod,
+        province,
+        district,
+        ward
+    });
+
+    // Redirect to a confirmation page or show a success message
+    alert('Shipping information submitted successfully!');
+    closeShippingForm();
+});
+
+ // hàm thanh toán
 function checkout() {
-    if (cart.length === 0) {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.cart || loggedInUser.cart.length === 0) {
         alert('Giỏ hàng của bạn đang trống.');
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+    if (!loggedInUser) {
         alert('Bạn cần đăng nhập để thanh toán.');
         return;
     }
-
-     // Hiển thị tóm tắt hóa đơn
-     displayOrderSummary();
-
-     // Hiển thị tùy chọn thanh toán
-     displayPaymentOptions();
-
-    alert(`Thông tin khách hàng:\nTên: ${user.name}\nEmail: ${user.email}`);
-}
-function displayOrderSummary() {
-    const orderSummary = document.getElementById('order-summary');
-    orderSummary.innerHTML = '<h2>Tóm tắt hóa đơn</h2>';
-    cart.forEach(item => {
-        orderSummary.innerHTML += `
-            <p>Sản phẩm: ${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price} VND</p>
-        `;
-    });
-    orderSummary.innerHTML += `<p>Tổng tiền: ${calculateTotal()} VND</p>`;
-    orderSummary.style.display = 'block';
-}
-
-function displayPaymentOptions() {
-    const paymentOptions = document.getElementById('payment-options');
-    paymentOptions.innerHTML = `
-        <h2>Chọn phương thức thanh toán</h2>
-        <button onclick="payByCash()">Thanh toán tiền mặt</button>
-        <button onclick="payByBankTransfer()">Chuyển khoản</button>
-        <button onclick="payByCard()">Thanh toán qua thẻ</button>
-    `;
-    paymentOptions.style.display = 'block';
-}
-
-function payByCash() {
-    alert('Bạn đã chọn thanh toán tiền mặt.');
-    completeCheckout('cash');
-}
-
-function payByBankTransfer() {
-    alert('Bạn đã chọn chuyển khoản.');
-    completeCheckout('bank_transfer');
-}
-
-function payByCard() {
-    const paymentGateway = document.getElementById('payment-gateway');
-    paymentGateway.innerHTML = `
-        <h2>Nhập thông tin thẻ</h2>
-        <form id="card-payment-form">
-            <input type="text" placeholder="Số thẻ" required>
-            <input type="text" placeholder="Tên chủ thẻ" required>
-            <input type="text" placeholder="Ngày hết hạn" required>
-            <input type="text" placeholder="CVV" required>
-            <button type="submit">Thanh toán</button>
-        </form>
-    `;
-    paymentGateway.style.display = 'block';
-
-    document.getElementById('card-payment-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('Thanh toán qua thẻ thành công.');
-        completeCheckout('card');
-    });
-}
-
-function completeCheckout(paymentMethod) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const order = {
-        user: user,
-        cart: cart,
-        total: calculateTotal(),
-        paymentMethod: paymentMethod,
-        date: new Date().toLocaleString()
-    };
-
-    let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
-    orderHistory.push(order);
-    localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
-
-    alert('Thanh toán thành công!');
-    cart = [];
+ // Redirect to the shipping information form
+ showShippingForm();
     updateCart();
-    document.getElementById('order-summary').style.display = 'none';
-    document.getElementById('payment-options').style.display = 'none';
-    document.getElementById('payment-gateway').style.display = 'none';
+
 }
 
-function calculateTotal() {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-}
 
-function viewOrderHistory() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-        alert('Bạn cần đăng nhập để xem lịch sử mua hàng.');
-        return;
+
+// Gọi hàm cập nhật giỏ hàng khi tải trang
+window.onload = function() {
+    localStorage.removeItem('loggedInUser');
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        updateCart();
     }
+};
 
-    const orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
-    const userOrders = orderHistory.filter(order => order.user.email === user.email);
 
-    const orderHistoryDiv = document.getElementById('order-history');
-    const historyDetails = orderHistoryDiv.querySelector('.history-details');
-    historyDetails.innerHTML = '<h2>Lịch sử mua hàng</h2>';
-    userOrders.forEach(order => {
-         historyDetails.innerHTML += `
-            <div>
-                <p>Ngày: ${order.date}</p>
-                <p>Phương thức thanh toán: ${order.paymentMethod}</p>
-                <p>Tổng tiền: ${order.total} VND</p>
-                <h3>Sản phẩm:</h3>
-                ${order.cart.map(item => `<p>${item.name} - Số lượng: ${item.quantity} - Giá: ${item.price} VND</p>`).join('')}
-                <hr>
-            </div>
-        `;
-    });
-    orderHistoryDiv.style.display = 'block';
-}
-
-function closeOrderSummary() {
-    document.getElementById('order-summary').style.display = 'none';
-}
-
-function closePaymentOptions() {
-    document.getElementById('payment-options').style.display = 'none';
-}
-
-function closePaymentGateway() {
-    document.getElementById('payment-gateway').style.display = 'none';
-}
-
-function closeOrderHistory() {
-    document.getElementById('order-history').style.display = 'none';
-}
-    function togglePurchaseHistoryButton(show) {
-        var button = document.getElementById('view-order-history-btn');
-        if (show) {
-            button.style.display = 'block';
-        } else {
-            button.style.display = 'none';
-        }
-    }
-
-    function viewAccountInfo() {
-        // Mã hiện tại của bạn để hiển thị thông tin tài khoản
-        togglePurchaseHistoryButton(true);
-    }
-
-    function closeAccountInfo() {
-        // Mã hiện tại của bạn để ẩn thông tin tài khoản
-        togglePurchaseHistoryButton(false);
-    }
 
 // Đảm bảo các phần tử tồn tại trước khi thêm sự kiện
 document.addEventListener('DOMContentLoaded', () => {
+
     const cartButton = document.querySelector('.fa-shopping-cart').parentElement;
     const checkoutButton = document.getElementById('checkout-btn');
 
