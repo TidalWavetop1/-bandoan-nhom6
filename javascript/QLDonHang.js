@@ -27,7 +27,7 @@ function sortOrdersByDistrictName(orders) {
 // Hiển thị danh sách hóa đơn và các chwucs năng của quản lí hóa đơn
 function displayOrders(filteredOrders = listDonHang) {
     // let listnhanvien = JSON.parse(localStorage.getItem('listUsers'));
-    let listSanpham = JSON.parse(localStorage.getItem('products')); 
+    let listSanpham = JSON.parse(localStorage.getItem('listSanPham')); 
 
     const adminTableBody = document.getElementById('ordertable').getElementsByTagName('tbody')[0];
     adminTableBody.innerHTML = ''; // Clear existing rows
@@ -38,7 +38,7 @@ function displayOrders(filteredOrders = listDonHang) {
         const row = adminTableBody.insertRow();
 
         // const staff = listnhanvien.find(c => c.Manguoidung === order.Manhanvien);
-        const product = listSanpham.find(p => p.ID === order.ID);
+        const product = listSanpham.find(p => p.Masanpham === order.Masanpham);
 
         const cell1 = document.createElement('td');
         const cell2 = document.createElement('td');
@@ -102,7 +102,7 @@ function updateOrderStatus(Madon, newStatus) {
 // Xem chi tiết hóa đơn
 function detailOrder(orderId) {
     let listKhach = JSON.parse(localStorage.getItem('listUsers'));
-    let listSanpham = JSON.parse(localStorage.getItem('products')); 
+    let listSanpham = JSON.parse(localStorage.getItem('listSanPham')); 
 
     const order = listDonHang.find(item => item.Madon === orderId);
     if (!order) return;
@@ -121,13 +121,13 @@ function detailOrder(orderId) {
     sanPhamDiv.innerHTML = ''; // Clear previous content
 
     order.sanPhamMua.forEach(sp => {
-        const product = listSanpham.find(p => p.ID === sp.ID);
+        const product = listSanpham.find(p => p.Masanpham === sp.Masanpham);
         if (product) {
             const productInfo = document.createElement('div');
             productInfo.innerHTML = `
-                <p>Tên sản phẩm: ${product.name}</p>
+                <p>Tên sản phẩm: ${product.Ten}</p>
                 <p>Số lượng mua: ${sp.SLmua}</p>
-                <p>Tổng tiền: ${product.price * sp.SLmua} VND</p>
+                <p>Tổng tiền: ${product.Gia * sp.SLmua} VND</p>
                 <hr>
             `;
             sanPhamDiv.appendChild(productInfo);
