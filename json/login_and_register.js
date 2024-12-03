@@ -3,7 +3,12 @@ let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
 
 // Mock database
 let users = JSON.parse(localStorage.getItem('users')) || [
-    { email: "admin@gmail.com", password: "1234", username: "admin", name: "Admin User", role: "admin", status: "active" } // Admin user
+    {
+        password: "1234",
+        username: "admin",
+        role: "admin",
+        status: "active"
+    } // Admin user
 ];
 
 // Hàm lưu danh sách người dùng vào LocalStorage
@@ -20,22 +25,42 @@ function saveLoggedInUser() {
 function restoreAccountState() {
     loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
     users = JSON.parse(localStorage.getItem('users')) || users;
+
     updateAccountInfo();
 }
 
-// Hàm cập nhật giao diện tài khoản
 function updateAccountInfo() {
     const accountLink = document.getElementById("account");
+    const dropdown = document.querySelector(".dropdown");
+
     if (loggedInUser) {
-        accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.name}`;
-        const dropdown = document.querySelector(".dropdown");
-        dropdown.innerHTML = `
-            <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
+        // Chỉ hiển thị tên người dùng cho người dùng bình thường
+        if (loggedInUser.role !== "admin") {
+            accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.username}`;
+        } else {
+            accountLink.innerHTML = `<i class="fa-solid fa-caret-down"></i> ${loggedInUser.username}`; // Hoặc một thông điệp khác cho admin
+        }
+
+        let dropdownHTML = `
             <li><a href="javascript:void(0);" onclick="handleLogout()">Đăng xuất</a></li>
         `;
+
+        // Kiểm tra nếu người dùng là admin
+        if (loggedInUser.role === "admin") {
+            dropdownHTML += `
+                <li><a href="admin.html">Quản trị</a></li>
+            `;
+        } else {
+            dropdownHTML += `
+                <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
+                <li><a href="#order-history" onclick="viewOrderHistory()">Lịch sử mua hàng</a></li>
+            `;
+        }
+
+        // Thêm phần này để cập nhật dropdown
+        dropdown.innerHTML = dropdownHTML;
     } else {
         accountLink.innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
-        const dropdown = document.querySelector(".dropdown");
         dropdown.innerHTML = `
             <li><a href="javascript:void(0);" onclick="toggleLogin()">Đăng nhập</a></li>
             <li><a href="javascript:void(0);" onclick="toggleRegister()">Đăng ký</a></li>
@@ -76,7 +101,7 @@ function handleRegister(event) {
         return;
     }
 
-    const existingUser = users.find((user) => user.email === email.value || user.userName === userName.value);
+    const existingUser = users.find((user) => user.email === email.value || user.username === userName.value);
     if (existingUser) {
         alert("Email hoặc tên người dùng đã tồn tại!");
         return;
@@ -87,14 +112,18 @@ function handleRegister(event) {
         number: number.value,
         address: address.value,
         email: email.value,
-        userName: userName.value,
+        username: userName.value,
         password: password.value,
         role: "user",
-        status: "active"
+        status: "active",
+        orderHistory: [] // Initialize order history
     };
 
     users.push(newUser);
     saveUsers();
+
+    // Gửi thông tin đăng ký đến admin
+    notifyAdmin(newUser);
 
     alert("Đăng ký thành công! Vui lòng đăng nhập.");
     closeRegister();
@@ -108,8 +137,24 @@ function handleLogin(event) {
     const loginForm = document.querySelector(".login-form");
     const [userName, password] = loginForm.elements;
 
+    // Kiểm tra đăng nhập cho admin
+    if (userName.value === "admin" && password.value === "1234") {
+        loggedInUser = {
+            password: "1234",
+            username: "admin",
+            role: "admin",
+            status: "active"
+        };
+        saveLoggedInUser();
+        alert("Chào mừng, Admin!");
+        closeLogin();
+        updateAccountInfo();
+        loginForm.reset();
+        return;
+    }
+
     const user = users.find(
-        (user) => user.userName === userName.value && user.password === password.value
+        (user) => user.username === userName.value && user.password === password.value // Fixed property name
     );
 
     if (!user) {
@@ -165,6 +210,62 @@ function viewProfile() {
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', profileHTML);
+
+    document.getElementById('profileForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        updateProfile();
+    });
+}
+
+// Hàm hiển thị lịch sử mua hàng
+function viewOrderHistory() {
+    if (!loggedInUser) {
+        alert("Bạn chưa đăng nhập!");
+        return;
+    }
+
+    const orderHistoryHTML = `
+        <div class="overlay" id="orderHistoryOverlay">
+            <div class="order-history-container">
+                <span class="close-btn" onclick="closeOrderHistory()">&times;</span>
+                <h2>Lịch sử mua hàng</h2>
+                <div id="orderHistoryContent">
+                    ${loggedInUser.orderHistory && loggedInUser.orderHistory.length > 0 ? loggedInUser.orderHistory.map(order => `
+                        <div class="order-item">
+                            <p><strong>Ngày:</strong> ${order.date}</p>
+                            <p><strong>Sản phẩm:</strong> ${order.items.map(item => `${item.name} x ${item.quantity}`).join(', ')}</p>
+                            <p><strong>Tổng tiền:</strong> ${order.total}</p>
+                        </div>
+                    `).join('') : '<p>Bạn chưa có đơn hàng nào.</p>'}
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', orderHistoryHTML);
+}
+
+// Hàm đóng overlay lịch sử mua hàng
+function closeOrderHistory() {
+    const orderHistoryOverlay = document.getElementById("orderHistoryOverlay");
+    if (orderHistoryOverlay) {
+        orderHistoryOverlay.remove();
+    }
+}
+
+// Hàm cập nhật thông tin tài khoản
+function updateProfile() {
+    const profileForm = document.getElementById('profileForm');
+    const [name, email, number, address] = profileForm.elements;
+
+    loggedInUser.name = name.value;
+    loggedInUser.email = email.value;
+    loggedInUser.number = number.value;
+    loggedInUser.address = address.value;
+
+    saveLoggedInUser();
+    alert("Cập nhật thông tin thành công!");
+    closeProfile();
+    updateAccountInfo();
 }
 
 // Hàm đóng overlay tài khoản
@@ -211,5 +312,7 @@ function toggleLogin() {
 window.onload = restoreAccountState;
 
 // Đăng ký sự kiện
-document.querySelector(".register-form").addEventListener("submit", handleRegister);
-document.querySelector(".login-form").addEventListener("submit", handleLogin);
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".register-form").addEventListener("submit", handleRegister);
+    document.querySelector(".login-form").addEventListener("submit", handleLogin);
+});
