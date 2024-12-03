@@ -1,44 +1,44 @@
 const products = [
-    { name: "Gà Rán", price: "99,000 VND", img: "image/Product_Menu/Gà_Rán.png" },
-    { name: "Burger Gà", price: "75,000 VND", img: "image/Product_Menu/Burger_Gà.png" },
-    { name: "Gà Quay", price: "89,000 VND", img: "image/Product_Menu/Gà_quay.png" },
-    { name: "Phi-lê Gà Quay", price: "95,000 VND", img: "image/Product_Menu/Phi-lê Gà Quay.jpg" },
-    { name: "Gà Không Xương", price: "85,000 VND", img: "image/Product_Menu/Gà_Ko_xương.png" },
-    { name: "Đùi Gà Quay", price: "105,000 VND", img: "image/Product_Menu/Đùi_gà_quay.png" },
-    { name: "Gà Chiên Xù", price: "110,000 VND", img: "image/Product_Menu/Gà_Chiên_Xù.jpg" },
-    { name: "Gà Sốt BBQ", price: "120,000 VND", img: "image/Product_Menu/Gà_sốt_BBQ.png" },
-    { name: "Gà Sốt Cay", price: "130,000 VND", img: "image/Product_Menu/Gà_sốt_cay.png" },
-    { name: "Gà Sốt Mật Ong", price: "140,000 VND", img: "image/Product_Menu/Gà_sốt_mật_ong.png" },
-    { name: "Mì Ý Gà Zinger", price: "150,000 VND", img: "image/Product_Menu/Mì_Ý_gà_Zinger.png" },
-    { name: "Gà Sốt Chanh", price: "160,000 VND", img: "image/Product_Menu/gà_sốt_chanh.png" },
-    { name: "Khoai Tây Nghiền (Vừa)", price: "170,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Vừa).png" },
-    { name: "Gà Sốt Dứa", price: "180,000 VND", img: "image/Product_Menu/Gà_sốt_dứa.png" },
-    { name: "Khoai Tây Nghiền (Lớn)", price: "190,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Lớn).png" },
-    { name: "Gà Sốt Dâu", price: "200,000 VND", img: "image/Product_Menu/Gà_sốt_dâu.png" },
-    { name: "Khoai Tây Nghiền (Đại)", price: "210,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Đại).png" },
-    { name: "Khoai Tây Chiên (Vừa)", price: "80,000 VND", img: "image/Product_Menu/Khoai_tây_chiên_Vừa.png" },
-    { name: "Khoai Tây Chiên (Lớn)", price: "85,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Lớn).png" },
-    { name: "Khoai Tây Chiên (Đại)", price: "90,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Đại).png" },
-    { name: "Burger Bò", price: "95,000 VND", img: "image/Product_Menu/Burger Bò.png" },
-    { name: "Burger Phô Mai", price: "100,000 VND", img: "image/Product_Menu/Burger_Phô_mai.png" },
-    { name: "Burger Cá", price: "105,000 VND", img: "image/Product_Menu/Burger_cá.png" },
-    { name: "Mì Ý Sốt Bò", price: "110,000 VND", img: "image/Product_Menu/Mì Ý Sốt Bò.png" },
-    { name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Vừa).png" },
-    { name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Lớn).png" },
-    { name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Đại).png" },
-    { name: "Combo Gà Nướng", price: "130,000 VND", img: "image/Product_Menu/Combo Gà Nướn.png" },
-    { name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "image/Product_Menu/Mì Ý Phi-Lê Gà Quay.png" },
-    { name: "Combo Gà Sốt BBQ", price: "140,000 VND", img: "image/Product_Menu/Combo Gà Sốt BBQ.png" },
-    { name: "Combo Gà Sốt Cay", price: "145,000 VND", img: "image/Product_Menu/Combo Gà Sốt Cay.png" },
-    { name: "Salad Hạt", price: "150,000 VND", img: "image/Product_Menu/Salad Hạt.png" },
-    { name: "Salad Pop", price: "155,000 VND", img: "image/Product_Menu/Salad Pop.png" },
-    { name: "Mì Ý Gà Rán", price: "160,000 VND", img: "image/Product_Menu/Mì Ý Gà Rán.png" },
-    { name: "3 Cá Thanh", price: "165,000 VND", img: "image/Product_Menu/3 Cá Thanh.png" },
-    { name: "Combo Gà Sốt Dứa", price: "170,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dứa.png" },
-    { name: "Combo Gà Sốt Xoài", price: "175,000 VND", img: "image/Product_Menu/Combo Gà Sốt Xoài.png" },
-    { name: "Combo Gà Sốt Dâu", price: "180,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dâu.png" },
-    { name: "4 Phô Mai Viên", price: "185,000 VND", img: "image/Product_Menu/4 Phô Mai Viên.png" },
-    { name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dừa.png" }
+    { ID: 1, name: "Gà Rán", price: "99,000 VND", img: "image/Product_Menu/Gà_Rán.png", category: "Gà" },
+    { ID: 2, name: "Burger Gà", price: "75,000 VND", img: "image/Product_Menu/Burger_Gà.png", category: "Burger" },
+    { ID: 3, name: "Gà Quay", price: "89,000 VND", img: "image/Product_Menu/Gà_quay.png", category: "Gà" },
+    { ID: 4, name: "Phi-lê Gà Quay", price: "95,000 VND", img: "image/Product_Menu/Phi-lê Gà Quay.jpg", category: "Gà" },
+    { ID: 5, name: "Gà Không Xương", price: "85,000 VND", img: "image/Product_Menu/Gà_Ko_xương.png", category: "Gà" },
+    { ID: 6, name: "Đùi Gà Quay", price: "105,000 VND", img: "image/Product_Menu/Đùi_gà_quay.png", category: "Gà" },
+    { ID: 7, name: "Gà Chiên Xù", price: "110,000 VND", img: "image/Product_Menu/Gà_Chiên_Xù.jpg", category: "Gà" },
+    { ID: 8, name: "Gà Sốt BBQ", price: "120,000 VND", img: "image/Product_Menu/Gà_sốt_BBQ.png", category: "Gà" },
+    { ID: 9, name: "Gà Sốt Cay", price: "130,000 VND", img: "image/Product_Menu/Gà_sốt_cay.png", category: "Gà" },
+    { ID: 10, name: "Gà Sốt Mật Ong", price: "140,000 VND", img: "image/Product_Menu/Gà_sốt_mật_ong.png", category: "Gà" },
+    { ID: 11, name: "Mì Ý Gà Zinger", price: "150,000 VND", img: "image/Product_Menu/Mì_Ý_gà_Zinger.png", category: "Mì Ý" },
+    { ID: 12, name: "Gà Sốt Chanh", price: "160,000 VND", img: "image/Product_Menu/gà_sốt_chanh.png", category: "Gà" },
+    { ID: 13, name: "Khoai Tây Nghiền (Vừa)", price: "170,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Vừa).png", category: "Khoai Tây" },
+    { ID: 14, name: "Gà Sốt Dứa", price: "180,000 VND", img: "image/Product_Menu/Gà_sốt_dứa.png", category: "Gà" },
+    { ID: 15, name: "Khoai Tây Nghiền (Lớn)", price: "190,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Lớn).png", category: "Khoai Tây" },
+    { ID: 16, name: "Gà Sốt Dâu", price: "200,000 VND", img: "image/Product_Menu/Gà_sốt_dâu.png", category: "Gà" },
+    { ID: 17, name: "Khoai Tây Nghiền (Đại)", price: "210,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Đại).png", category: "Khoai Tây" },
+    { ID: 18, name: "Khoai Tây Chiên (Vừa)", price: "80,000 VND", img: "image/Product_Menu/Khoai_tây_chiên_Vừa.png", category: "Khoai Tây" },
+    { ID: 19, name: "Khoai Tây Chiên (Lớn)", price: "85,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Lớn).png", category: "Khoai Tây" },
+    { ID: 20, name: "Khoai Tây Chiên (Đại)", price: "90,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Đại).png", category: "Khoai Tây" },
+    { ID: 21, name: "Burger Bò", price: "95,000 VND", img: "image/Product_Menu/Burger Bò.png", category: "Burger" },
+    { ID: 22, name: "Burger Phô Mai", price: "100,000 VND", img: "image/Product_Menu/Burger_Phô_mai.png", category: "Burger" },
+    { ID: 23, name: "Burger Cá", price: "105,000 VND", img: "image/Product_Menu/Burger_cá.png", category: "Burger" },
+    { ID: 24, name: "Mì Ý Sốt Bò", price: "110,000 VND", img: "image/Product_Menu/Mì Ý Sốt Bò.png", category: "Mì Ý" },
+    { ID: 25, name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Vừa).png", category: "Bắp Cải" },
+    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cảii Trộn (Lớn).png", category: "Bắp Cải" },
+    { ID: 27, name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Đại).png", category: "Bắp Cải" },
+    { ID: 28, name: "Combo Gà Nướng", price: "130,000 VND", img: "image/Product_Menu/Combo Gà Nướn.png", category: "Combo" },
+    { ID: 29, name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "image/Product_Menu/Mì Ý Phi-Lê Gà Quay.png", category: "Mì Ý" },
+    { ID: 30, name: "Combo Gà Sốt BBQ", price: "140,000 VND", img: "image/Product_Menu/Combo Gà Sốt BBQ.png", category: "Combo" },
+    { ID: 31, name: "Combo Gà Sốt Cay", price: "145,000 VND", img: "image/Product_Menu/Combo Gà Sốt Cay.png", category: "Combo" },
+    { ID: 32, name: "Salad Hạt", price: "150,000 VND", img: "image/Product_Menu/Salad Hạt.png", category: "Salad" },
+    { ID: 33, name: "Salad Pop", price: "155,000 VND", img: "image/Product_Menu/Salad Pop.png", category: "Salad" },
+    { ID: 34, name: "Mì Ý Gà Rán", price: "160,000 VND", img: "image/Product_Menu/Mì Ý Gà Rán.png", category: "Mì Ý" },
+    { ID: 35, name: "3 Cá Thanh", price: "165,000 VND", img: "image/Product_Menu/3 Cá Thanh.png", category: "Cá" },
+    { ID: 36, name: "Combo Gà Sốt Dứa", price: "170,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dứa.png", category: "Combo" },
+    { ID: 37, name: "Combo Gà Sốt Xoài", price: "175,000 VND", img: "image/Product_Menu/Combo Gà Sốt Xoài.png", category: "Combo" },
+    { ID: 38, name: "Combo Gà Sốt Dâu", price: "180,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dâu.png", category: "Combo" },
+    { ID: 39, name: "4 Phô Mai Viên", price: "185,000 VND", img: "image/Product_Menu/4 Phô Mai Viên.png", category: "Phô Mai" },
+    { ID: 40, name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dừa.png", category: "Combo" }
 ];
 
 const initialItemsPerPage = 12;
@@ -62,6 +62,7 @@ function displayProducts() {
     paginatedProducts.forEach((product, index) => {
         const productElement = document.createElement('div');
         productElement.classList.add('menu-item');
+        productElement.setAttribute('data-product-id', index); // Set data-product-id attribute
         if (itemsPerPage === filteredItemsPerPage) {
             productElement.classList.add('filtered');
         } else {
@@ -199,6 +200,7 @@ function showDetails(productName) {
     if (product) {
         const detailsOverlay = document.createElement('div');
         detailsOverlay.classList.add('details-overlay');
+        detailsOverlay.setAttribute('data-product-id', product.ID); // Set data-product-id attribute
         detailsOverlay.innerHTML = `
             <div class="details-container" onclick="event.stopPropagation()">
                 <span class="close-btn" onclick="closeDetails()">&times;</span>
@@ -210,19 +212,8 @@ function showDetails(productName) {
                         <h2>${product.name}</h2>
                         <p class="description">This is a brief description of the combo, including a promotional note.</p>
                         <p class="price">${product.price}</p>
-                        <div class="drink-selection">
-                            <h3>Choose up to 2 drinks:</h3>
-                            <div class="drink-option">
-                                <span>Drink 1 (+0₫)</span>
-                                <input type="number" value="0" min="0" max="2">
-                            </div>
-                            <div class="drink-option">
-                                <span>Drink 2 (+0₫)</span>
-                                <input type="number" value="0" min="0" max="2">
-                            </div>
-                        </div>
                         <div class="quantity-add-to-cart">
-                            <input type="number" value="1" min="1">
+                            <input type="number" value="1" min="1" id="product-quantity">
                             <button class="btn-add-to-cart">Add to Cart</button>
                         </div>
                     </div>
@@ -231,6 +222,25 @@ function showDetails(productName) {
         `;
         detailsOverlay.addEventListener('click', closeDetails);
         document.body.appendChild(detailsOverlay);
+
+        // Thêm sự kiện cho nút "Add to Cart"
+        const productId = detailsOverlay.getAttribute('data-product-id'); // Assuming product ID is stored in a data attribute
+        const addToCartButton = detailsOverlay.querySelector('.btn-add-to-cart');
+        if (productId) {
+            console.log('ID sản phẩm:', productId); // Kiểm tra giá trị ID
+        } else {
+            console.error('Không tìm thấy thuộc tính data-product-id.');
+        }
+        addToCartButton.addEventListener('click', function() {
+            const quantityInput = detailsOverlay.querySelector('#product-quantity');
+            if (quantityInput) {
+                const quantity = parseInt(quantityInput.value);
+                addToCart(productId, quantity);
+                closeDetails();
+            } else {
+                console.error('Element with ID "product-quantity" not found.');
+            }
+        });
     }
 }
 
