@@ -173,17 +173,17 @@ function filterMenu(category) {
     } else {
         itemsPerPage = filteredItemsPerPage;
         switch (category) {
-            case 'Gà Rán':
-                filteredProducts = products.filter(product => product.name.toLowerCase().includes('gà rán') || product.name.toLowerCase().includes('gà quay') || product.name.toLowerCase().includes('gà không xương') || product.name.toLowerCase().includes('đùi gà'));
+            case 'Gà':
+                filteredProducts = products.filter(product => product.name.toLowerCase().includes('gà') && !product.name.toLowerCase().includes('mì ý') && !product.name.toLowerCase().includes('burger') && !product.name.toLowerCase().includes('combo'));
                 break;
-            case 'Burger':
+            case 'Burger - Mì Ý':
                 filteredProducts = products.filter(product => product.name.toLowerCase().includes('burger') || product.name.toLowerCase().includes('mì ý'));
                 break;
             case 'Combo':
                 filteredProducts = products.filter(product => product.name.toLowerCase().includes('combo'));
                 break;
             case 'Thức ăn nhẹ':
-                filteredProducts = products.filter(product => !product.name.toLowerCase().includes('gà rán') && !product.name.toLowerCase().includes('gà quay') && !product.name.toLowerCase().includes('gà không xương') && !product.name.toLowerCase().includes('đùi gà') && !product.name.toLowerCase().includes('burger') && !product.name.toLowerCase().includes('mì ý') && !product.name.toLowerCase().includes('combo'));
+                filteredProducts = products.filter(product => !product.name.toLowerCase().includes('gà') && !product.name.toLowerCase().includes('burger') && !product.name.toLowerCase().includes('mì ý'));
                 break;
             default:
                 filteredProducts = products;
@@ -245,6 +245,18 @@ function closeOverlay(event) {
     if (event.target.classList.contains('overlay')) {
         event.target.style.display = 'none';
     }
+}
+
+function moHome() {
+    window.location.href = 'index.html';
+}
+
+function moGioiThieu() {
+    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+}
+
+function moThucDon() {
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
