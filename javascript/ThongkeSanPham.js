@@ -3,7 +3,7 @@ function detailGenerateProductStatistics(product_startDate, product_endDate) {
     let statistics = {};
     let totalRevenue = 0;
     let listdonhang = JSON.parse(localStorage.getItem('listDonHang')) || []; 
-    let listsanpham = JSON.parse(localStorage.getItem('listSanPham')) || [];
+    let listsanpham = JSON.parse(localStorage.getItem('products')) || [];
 
     const product_startdate = new Date(product_startDate);
     const product_enddate = new Date(product_endDate);
@@ -13,20 +13,20 @@ function detailGenerateProductStatistics(product_startDate, product_endDate) {
 
         if (product_startdate <= productOrderDate && productOrderDate <= product_enddate && (order.Trangthai === "Đã xác nhận" || order.Trangthai === "Đã giao thành công")) {
             order.sanPhamMua.forEach(sp => {
-                const product = listsanpham.find(p => p.Masanpham === sp.Masanpham);
+                const product = listsanpham.find(p => p.ID === sp.ID);
                 if (product) {
-                    if (!statistics[product.Masanpham]) {
-                        statistics[product.Masanpham] = {
-                            name: product.Ten,
+                    if (!statistics[product.ID]) {
+                        statistics[product.ID] = {
+                            name: product.name,
                             sold: 0,
                             revenue: 0,
                             orders: []
                         };
                     }
-                    statistics[product.Masanpham].sold += sp.SLmua;
-                    statistics[product.Masanpham].revenue += (sp.SLmua * product.Gia);
-                    statistics[product.Masanpham].orders.push(order);
-                    totalRevenue += (sp.SLmua * product.Gia);
+                    statistics[product.ID].sold += sp.SLmua;
+                    statistics[product.ID].revenue += (sp.SLmua * product.price);
+                    statistics[product.ID].orders.push(order);
+                    totalRevenue += (sp.SLmua * product.price);
                 }
             });
         }
@@ -70,7 +70,7 @@ function displayStatistics(statistics, totalRevenue) {
 // Hiển thị danh sách hóa đơn liên quan đến sản phẩm
 function displayInvoices(productId) {
     let listdonhang = JSON.parse(localStorage.getItem('listDonHang')) || []; 
-    let listsanpham = JSON.parse(localStorage.getItem('listSanPham')) || [];
+    let listsanpham = JSON.parse(localStorage.getItem('products')) || [];
 
     const modal = document.getElementById('product-invoices');
     const productInvoices = document.getElementById('pInvoices');
@@ -88,17 +88,17 @@ function displayInvoices(productId) {
         if (product_startdate <= orderDate && orderDate <= product_enddate && 
             (order.Trangthai === "Đã xác nhận" || order.Trangthai === "Đã giao thành công")) {
             order.sanPhamMua.forEach(sp => {
-                if (sp.Masanpham === productId) {
+                if (sp.ID === productId) {
                     productOrders.push(order);
                 }
             });
         }
     });
 
-    const product = listsanpham.find(p => p.Masanpham === productId);
+    const product = listsanpham.find(p => p.ID === productId);
 
     if (product) {
-        productInvoices.innerHTML = `<h2>Danh sách hóa đơn liên quan đến ${product.Ten}</h2>`;
+        productInvoices.innerHTML = `<h2>Danh sách hóa đơn liên quan đến ${product.name}</h2>`;
         if (productOrders.length === 0) {
             productInvoices.innerHTML += `<p>Không có hóa đơn nào trong khoảng thời gian đã chọn.</p>`;
         } else {

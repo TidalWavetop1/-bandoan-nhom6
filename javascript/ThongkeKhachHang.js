@@ -67,7 +67,7 @@ function displayCustomerStatistics(topCustomers) {
 function displayCustomerInvoices(makhach) { 
     let listdh = JSON.parse(localStorage.getItem('listDonHang')) || [];
     let listkh = JSON.parse(localStorage.getItem('listUsers')) || [];
-    let listsp = JSON.parse(localStorage.getItem('listSanPham')) || [];
+    let listsp = JSON.parse(localStorage.getItem('products')) || [];
 
     const modal = document.getElementById('customer-invoices');
     const invoicesDiv = document.getElementById('cInvoices'); 
@@ -95,8 +95,8 @@ function displayCustomerInvoices(makhach) {
             <p>Mã hóa đơn: ${order.Madon}</p> 
             <p>Ngày: ${new Date(order.Thoigian).toLocaleDateString()}</p>
             ${order.sanPhamMua.map(sp => { 
-                const product = listsp.find(p => p.Masanpham === sp.Masanpham); 
-                return `<p>Sản phẩm: ${product.Ten} - Số lượng: ${sp.SLmua}</p>`; 
+                const product = listsp.find(p => p.ID === sp.ID); 
+                return `<p>Sản phẩm: ${product.name} - Số lượng: ${sp.SLmua}</p>`; 
             }).join('')}
             <p>Thành tiền: ${order.Thanhtien} VND</p> <hr> `; 
         });
