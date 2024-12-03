@@ -230,31 +230,83 @@ function removeFromCart(productId) {
 
 // Hàm mở form thông tin giao hàng
 function showShippingForm() {
-    const cartModal = document.querySelector('#cartModal');
-    const shippingModal = document.querySelector('#shippingFormModal');
-    if (cartModal && shippingModal) {
+    const cartModal = document.getElementById('cartModal');
+    const shippingModal = document.getElementById('shippingFormModal');
+    const overlay = document.getElementById('pageOverlay'); // Lấy lớp phủ
+    const shippingCartItems = document.getElementById('shipping-cart-items');
+    const shippingTotalPrice = document.getElementById('shipping-total-price');
+    
+    if (cartModal && shippingModal && overlay && shippingCartItems && shippingTotalPrice) {
         cartModal.classList.remove('show');
+        cartModal.style.display = 'none'; // Ẩn giỏ hàng
+        shippingModal.style.display = 'block'; // Hiển thị form giao hàng
         shippingModal.classList.add('show');
+        
+        overlay.style.display = 'block'; // Hiển thị lớp phủ
+        document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+
+        // Hiển thị các sản phẩm trong giỏ hàng
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        if (loggedInUser && loggedInUser.cart) {
+            shippingCartItems.innerHTML = '';
+            let total = 0;
+            loggedInUser.cart.forEach(item => {
+                const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, "").replace(",", ""));
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                <div class="product-container">
+                   <div class="product-img">
+                       <img src="${item.img}" alt="${item.name}">
+                   </div>
+                   <div class="product-detail">
+                       <span>${item.name}</span>
+                       <span>${numericPrice.toLocaleString()}₫</span>
+                       <span>SL: ${item.soluong}</span>
+                   </div>     
+                </div>
+                `;
+                shippingCartItems.appendChild(itemElement);
+                total += numericPrice * item.soluong;
+            });
+            shippingTotalPrice.innerText = `${total.toLocaleString()}₫`;
+        }
     }
 }
 
 // Hàm đóng form thông tin giao hàng
 function closeShippingForm() {
-    const shippingModal = document.querySelector('#shippingFormModal');
-    const overlay = document.querySelector('#pageOverlay');
+    const shippingModal = document.getElementById('shippingFormModal');
+    const overlay = document.getElementById('pageOverlay');
+    
     if (shippingModal && overlay) {
         shippingModal.classList.remove('show');
-        overlay.classList.remove('show');
+        shippingModal.classList.add('hide');
+        
+        setTimeout(() => {
+            shippingModal.style.display = 'none'; // Ẩn form
+            overlay.style.display = 'none'; // Ẩn lớp phủ
+            document.body.style.overflow = 'auto'; // Bật cuộn trang
+        }, 500); // Khớp với thời gian animation
     }
 }
 
+const cartModal = document.getElementById('cartModal');
+const overlay = document.getElementById('pageOverlay');
+cartModal.classList.remove('show');
+cartModal.classList.add('hide');
+
 // Hàm trở về giỏ hàng từ form thông tin giao hàng
 function backToCart() {
-    const cartModal = document.querySelector('#cartModal');
-    const shippingModal = document.querySelector('#shippingFormModal');
-    if (cartModal && shippingModal) {
+    const cartModal = document.getElementById('cartModal');
+    const shippingModal = document.getElementById('shippingFormModal');
+    const overlay = document.getElementById('pageOverlay');
+    if (cartModal && shippingModal && overlay) {
         shippingModal.classList.remove('show');
+        shippingModal.style.display = 'none'; // Ẩn form giao hàng
+        cartModal.style.display = 'block'; // Hiển thị lại giỏ hàng
         cartModal.classList.add('show');
+        overlay.style.display = 'block'; // Hiển thị lớp phủ
     }
 }
 
@@ -270,7 +322,7 @@ function toggleCreditCardFields() {
 }
 
 // Handle the shipping form submission
-document.getElementById('shipping-form').addEventListener('Đặt hàng', function(event) {
+document.getElementById('shipping-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const fullName = document.getElementById('full-name').value;
@@ -278,9 +330,6 @@ document.getElementById('shipping-form').addEventListener('Đặt hàng', functi
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const paymentMethod = document.getElementById('payment-method').value;
-    const province = document.getElementById('province').value;
-    const district = document.getElementById('district').value;
-    const ward = document.getElementById('ward').value;
 
     // Handle the form data as needed, e.g., send it to the server or store it in localStorage
     console.log({
@@ -288,22 +337,30 @@ document.getElementById('shipping-form').addEventListener('Đặt hàng', functi
         phoneNumber,
         email,
         address,
-        paymentMethod,
-        province,
-        district,
-        ward
+        paymentMethod
     });
 
+    // Show a success message
+    alert('Đặt hàng thành công!');
+
+    // Clear the cart
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        loggedInUser.cart = [];
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+    }
+
     // Redirect to a confirmation page or show a success message
-    alert('Shipping information submitted successfully!');
     closeShippingForm();
+
+     // Update the cart display
+     updateCart();
 });
 
  // hàm thanh toán
 function checkout() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.cart || loggedInUser.cart.length === 0) {
-        alert('Giỏ hàng của bạn đang trống.');
         return;
     }
 
