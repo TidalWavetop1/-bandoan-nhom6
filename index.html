@@ -25,7 +25,7 @@
         <button class="advanced-search-toggle" href="javascript:void(0)" onclick="toggleAdvancedSearch()">
             <i class="fa-solid fa-sliders"></i>
         </button>
-        <div class="advanced-search-menu" id="advancedSearchMenu" style="display: none;">
+        <div class="advanced-search-menu" id="advancedSearchMenu">
             <select id="categoryFilter">
                 <option value="">Tất cả danh mục</option>
                 <option value="Burger">Burger</option>
@@ -109,69 +109,98 @@
     </div>
     
     <div id="pageOverlay" class="overlay_modal"></div>
-        <!--Modal giỏ hàng-->
-        <div id="cartModal" class="modal">
-            <div class="modal-content">
-                <div class="cart-header">
-                    <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
-                    <span class="close" onclick="closeCart()">&times;</span>
+    <!--Modal giỏ hàng-->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i>Giỏ hàng</h2>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <div class="gio-hang-trong" id="empty-cart">
+                    <i class="fas fa-solid fa-cart-arrow-down"></i>
+                    <p>Vui lòng thêm sản phẩm vào giỏ hàng</p>
                 </div>
-                <div class="cart-items" id="cart-items">
-                    <div class="gio-hang-trong" id="empty-cart">
-                        <i class="fas fa-solid fa-cart-arrow-down"></i>
-                        <p>Vui lòng thêm sản phẩm vào giỏ hàng</p>
-                    </div>
-                    <ul class="cart-list"></ul>
+                <ul class="cart-list"></ul>
+            </div>
+            <div class="cart-footer">
+                <div class="total">
+                    <span class="tongtien">Tổng tiền:</span>
+                    <span id="total-price">0₫</span> <!-- Đã sửa: Sử dụng đúng id 'total-price' -->
                 </div>
-                <div class="cart-footer">
-                    <div class="total">
-                        <span class="tongtien">Tổng tiền:</span>
-                        <span id="total-price">0₫</span> <!-- Đã sửa: Sử dụng đúng id 'total-price' -->
-                    </div>
-                    <button class="checkout-btn" id="checkout-btn" onclick="showShippingForm()" disabled>Thanh toán</button>
-                    <!-- Đã sửa: Sử dụng đúng id 'checkout-btn' -->
-                </div>
+                <button class="checkout-btn" id="checkout-btn" onclick="showShippingForm()" disabled>Thanh toán</button>
+                <!-- Đã sửa: Sử dụng đúng id 'checkout-btn' -->
             </div>
         </div>
-        
-        <!-- Shipping Information Form -->
-        <div id="shippingFormModal" class="modal">
-            <div class="modal-content">
-                <h1>FASH FOOD STORE</h1>
-                <div class="cart-header">
-                    <h2>Thông tin giao hàng</h2>
-                    <span class="close" onclick="closeShippingForm()">&times;</span>
-                </div>
-                <div id="shipping-cart-items" class="cart-items">
-                    <!-- Các sản phẩm trong giỏ hàng sẽ được hiển thị ở đây -->
-                </div>
-                <div class="cart-footer">
-                    <div class="total">
-                        <span class="tongtien">Tổng tiền:</span>
-                        <span id="shipping-total-price">0₫</span>
-                    </div>
-                </div>
-                <form id="shipping-form" onsubmit="submitOrder(event)">
-                    <input type="text" id="full-name" name="full-name" placeholder="Full Name" required>
-                    <input type="tel" id="phone-number" name="phone-number" placeholder="Phone Number" required>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                    <input type="text" id="address" name="address" placeholder="Address" required>
-                    <select id="payment-method" name="payment-method" required onchange="toggleCreditCardFields()">
-                        <option value="" disabled selected>Payment Method</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="cash-on-delivery">Cash on Delivery</option>
-                        <option value="credit-card">Credit Card</option>
-                    </select>
-                    <div id="credit-card-info">
-                        <input type="text" id="card-number" name="card-number" placeholder="Card Number">
-                        <input type="text" id="expiry-date" name="expiry-date" placeholder="Expiry Date">
-                        <input type="text" id="cvv" name="cvv" placeholder="CVV">
-                    </div>
-                    <button type="button" onclick="backToCart()">Trở về</button>
-                    <button type="submit">Đặt hàng</button>
-                </form>
+    </div>
+    
+    <!-- Shipping Information Form -->
+    <div id="shippingFormModal" class="modal">
+        <div class="modal-content">
+            <h1>FASH FOOD STORE</h1>
+            <div class="cart-header">
+                <h2>Thông tin giao hàng</h2>
+                <span class="close" onclick="closeShippingForm()">&times;</span>
             </div>
+            <form id="shipping-form">
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" name="full-name" required><br>
+    
+                <label for="phone-number">Phone Number:</label>
+                <input type="tel" id="phone-number" name="phone-number" required><br>
+    
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+    
+                <label>
+                    <input type="checkbox" id="use-account-address" name="use-account-address" onchange="toggleNewAddressFields()">
+                    Sử dụng địa chỉ từ tài khoản
+                </label><br>
+    
+                <div id="new-address-fields">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address"><br>
+    
+                    <label for="province">Province/City:</label>
+                    <select id="province" name="province">
+                        <option>Hồ chí Minh</option>
+                    </select><br>
+    
+                    <label for="district">District:</label>
+                    <select id="district" name="district">
+                        <option>Quận 3</option>
+                    </select><br>
+    
+                    <label for="ward">Ward:</label>
+                    <select id="ward" name="ward">
+                        <option>phường 14</option>
+                    </select><br>
+                </div>
+    
+                <label for="payment-method">Payment Method:</label>
+                <select id="payment-method" name="payment-method" required onchange="toggleCreditCardFields()">
+                    <option value="credit-card">Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="cash-on-delivery">Cash on Delivery</option>
+                </select><br>
+    
+                <!-- Credit Card Information Fields -->
+                <div id="credit-card-info" style="display: none;">
+                    <label for="card-number">Card Number:</label>
+                    <input type="text" id="card-number" name="card-number"><br>
+    
+                    <label for="expiry-date">Expiry Date:</label>
+                    <input type="text" id="expiry-date" name="expiry-date"><br>
+    
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv"><br>
+                </div>
+    
+                <button type="button" onclick="backToCart()">Trở về</button>
+                <button type="submit">Đặt hàng</button>
+            </form>
         </div>
+    </div>
 
     <!-- Order Summary Modal -->
     <div id="orderSummaryModal" class="modal">
@@ -187,17 +216,17 @@
     <!-- Hero Section -->
     <section id="hero">
         <div class="hero-content">
-            <div>
-                <img class="hero-image"
-                    src="image/Banner/aicook_bxv_29023_commercial_photography_Spicy_Chicken_Wings_sho_14bc7088-8ea8-4d37-9c98-57e8a13c2293.png"
-                    alt="Banner 2">
-                <img class="hero-image"
-                    src="image/Banner/aicook_bxv_29023_commercial_photography_plate_of_fried_chicken__31a63dc8-6bbd-4e03-8f48-b3c6af6899da (1).png"
-                    alt="Banner 1">
-                <img class="hero-image"
-                    src="image/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png"
-                    alt="Banner 3">
+            <div class="hero-text">
+                <h1>Chào mừng đến với cửa hàng đồ ăn nhanh</h1>
+                <p>Thưởng thức các món ngon từ burger, pizza và hơn thế nữa!</p>
+                <a href="#menu" class="btn-primary">Xem thực đơn</a>
             </div>
+            <div>
+                <img class="hero-image" src="image/Banner/aicook_bxv_29023_commercial_photography_Spicy_Chicken_Wings_sho_14bc7088-8ea8-4d37-9c98-57e8a13c2293.png" alt="Banner 2">
+                <img class="hero-image" src="image/Banner/aicook_bxv_29023_commercial_photography_plate_of_fried_chicken__31a63dc8-6bbd-4e03-8f48-b3c6af6899da (1).png" alt="Banner 1">
+                <img class="hero-image" src="image/Banner/aicook_bxv_29023_food_photography_Zinger_Burger_shot_by_Canon_E_82354169-1d83-4b5e-976b-d1375cf69188.png" alt="Banner 3">
+            </div>
+            
         </div>
     </section>
 
@@ -235,8 +264,8 @@
     <section id="menu">
         <h2>Thực đơn của chúng tôi</h2>
         <div class="menu-category">
-            <button onclick="filterMenu('Burger')">Burger</button>
-            <button onclick="filterMenu('Gà Rán')">Gà Rán</button>
+            <button onclick="filterMenu('Burger - Mì Ý')">Burger - Mì Ý</button>
+            <button onclick="filterMenu('Gà')">Gà</button>
             <button onclick="filterMenu('Combo')">Combo</button>
             <button onclick="filterMenu('Thức ăn nhẹ')">Thức ăn nhẹ</button>
             <button onclick="filterMenu('')">Tất cả</button>
