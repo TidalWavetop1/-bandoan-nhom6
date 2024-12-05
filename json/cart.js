@@ -41,15 +41,14 @@ localStorage.setItem('products', JSON.stringify([
     { ID: 40, name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dừa.png", category: "Combo" }
 ]));
 
-
 let cart = [];
 
 function openCart() {
     const cartModal = document.getElementById('cartModal');
     const overlay = document.getElementById('pageOverlay');
 
-    if (cartModal) {
-        cartModal.style.display = 'block';
+    if(cartModal){
+        cartModal.style.display ='block';
     }
 
     cartModal.style.display = 'block';
@@ -236,13 +235,13 @@ function showShippingForm() {
     const overlay = document.getElementById('pageOverlay'); // Lấy lớp phủ
     const shippingCartItems = document.getElementById('shipping-cart-items');
     const shippingTotalPrice = document.getElementById('shipping-total-price');
-
+    
     if (cartModal && shippingModal && overlay && shippingCartItems && shippingTotalPrice) {
         cartModal.classList.remove('show');
         cartModal.style.display = 'none'; // Ẩn giỏ hàng
         shippingModal.style.display = 'block'; // Hiển thị form giao hàng
         shippingModal.classList.add('show');
-
+        
         overlay.style.display = 'block'; // Hiển thị lớp phủ
         document.body.style.overflow = 'hidden'; // Khóa cuộn trang
 
@@ -279,11 +278,11 @@ function showShippingForm() {
 function closeShippingForm() {
     const shippingModal = document.getElementById('shippingFormModal');
     const overlay = document.getElementById('pageOverlay');
-
+    
     if (shippingModal && overlay) {
         shippingModal.classList.remove('show');
         shippingModal.classList.add('hide');
-
+        
         setTimeout(() => {
             shippingModal.style.display = 'none'; // Ẩn form
             overlay.style.display = 'none'; // Ẩn lớp phủ
@@ -323,7 +322,7 @@ function toggleCreditCardFields() {
 }
 
 // Handle the shipping form submission
-document.getElementById('shipping-form').addEventListener('submit', function (event) {
+document.getElementById('shipping-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const fullName = document.getElementById('full-name').value;
@@ -354,11 +353,11 @@ document.getElementById('shipping-form').addEventListener('submit', function (ev
     // Redirect to a confirmation page or show a success message
     closeShippingForm();
 
-    // Update the cart display
-    updateCart();
+     // Update the cart display
+     updateCart();
 });
 
-// hàm thanh toán
+ // hàm thanh toán
 function checkout() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.cart || loggedInUser.cart.length === 0) {
@@ -369,8 +368,8 @@ function checkout() {
         alert('Bạn cần đăng nhập để thanh toán.');
         return;
     }
-    // Redirect to the shipping information form
-    showShippingForm();
+ // Redirect to the shipping information form
+ showShippingForm();
     updateCart();
 
 }
@@ -378,7 +377,7 @@ function checkout() {
 
 
 // Gọi hàm cập nhật giỏ hàng khi tải trang
-window.onload = function () {
+window.onload = function() {
     localStorage.removeItem('loggedInUser');
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (loggedInUser) {
@@ -400,5 +399,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (checkoutButton) {
         checkoutButton.addEventListener('click', checkout);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('checkout-btn');
+    if (btn) {
+        btn.addEventListener('click', function() {
+        });
     }
 });
