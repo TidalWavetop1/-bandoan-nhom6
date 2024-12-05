@@ -62,7 +62,6 @@ function displayProducts() {
     paginatedProducts.forEach((product, index) => {
         const productElement = document.createElement('div');
         productElement.classList.add('menu-item');
-        productElement.setAttribute('data-product-id', index); // Set data-product-id attribute
         if (itemsPerPage === filteredItemsPerPage) {
             productElement.classList.add('filtered');
         } else {
@@ -200,7 +199,6 @@ function showDetails(productName) {
     if (product) {
         const detailsOverlay = document.createElement('div');
         detailsOverlay.classList.add('details-overlay');
-        detailsOverlay.setAttribute('data-product-id', product.ID); // Set data-product-id attribute
         detailsOverlay.innerHTML = `
             <div class="details-container" onclick="event.stopPropagation()">
                 <span class="close-btn" onclick="closeDetails()">&times;</span>
@@ -224,24 +222,19 @@ function showDetails(productName) {
         document.body.appendChild(detailsOverlay);
 
         // Thêm sự kiện cho nút "Add to Cart"
-        const productId = detailsOverlay.getAttribute('data-product-id'); // Assuming product ID is stored in a data attribute
         const addToCartButton = detailsOverlay.querySelector('.btn-add-to-cart');
-        if (productId) {
-            console.log('ID sản phẩm:', productId); // Kiểm tra giá trị ID
-        } else {
-            console.error('Không tìm thấy thuộc tính data-product-id.');
-        }
         addToCartButton.addEventListener('click', function() {
             const quantityInput = detailsOverlay.querySelector('#product-quantity');
             if (quantityInput) {
                 const quantity = parseInt(quantityInput.value);
-                addToCart(productId, quantity);
+                addToCart(product.ID, quantity); // Use product.ID directly
                 closeDetails();
             } else {
                 console.error('Element with ID "product-quantity" not found.');
             }
         });
     }
+    
 }
 
 function closeDetails() {
@@ -258,8 +251,12 @@ function closeOverlay(event) {
 }
 
 function moHome() {
-    window.location.href = 'index.html';
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
+
 
 function moGioiThieu() {
     document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
