@@ -24,7 +24,7 @@ const products = [
     { ID: 23, name: "Burger Cá", price: "105,000 VND", img: "image/Product_Menu/Burger_cá.png", category: "Burger" },
     { ID: 24, name: "Mì Ý Sốt Bò", price: "110,000 VND", img: "image/Product_Menu/Mì Ý Sốt Bò.png", category: "Mì Ý" },
     { ID: 25, name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Vừa).png", category: "Bắp Cải" },
-    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cảii Trộn (Lớn).png", category: "Bắp Cải" },
+    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Lớn).png", category: "Bắp Cải" },
     { ID: 27, name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Đại).png", category: "Bắp Cải" },
     { ID: 28, name: "Combo Gà Nướng", price: "130,000 VND", img: "image/Product_Menu/Combo Gà Nướn.png", category: "Combo" },
     { ID: 29, name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "image/Product_Menu/Mì Ý Phi-Lê Gà Quay.png", category: "Mì Ý" },
@@ -62,6 +62,7 @@ function displayProducts() {
     paginatedProducts.forEach((product, index) => {
         const productElement = document.createElement('div');
         productElement.classList.add('menu-item');
+        productElement.setAttribute('data-product-id', index); // Set data-product-id attribute
         if (itemsPerPage === filteredItemsPerPage) {
             productElement.classList.add('filtered');
         } else {
@@ -199,6 +200,7 @@ function showDetails(productName) {
     if (product) {
         const detailsOverlay = document.createElement('div');
         detailsOverlay.classList.add('details-overlay');
+        detailsOverlay.setAttribute('data-product-id', product.ID); // Set data-product-id attribute
         detailsOverlay.innerHTML = `
             <div class="details-container" onclick="event.stopPropagation()">
                 <span class="close-btn" onclick="closeDetails()">&times;</span>
@@ -222,19 +224,24 @@ function showDetails(productName) {
         document.body.appendChild(detailsOverlay);
 
         // Thêm sự kiện cho nút "Add to Cart"
+        const productId = detailsOverlay.getAttribute('data-product-id'); // Assuming product ID is stored in a data attribute
         const addToCartButton = detailsOverlay.querySelector('.btn-add-to-cart');
-        addToCartButton.addEventListener('click', function() {
+        if (productId) {
+            console.log('ID sản phẩm:', productId); // Kiểm tra giá trị ID
+        } else {
+            console.error('Không tìm thấy thuộc tính data-product-id.');
+        }
+        addToCartButton.addEventListener('click', function () {
             const quantityInput = detailsOverlay.querySelector('#product-quantity');
             if (quantityInput) {
                 const quantity = parseInt(quantityInput.value);
-                addToCart(product.ID, quantity); // Use product.ID directly
+                addToCart(productId, quantity);
                 closeDetails();
             } else {
                 console.error('Element with ID "product-quantity" not found.');
             }
         });
     }
-    
 }
 
 function closeDetails() {
@@ -251,12 +258,8 @@ function closeOverlay(event) {
 }
 
 function moHome() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.location.href = 'index.html';
 }
-
 
 function moGioiThieu() {
     document.getElementById('about').scrollIntoView({ behavior: 'smooth' });

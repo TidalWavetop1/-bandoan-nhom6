@@ -44,29 +44,12 @@ function updateAccountInfo() {
 
     if (loggedInUser) {
         // Chỉ hiển thị tên người dùng cho người dùng bình thường
-        if (loggedInUser.role !== "admin") {
-            accountLink.innerHTML = `<i class="fa-solid fa-user"></i> ${loggedInUser.username}`;
-        } else {
-            accountLink.innerHTML = `<i class="fa-solid fa-caret-down"></i> ${loggedInUser.username}`; // Hoặc một thông điệp khác cho admin
-        }
-
+        accountLink.innerHTML = `<i class="fa-solid fa-caret-down"></i> ${loggedInUser.username}`;
         let dropdownHTML = `
+            <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
+            <li><a href="#order-history" onclick="viewOrderHistory()">Lịch sử mua hàng</a></li>
             <li><a href="javascript:void(0);" onclick="handleLogout()">Đăng xuất</a></li>
         `;
-
-        // Kiểm tra nếu người dùng là admin
-        if (loggedInUser.role === "admin") {
-            dropdownHTML += `
-                <li><a href="admin.html">Quản trị</a></li>
-            `;
-        } else {
-            dropdownHTML += `
-                <li><a href="#profile" onclick="viewProfile()">Thông tin tài khoản</a></li>
-                <li><a href="#order-history" onclick="viewOrderHistory()">Lịch sử mua hàng</a></li>
-            `;
-        }
-
-        // Thêm phần này để cập nhật dropdown
         dropdown.innerHTML = dropdownHTML;
     } else {
         accountLink.innerHTML = '<i class="fa-solid fa-caret-down"></i>Tài khoản';
@@ -145,23 +128,6 @@ function handleLogin(event) {
     event.preventDefault();
     const loginForm = document.querySelector(".login-form");
     const [userName, password] = loginForm.elements;
-
-    // Kiểm tra đăng nhập cho admin
-    if (userName.value === "admin" && password.value === "1234") {
-        loggedInUser = {
-            password: "1234",
-            username: "admin",
-            role: "admin",
-            status: "active",
-            email: "admin@example.com" // Add email for admin
-        };
-        saveLoggedInUser();
-        alert("Chào mừng, Admin!");
-        closeLogin();
-        updateAccountInfo();
-        loginForm.reset();
-        return;
-    }
 
     const user = users.find(
         (user) => (user.username === userName.value || user.email === userName.value) && user.password === password.value // Allow login with email

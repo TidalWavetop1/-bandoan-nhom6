@@ -1,32 +1,7 @@
-const newsLink = document.querySelector('.news-link');
-const termsLink = document.querySelector('.terms-link');
+function openSidebar() {
+    document.getElementById("sidebar").style.width = "300px";
+}
 
-newsLink.addEventListener('click', function (event) {
-    event.preventDefault();
-    window.location.href = 'index.html';
-});
-
-termsLink.addEventListener('click', function (event) {
-    event.preventDefault();
-    window.location.href = 'index.html';
-});
-
-document.getElementById("menu-toggle").addEventListener("click", function () {
-    const navbar = document.querySelector(".navbar");
-    navbar.classList.toggle("active");
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function closeSidebar() {
+    document.getElementById("sidebar").style.width = "0";
+}

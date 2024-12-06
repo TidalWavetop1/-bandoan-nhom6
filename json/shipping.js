@@ -1,4 +1,3 @@
-
 function toggleAddressFields() {
     const addressOption = document.getElementById('address-option').value;
     const accountAddress = document.getElementById('account-address');
