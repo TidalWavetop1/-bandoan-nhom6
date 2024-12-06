@@ -187,7 +187,11 @@ function updateCart() {
            <div class="product-detail">
                <span>${item.name}</span>
                <span>${numericPrice.toLocaleString()}₫</span>
-               <span>SL: ${item.soluong}</span>
+               <div class="quantity-controls">
+                   <button class="btn-decrement">-</button>
+                   <span class="quantity">${item.soluong}</span>
+                   <button class="btn-increment">+</button>
+               </div>
            </div>
            <div class="remove-btn">
                <button onclick="removeFromCart(${item.ID})">Xóa</button>
@@ -210,6 +214,43 @@ function updateCart() {
     if (checkoutButton && loggedInUser.cart.length > 0) {
         checkoutButton.disabled = false;
     }
+
+    // Add event listeners for increment and decrement buttons
+    const incrementButtons = document.querySelectorAll('.btn-increment');
+    const decrementButtons = document.querySelectorAll('.btn-decrement');
+
+    incrementButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = this.closest('.cart-item').querySelector('.remove-btn button').getAttribute('onclick').match(/\d+/)[0];
+            updateQuantity(productId, 1);
+        });
+    });
+
+    decrementButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = this.closest('.cart-item').querySelector('.remove-btn button').getAttribute('onclick').match(/\d+/)[0];
+            updateQuantity(productId, -1);
+        });
+    });
+}
+
+function updateQuantity(productId, change) {
+    let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!loggedInUser || !loggedInUser.cart) {
+        console.error("No logged-in user or cart found.");
+        return;
+    }
+
+    let product = loggedInUser.cart.find(item => item.ID === parseInt(productId));
+    if (product) {
+        product.soluong += change;
+        if (product.soluong <= 0) {
+            removeFromCart(productId);
+        } else {
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            updateCart();
+        }
+    }
 }
 
 function removeFromCart(productId) {
@@ -231,6 +272,7 @@ function removeFromCart(productId) {
 
 // Hàm mở form thông tin giao hàng
 function showShippingForm() {
+    console.log('showShippingForm function called'); // Add this line to check if the function is called
     const cartModal = document.getElementById('cartModal');
     const shippingModal = document.getElementById('shippingFormModal');
     const overlay = document.getElementById('pageOverlay'); // Lấy lớp phủ
@@ -238,6 +280,7 @@ function showShippingForm() {
     const shippingTotalPrice = document.getElementById('shipping-total-price');
 
     if (cartModal && shippingModal && overlay && shippingCartItems && shippingTotalPrice) {
+        console.log('All elements found'); // Add this line to check if all elements are found
         cartModal.classList.remove('show');
         cartModal.style.display = 'none'; // Ẩn giỏ hàng
         shippingModal.style.display = 'block'; // Hiển thị form giao hàng
@@ -249,6 +292,7 @@ function showShippingForm() {
         // Hiển thị các sản phẩm trong giỏ hàng
         const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
         if (loggedInUser && loggedInUser.cart) {
+            console.log('Logged in user and cart found'); // Add this line to check if logged in user and cart are found
             shippingCartItems.innerHTML = '';
             let total = 0;
             loggedInUser.cart.forEach(item => {
@@ -272,6 +316,8 @@ function showShippingForm() {
             });
             shippingTotalPrice.innerText = `${total.toLocaleString()}₫`;
         }
+    } else {
+        console.error('One or more elements not found'); // Add this line to check if any element is not found
     }
 }
 
@@ -360,8 +406,10 @@ document.getElementById('shipping-form').addEventListener('submit', function (ev
 
 // hàm thanh toán
 function checkout() {
+    console.log('Checkout button clicked'); // Add this line to check if the button is clicked
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (!loggedInUser || !loggedInUser.cart || loggedInUser.cart.length === 0) {
+        console.log('No logged-in user or cart is empty'); // Add this line to check if the user is logged in and cart is not empty
         return;
     }
 
@@ -370,12 +418,10 @@ function checkout() {
         return;
     }
     // Redirect to the shipping information form
+    console.log('Calling showShippingForm'); // Add this line to check if showShippingForm is being called
     showShippingForm();
     updateCart();
-
 }
-
-
 
 // Gọi hàm cập nhật giỏ hàng khi tải trang
 window.onload = function () {
@@ -399,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (checkoutButton) {
+        console.log('Attaching checkout event listener'); // Add this line to check if the event listener is being attached
         checkoutButton.addEventListener('click', checkout);
     }
 });

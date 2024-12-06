@@ -517,6 +517,7 @@ a:hover {
     background-color: white;
     opacity: 0;
     border-radius: 5px;
+    margin-right: 10px;
 }
 
 .modal.show {
@@ -1996,3 +1997,46 @@ div ul {
         display: flex;
     }
 }
+
+/*tăng giảm số lượng sản phẩm trong giỏ hàng*/
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    width: fit-content; /* Ensure the width fits the content */
+    background-color: #fff; /* Light background color */
+}
+
+.quantity-controls .btn-decrement,
+.quantity-controls .btn-increment {
+    background-color: #f0f0f0;
+    border: none;
+    width: 30px; /* Compact width */
+    height: 30px; /* Compact height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px; /* Compact font size */
+}
+
+.quantity-controls .btn-decrement:hover,
+.quantity-controls .btn-increment:hover {
+    background-color: #e0e0e0;
+}
+
+.quantity-controls .quantity {
+    font-size: 16px; /* Compact font size */
+    width: 40px; /* Compact width */
+    text-align: center;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 5px 0; /* Padding for better alignment */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the quantity text */
+}
+
+

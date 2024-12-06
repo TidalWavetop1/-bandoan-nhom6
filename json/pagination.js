@@ -258,7 +258,7 @@ function closeOverlay(event) {
 }
 
 function moHome() {
-    window.location.href = 'index.html';
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top of the page smoothly
 }
 
 function moGioiThieu() {
@@ -267,6 +267,51 @@ function moGioiThieu() {
 
 function moThucDon() {
     document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+}
+
+function showShippingForm() {
+    const cartModal = document.getElementById('cartModal');
+    const shippingModal = document.getElementById('shippingFormModal');
+    const overlay = document.getElementById('pageOverlay'); // Lấy lớp phủ
+    const shippingCartItems = document.getElementById('shipping-cart-items');
+    const shippingTotalPrice = document.getElementById('shipping-total-price');
+
+    if (cartModal && shippingModal && overlay && shippingCartItems && shippingTotalPrice) {
+        cartModal.classList.remove('show');
+        cartModal.style.display = 'none'; // Ẩn giỏ hàng
+        shippingModal.style.display = 'block'; // Hiển thị form giao hàng
+        shippingModal.classList.add('show');
+
+        overlay.style.display = 'block'; // Hiển thị lớp phủ
+        document.body.style.overflow = 'hidden'; // Khóa cuộn trang
+
+        // Hiển thị các sản phẩm trong giỏ hàng
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        if (loggedInUser && loggedInUser.cart) {
+            shippingCartItems.innerHTML = '';
+            let total = 0;
+            loggedInUser.cart.forEach(item => {
+                const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, "").replace(",", ""));
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                <div class="product-container">
+                   <div class="product-img">
+                       <img src="${item.img}" alt="${item.name}">
+                   </div>
+                   <div class="product-detail">
+                       <span>${item.name}</span>
+                       <span>${numericPrice.toLocaleString()}₫</span>
+                       <span>SL: ${item.soluong}</span>
+                   </div>     
+                </div>
+                `;
+                shippingCartItems.appendChild(itemElement);
+                total += numericPrice * item.soluong;
+            });
+            shippingTotalPrice.innerText = `${total.toLocaleString()}₫`;
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
