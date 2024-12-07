@@ -1,12 +1,13 @@
-let currentPage = 1;
-const itemsPerPage = 8;
+let currentpage = 1;
+const itemsPerpage = 8; 
 let currentItems = [];
 
 function performSearch() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
     currentItems = filterItems(searchInput, '', '');
-    currentPage = 1; // Reset to first page on new search
-    displayItems(currentItems, currentPage);
+    currentpage = 1; // Reset to first page on new search
+    currentItems.forEach(item => console.log(item.img));
+    displayCacSP(currentItems, currentpage);
     displayPageNumbers(currentItems);
 }
 
@@ -15,16 +16,16 @@ function performAdvancedSearch() {
     const categoryFilter = document.getElementById('categoryFilter').value;
     const priceRange = document.getElementById('priceRange').value;
     currentItems = filterItems(searchInput, categoryFilter, priceRange);
-    currentPage = 1; // Reset to first page on new search
-    displayItems(currentItems, currentPage);
+    currentpage = 1; // Reset to first page on new search
+    displayCacSP(currentItems, currentpage);
     displayPageNumbers(currentItems);
 }
 
 function filterItems(searchInput, categoryFilter, priceRange) {
     return products.filter(item => {
-        const matchesName = item.name.toLowerCase().includes(searchInput);
-        const matchesCategory = categoryFilter ? item.category === categoryFilter : true;
-        const matchesPrice = priceRange ? checkPriceRange(item.price, priceRange) : true;
+        const matchesName = String(item.name).toLowerCase().includes(searchInput);
+        const matchesCategory = categoryFilter ? String(item.category) === categoryFilter : true;
+        const matchesPrice = priceRange ? checkPriceRange(Number(item.price), priceRange) : true;
         return matchesName && matchesCategory && matchesPrice;
     });
 }
@@ -35,11 +36,11 @@ function checkPriceRange(price, priceRange) {
     return numericPrice >= min && (max ? numericPrice <= max : true);
 }
 
-function displayItems(items, page) {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+function displayCacSP(items, page) {
+    const startIndex = (page - 1) * itemsPerpage;
+    const endIndex = startIndex + itemsPerpage;
     const itemsToDisplay = items.slice(startIndex, endIndex);
-
+    
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = itemsToDisplay.map(item => `
         <div class="menu-item">
@@ -54,7 +55,7 @@ function displayItems(items, page) {
 }
 
 function updatePaginationControls(totalItems, page) {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / itemsPerpage);
     const pageNumbers = document.getElementById('page-numbers');
     pageNumbers.innerHTML = `Page ${page} of ${totalPages}`;
 
@@ -65,33 +66,33 @@ function updatePaginationControls(totalItems, page) {
 function displayPageNumbers(items) {
     const pageNumbersContainer = document.getElementById('page-numbers');
     pageNumbersContainer.innerHTML = '';
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const totalPages = Math.ceil(items.length / itemsPerpage);
 
     for (let i = 1; i <= totalPages; i++) {
         const pageNumberElement = document.createElement('button');
         pageNumberElement.innerText = i;
-        pageNumberElement.className = i === currentPage ? 'active' : '';
+        pageNumberElement.className = i === currentpage ? 'active' : '';
         pageNumberElement.addEventListener('click', () => goToPage(i));
         pageNumbersContainer.appendChild(pageNumberElement);
     }
 }
 
 function goToPage(pageNumber) {
-    currentPage = pageNumber;
-    displayItems(currentItems, currentPage);
+    currentpage = pageNumber;
+    displayCacSP(currentItems, currentpage);
 }
 
 function prevPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        displayItems(currentItems, currentPage);
+    if (currentpage > 1) {
+        currentpage--;
+        displayCacSP(currentItems, currentpage);
     }
 }
 
 function nextPage() {
-    if (currentPage * itemsPerPage < currentItems.length) {
-        currentPage++;
-        displayItems(currentItems, currentPage);
+    if (currentpage * itemsPerpage < currentItems.length) {
+        currentpage++;
+        displayCacSP(currentItems, currentpage);
     }
 }
 
