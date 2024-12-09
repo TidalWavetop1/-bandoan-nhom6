@@ -1,45 +1,4 @@
-const products = [
-    { ID: 1, name: "Gà Rán", price: "99,000 VND", img: "image/Product_Menu/Gà_Rán.png", category: "Gà" },
-    { ID: 2, name: "Burger Gà", price: "75,000 VND", img: "image/Product_Menu/Burger_Gà.png", category: "Burger" },
-    { ID: 3, name: "Gà Quay", price: "89,000 VND", img: "image/Product_Menu/Gà_quay.png", category: "Gà" },
-    { ID: 4, name: "Phi-lê Gà Quay", price: "95,000 VND", img: "image/Product_Menu/Phi-lê Gà Quay.jpg", category: "Gà" },
-    { ID: 5, name: "Gà Không Xương", price: "85,000 VND", img: "image/Product_Menu/Gà_Ko_xương.png", category: "Gà" },
-    { ID: 6, name: "Đùi Gà Quay", price: "105,000 VND", img: "image/Product_Menu/Đùi_gà_quay.png", category: "Gà" },
-    { ID: 7, name: "Gà Chiên Xù", price: "110,000 VND", img: "image/Product_Menu/Gà_Chiên_Xù.jpg", category: "Gà" },
-    { ID: 8, name: "Gà Sốt BBQ", price: "120,000 VND", img: "image/Product_Menu/Gà_sốt_BBQ.png", category: "Gà" },
-    { ID: 9, name: "Gà Sốt Cay", price: "130,000 VND", img: "image/Product_Menu/Gà_sốt_cay.png", category: "Gà" },
-    { ID: 10, name: "Gà Sốt Mật Ong", price: "140,000 VND", img: "image/Product_Menu/Gà_sốt_mật_ong.png", category: "Gà" },
-    { ID: 11, name: "Mì Ý Gà Zinger", price: "150,000 VND", img: "image/Product_Menu/Mì_Ý_gà_Zinger.png", category: "Mì Ý" },
-    { ID: 12, name: "Gà Sốt Chanh", price: "160,000 VND", img: "image/Product_Menu/gà_sốt_chanh.png", category: "Gà" },
-    { ID: 13, name: "Khoai Tây Nghiền (Vừa)", price: "170,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Vừa).png", category: "Khoai Tây" },
-    { ID: 14, name: "Gà Sốt Dứa", price: "180,000 VND", img: "image/Product_Menu/Gà_sốt_dứa.png", category: "Gà" },
-    { ID: 15, name: "Khoai Tây Nghiền (Lớn)", price: "190,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Lớn).png", category: "Khoai Tây" },
-    { ID: 16, name: "Gà Sốt Dâu", price: "200,000 VND", img: "image/Product_Menu/Gà_sốt_dâu.png", category: "Gà" },
-    { ID: 17, name: "Khoai Tây Nghiền (Đại)", price: "210,000 VND", img: "image/Product_Menu/Khoai Tây Nghiền (Đại).png", category: "Khoai Tây" },
-    { ID: 18, name: "Khoai Tây Chiên (Vừa)", price: "80,000 VND", img: "image/Product_Menu/Khoai_tây_chiên_Vừa.png", category: "Khoai Tây" },
-    { ID: 19, name: "Khoai Tây Chiên (Lớn)", price: "85,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Lớn).png", category: "Khoai Tây" },
-    { ID: 20, name: "Khoai Tây Chiên (Đại)", price: "90,000 VND", img: "image/Product_Menu/Khoai Tây Chiên (Đại).png", category: "Khoai Tây" },
-    { ID: 21, name: "Burger Bò", price: "95,000 VND", img: "image/Product_Menu/Burger Bò.png", category: "Burger" },
-    { ID: 22, name: "Burger Phô Mai", price: "100,000 VND", img: "image/Product_Menu/Burger_Phô_mai.png", category: "Burger" },
-    { ID: 23, name: "Burger Cá", price: "105,000 VND", img: "image/Product_Menu/Burger_cá.png", category: "Burger" },
-    { ID: 24, name: "Mì Ý Sốt Bò", price: "110,000 VND", img: "image/Product_Menu/Mì Ý Sốt Bò.png", category: "Mì Ý" },
-    { ID: 25, name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Vừa).png", category: "Bắp Cải" },
-    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Lớn).png", category: "Bắp Cải" },
-    { ID: 27, name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Đại).png", category: "Bắp Cải" },
-    { ID: 28, name: "Combo Gà Nướng", price: "130,000 VND", img: "image/Product_Menu/Combo Gà Nướn.png", category: "Combo" },
-    { ID: 29, name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "image/Product_Menu/Mì Ý Phi-Lê Gà Quay.png", category: "Mì Ý" },
-    { ID: 30, name: "Combo Gà Sốt BBQ", price: "140,000 VND", img: "image/Product_Menu/Combo Gà Sốt BBQ.png", category: "Combo" },
-    { ID: 31, name: "Combo Gà Sốt Cay", price: "145,000 VND", img: "image/Product_Menu/Combo Gà Sốt Cay.png", category: "Combo" },
-    { ID: 32, name: "Salad Hạt", price: "150,000 VND", img: "image/Product_Menu/Salad Hạt.png", category: "Salad" },
-    { ID: 33, name: "Salad Pop", price: "155,000 VND", img: "image/Product_Menu/Salad Pop.png", category: "Salad" },
-    { ID: 34, name: "Mì Ý Gà Rán", price: "160,000 VND", img: "image/Product_Menu/Mì Ý Gà Rán.png", category: "Mì Ý" },
-    { ID: 35, name: "3 Cá Thanh", price: "165,000 VND", img: "image/Product_Menu/3 Cá Thanh.png", category: "Cá" },
-    { ID: 36, name: "Combo Gà Sốt Dứa", price: "170,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dứa.png", category: "Combo" },
-    { ID: 37, name: "Combo Gà Sốt Xoài", price: "175,000 VND", img: "image/Product_Menu/Combo Gà Sốt Xoài.png", category: "Combo" },
-    { ID: 38, name: "Combo Gà Sốt Dâu", price: "180,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dâu.png", category: "Combo" },
-    { ID: 39, name: "4 Phô Mai Viên", price: "185,000 VND", img: "image/Product_Menu/4 Phô Mai Viên.png", category: "Phô Mai" },
-    { ID: 40, name: "Combo Gà Sốt Dừa", price: "190,000 VND", img: "image/Product_Menu/Combo Gà Sốt Dừa.png", category: "Combo" }
-];
+let products = JSON.parse(localStorage.getItem('products'));
 
 const initialItemsPerPage = 12;
 const filteredItemsPerPage = 8;
@@ -119,22 +78,27 @@ function displayItems(items, page) {
     updatePaginationControls(items.length, page);
 }
 
-function displayPageNumbers() {
+function displayPagenumbers() {
     const pageNumbersContainer = document.getElementById('page-numbers');
     pageNumbersContainer.innerHTML = '';
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    console.log(totalPages);
 
     for (let i = 1; i <= totalPages; i++) {
         const pageNumberElement = document.createElement('button');
         pageNumberElement.innerText = i;
         pageNumberElement.className = i === currentPage ? 'active' : '';
-        pageNumberElement.addEventListener('click', () => goToPage(i));
+        pageNumberElement.addEventListener('click', () => {
+            console.log(`Button for page ${i} clicked`);
+            goTopage(i);
+        });
         pageNumbersContainer.appendChild(pageNumberElement);
     }
 }
 
-function goToPage(pageNumber) {
+function goTopage(pageNumber) {
     currentPage = pageNumber;
+    console.log("Hellloo dearrr");
     updatePage();
 }
 
@@ -156,14 +120,17 @@ function updatePage() {
     const productContainer = document.getElementById('product-container');
     const items = productContainer.querySelectorAll('.menu-item');
 
+    console.log(items);
+
     items.forEach(item => {
         item.classList.remove('active');
         item.classList.add('prev');
     });
 
+
     setTimeout(() => {
         displayProducts();
-        displayPageNumbers();
+        displayPagenumbers();
     }, 500); // Wait for the transition to complete
 }
 
@@ -291,7 +258,7 @@ function showShippingForm() {
             shippingCartItems.innerHTML = '';
             let total = 0;
             loggedInUser.cart.forEach(item => {
-                const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, "").replace(",", ""));
+                const numericPrice = parseFloat(String(item.price).replace(/[^0-9.-]+/g, "").replace(",", ""));
                 const itemElement = document.createElement('div');
                 itemElement.classList.add('cart-item');
                 itemElement.innerHTML = `
@@ -316,5 +283,5 @@ function showShippingForm() {
 
 document.addEventListener('DOMContentLoaded', function () {
     displayProducts();
-    displayPageNumbers();
+    displayPagenumbers();
 });

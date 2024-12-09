@@ -1,5 +1,5 @@
 let currentpage = 1;
-const itemsPerpage = 8; 
+const itemsPerpage = 8;
 let currentItems = [];
 
 function performSearch() {
@@ -31,7 +31,7 @@ function filterItems(searchInput, categoryFilter, priceRange) {
 }
 
 function checkPriceRange(price, priceRange) {
-    const numericPrice = parseInt(price.replace(/[^0-9]/g, ''), 10);
+    const numericPrice = parseInt(String(price).replace(/[^0-9]/g, ''), 10);
     const [min, max] = priceRange.split('-').map(Number);
     return numericPrice >= min && (max ? numericPrice <= max : true);
 }
@@ -40,7 +40,7 @@ function displayCacSP(items, page) {
     const startIndex = (page - 1) * itemsPerpage;
     const endIndex = startIndex + itemsPerpage;
     const itemsToDisplay = items.slice(startIndex, endIndex);
-    
+
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = itemsToDisplay.map(item => `
         <div class="menu-item">
@@ -59,14 +59,15 @@ function updatePaginationControls(totalItems, page) {
     const pageNumbers = document.getElementById('page-numbers');
     pageNumbers.innerHTML = `Page ${page} of ${totalPages}`;
 
-    document.querySelector('.pagination-controls button[onclick="prevPage()"]').disabled = page === 1;
-    document.querySelector('.pagination-controls button[onclick="nextPage()"]').disabled = page === totalPages;
+    document.querySelector('.pagination-controls button[onclick="prevpage()"]').disabled = page === 1;
+    document.querySelector('.pagination-controls button[onclick="nextpage()"]').disabled = page === totalPages;
 }
 
 function displayPageNumbers(items) {
     const pageNumbersContainer = document.getElementById('page-numbers');
     pageNumbersContainer.innerHTML = '';
-    const totalPages = Math.ceil(items.length / itemsPerpage);
+    console.log(items);
+    const totalPages = Math.ceil(items.length() / itemsPerpage);
 
     for (let i = 1; i <= totalPages; i++) {
         const pageNumberElement = document.createElement('button');
@@ -82,14 +83,14 @@ function goToPage(pageNumber) {
     displayCacSP(currentItems, currentpage);
 }
 
-function prevPage() {
+function prevpage() {
     if (currentpage > 1) {
         currentpage--;
         displayCacSP(currentItems, currentpage);
     }
 }
 
-function nextPage() {
+function nextpage() {
     if (currentpage * itemsPerpage < currentItems.length) {
         currentpage++;
         displayCacSP(currentItems, currentpage);

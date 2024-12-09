@@ -1465,6 +1465,7 @@ div ul {
 
 /* Order History Overlay */
 #orderHistoryOverlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1505,24 +1506,7 @@ div ul {
     margin: 5px 0;
 }
 
-.search-button {
-    width: 15%;
-    /* Đặt chiều rộng cho nút tìm kiếm */
-}
-
-/* Các form cần thiết */
-.login-container,
-.register-container {
-    padding: 10px;
-    /* Thêm padding cho các form */
-}
-
-.account {
-    text-align: center;
-    /* Căn giữa nội dung */
-}
-
-
+/* Shipping Form Modal */
 #shippingFormModal {
     display: none;
     position: fixed;
@@ -1773,6 +1757,34 @@ div ul {
         top: 50%;
         transform: translateY(-50%);
     }
+
+    #orderSummaryModal .modal-content {
+        padding: 10px;
+        width: 90%;
+    }
+
+    #orderHistoryOverlay .order-history-container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    #shippingFormModal .modal-content {
+        padding: 10px;
+    }
+
+    #shippingFormModal .cart-items {
+        max-height: 150px;
+    }
+
+    #shippingFormModal form input,
+    #shippingFormModal form select {
+        width: 100%;
+    }
+
+    #shippingFormModal form button {
+        width: 100%;
+        margin-top: 10px;
+    }
 }
 
 /* Tablet Devices */
@@ -1866,6 +1878,34 @@ div ul {
         top: 50%;
         transform: translateY(-50%);
     }
+
+    #orderSummaryModal .modal-content {
+        padding: 15px;
+        width: 80%;
+    }
+
+    #orderHistoryOverlay .order-history-container {
+        width: 80%;
+        padding: 15px;
+    }
+
+    #shippingFormModal .modal-content {
+        padding: 15px;
+    }
+
+    #shippingFormModal .cart-items {
+        max-height: 200px;
+    }
+
+    #shippingFormModal form input,
+    #shippingFormModal form select {
+        width: 48%;
+    }
+
+    #shippingFormModal form button {
+        width: 48%;
+        margin-top: 10px;
+    }
 }
 
 /* Laptop Devices */
@@ -1902,6 +1942,34 @@ div ul {
         top: 50%;
         transform: translateY(-50%);
     }
+
+    #orderSummaryModal .modal-content {
+        padding: 20px;
+        width: 70%;
+    }
+
+    #orderHistoryOverlay .order-history-container {
+        width: 70%;
+        padding: 20px;
+    }
+
+    #shippingFormModal .modal-content {
+        padding: 20px;
+    }
+
+    #shippingFormModal .cart-items {
+        max-height: 250px;
+    }
+
+    #shippingFormModal form input,
+    #shippingFormModal form select {
+        width: 48%;
+    }
+
+    #shippingFormModal form button {
+        width: 48%;
+        margin-top: 10px;
+    }
 }
 
 /* Desktop Devices */
@@ -1923,6 +1991,34 @@ div ul {
         /* Ensure the button is inside the search bar */
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    #orderSummaryModal .modal-content {
+        padding: 20px;
+        width: 60%;
+    }
+
+    #orderHistoryOverlay .order-history-container {
+        width: 60%;
+        padding: 20px;
+    }
+
+    #shippingFormModal .modal-content {
+        padding: 20px;
+    }
+
+    #shippingFormModal .cart-items {
+        max-height: 300px;
+    }
+
+    #shippingFormModal form input,
+    #shippingFormModal form select {
+        width: 48%;
+    }
+
+    #shippingFormModal form button {
+        width: 48%;
+        margin-top: 10px;
     }
 }
 
@@ -2005,21 +2101,26 @@ div ul {
     border: 1px solid #ccc;
     border-radius: 4px;
     overflow: hidden;
-    width: fit-content; /* Ensure the width fits the content */
-    background-color: #fff; /* Light background color */
+    width: fit-content;
+    /* Ensure the width fits the content */
+    background-color: #fff;
+    /* Light background color */
 }
 
 .quantity-controls .btn-decrement,
 .quantity-controls .btn-increment {
     background-color: #f0f0f0;
     border: none;
-    width: 30px; /* Compact width */
-    height: 30px; /* Compact height */
+    width: 30px;
+    /* Compact width */
+    height: 30px;
+    /* Compact height */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 16px; /* Compact font size */
+    font-size: 16px;
+    /* Compact font size */
 }
 
 .quantity-controls .btn-decrement:hover,
@@ -2028,15 +2129,17 @@ div ul {
 }
 
 .quantity-controls .quantity {
-    font-size: 16px; /* Compact font size */
-    width: 40px; /* Compact width */
+    font-size: 16px;
+    /* Compact font size */
+    width: 40px;
+    /* Compact width */
     text-align: center;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    padding: 5px 0; /* Padding for better alignment */
+    padding: 5px 0;
+    /* Padding for better alignment */
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the quantity text */
+    justify-content: center;
+    /* Center the quantity text */
 }
-
-

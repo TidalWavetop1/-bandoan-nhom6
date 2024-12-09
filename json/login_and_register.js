@@ -2,19 +2,11 @@
 let loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
 
 // Mock database
-let users = JSON.parse(localStorage.getItem('users')) || [
-    {
-        password: "1234",
-        username: "admin",
-        role: "admin",
-        status: "active",
-        email: "admin@example.com" // Ensure email is included for admin
-    } // Admin user
-];
+let users = JSON.parse(localStorage.getItem('userList')) || [];
 
 // Hàm lưu danh sách người dùng vào LocalStorage
 function saveUsers() {
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('userList', JSON.stringify(users));
 }
 
 // Hàm lưu trạng thái người dùng hiện tại vào LocalStorage
@@ -25,15 +17,7 @@ function saveLoggedInUser() {
 // Hàm khôi phục trạng thái tài khoản khi tải lại trang
 function restoreAccountState() {
     loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')) || null;
-    users = JSON.parse(localStorage.getItem('users')) || [
-        {
-            password: "1234",
-            username: "admin",
-            role: "admin",
-            status: "active",
-            email: "admin@example.com" // Ensure email is included for admin
-        }
-    ];
+    users = JSON.parse(localStorage.getItem('userList')) || [];
 
     updateAccountInfo();
 }
@@ -81,9 +65,9 @@ function validatePassword(password) {
 function handleRegister(event) {
     event.preventDefault();
     const registerForm = document.querySelector(".register-form");
-    const [name, number, address, email, userName, password, confirmPassword] = registerForm.elements;
+    const [name, number, address, e_mail, userName, password, confirmPassword] = registerForm.elements;
 
-    if (!validateEmail(email.value) || !validatePhoneNumber(number.value) || !validatePassword(password.value)) {
+    if (!validateEmail(e_mail.value) || !validatePhoneNumber(number.value) || !validatePassword(password.value)) {
         alert("Vui lòng kiểm tra lại thông tin nhập vào!");
         return;
     }
@@ -93,21 +77,21 @@ function handleRegister(event) {
         return;
     }
 
-    const existingUser = users.find((user) => user.email === email.value || user.username === userName.value);
+    const existingUser = users.find((user) => user.email === e_mail.value || user.username === userName.value);
     if (existingUser) {
         alert("Email hoặc tên người dùng đã tồn tại!");
         return;
     }
 
     const newUser = {
-        name: name.value,
-        number: number.value,
+        fullName: name.value,
+        phoneNumber: number.value,
         address: address.value,
-        email: email.value,
+        email: e_mail.value,
         username: userName.value,
         password: password.value,
-        role: "user",
-        status: "active",
+        role: "Khách hàng",
+        status: "Active",
         orderHistory: [] // Initialize order history
     };
 
@@ -115,7 +99,7 @@ function handleRegister(event) {
     saveUsers();
 
     // Gửi thông tin đăng ký đến admin
-    notifyAdmin(newUser);
+    // notifyAdmin(newUser);
 
     alert("Đăng ký thành công! Vui lòng đăng nhập.");
     closeRegister();
@@ -125,22 +109,23 @@ function handleRegister(event) {
 
 // Hàm đăng nhập
 function handleLogin(event) {
+    let users = JSON.parse(localStorage.getItem('userList'));
+
     event.preventDefault();
     const loginForm = document.querySelector(".login-form");
     const [userName, password] = loginForm.elements;
 
     const user = users.find(
-        (user) => (user.username === userName.value || user.email === userName.value) && user.password === password.value // Allow login with email
+        (user) => (user.username === userName.value || user.email === userName.value) && user.password === password.value && user.status === "Active"// Allow login with email
     );
-
     if (!user) {
-        alert("Thông tin đăng nhập không chính xác!");
+        alert("Thông tin đăng nhập không chính xác hoặc đã bị khóa!");
         return;
     }
 
     loggedInUser = user;
     saveLoggedInUser();
-    alert(`Chào mừng, ${user.name}!`);
+    alert(`Chào mừng, ${user.fullName}!`);
     closeLogin();
     updateAccountInfo();
     loginForm.reset();
@@ -173,11 +158,11 @@ function viewProfile() {
                 <h2>Thông tin tài khoản</h2>
                 <form id="profileForm" class="profile-form">
                     <label for="name">Họ và tên:</label>
-                    <input type="text" id="name" name="name" value="${loggedInUser.name}" required>
+                    <input type="text" id="name" name="name" value="${loggedInUser.fullName}" required>
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" value="${loggedInUser.email}" required>
                     <label for="number">Số điện thoại:</label>
-                    <input type="text" id="number" name="number" value="${loggedInUser.number}" required>
+                    <input type="text" id="number" name="number" value="${loggedInUser.phoneNumber}" required>
                     <label for="address">Địa chỉ:</label>
                     <input type="text" id="address" name="address" value="${loggedInUser.address}" required>
                     <button type="submit">Cập nhật thông tin</button>
@@ -231,14 +216,21 @@ function closeOrderHistory() {
 // Hàm cập nhật thông tin tài khoản
 function updateProfile() {
     const profileForm = document.getElementById('profileForm');
-    const [name, email, number, address] = profileForm.elements;
+    const [Name, Email, number, Address] = profileForm.elements;
 
-    loggedInUser.name = name.value;
-    loggedInUser.email = email.value;
-    loggedInUser.number = number.value;
-    loggedInUser.address = address.value;
+    loggedInUser.fullName = Name.value;
+    loggedInUser.email = Email.value;
+    loggedInUser.phoneNumber = number.value;
+    loggedInUser.address = Address.value;
 
+    users = users.map(khach => {
+        if (loggedInUser.userId === khach.userId) {
+            return { ...khach, fullName: Name.value, email: Email.value, phoneNumber: number.value, address: Address.value };
+        }
+        return khach;
+    });
     saveLoggedInUser();
+    saveUsers();
     alert("Cập nhật thông tin thành công!");
     closeProfile();
     updateAccountInfo();

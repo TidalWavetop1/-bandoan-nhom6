@@ -23,6 +23,12 @@ function toggleCreditCardFields() {
     }
 }
 
+function getCartItems() {
+    let Cart = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    return Cart.cart;
+}
+
 function showOrderSummary() {
     const orderSummaryModal = document.getElementById('orderSummaryModal');
     const orderSummaryContent = document.getElementById('order-summary-content');
@@ -39,6 +45,8 @@ function showOrderSummary() {
     orderSummaryContent.innerHTML = summaryHtml;
     orderSummaryModal.style.display = 'block';
 }
+
+
 
 function closeOrderSummary() {
     const orderSummaryModal = document.getElementById('orderSummaryModal');
