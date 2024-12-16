@@ -48,9 +48,9 @@ function validateLogin(username, password, listusr = []) {
     // Kiểm tra thông tin từ danh sách người dùng trong localStorage
     for (const usr of listusr) {
         if (username === usr.Username && password === usr.Password) {
-            if (usr.Trangthai === "Hoạt động") {
+            if (usr.status === "Active") {
                 return { success: true, message: "success" };
-            } else if (usr.Trangthai === "Đã khóa") {
+            } else if (usr.status === "Locked") {
                 return { success: false, message: "Tài khoản đã bị khóa!" };
             }
         }
@@ -67,7 +67,7 @@ function validateLogin(username, password, listusr = []) {
 
 // Hàm đăng nhập
 function login() {
-    const listusr = JSON.parse(localStorage.getItem('listUsers')) || [];
+    const listusr = JSON.parse(localStorage.getItem('userList')) || [];
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
@@ -87,7 +87,7 @@ function checkLoginFromURL() {
     const password = params.get("password");
 
     if (username && password) {
-        const listusr = JSON.parse(localStorage.getItem('listUsers')) || [];
+        const listusr = JSON.parse(localStorage.getItem('userList')) || [];
         const result = validateLogin(username, password, listusr);
 
         if (result.success) {

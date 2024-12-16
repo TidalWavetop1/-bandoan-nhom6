@@ -24,7 +24,7 @@ localStorage.setItem('products', JSON.stringify([
     { ID: 23, name: "Burger Cá", price: "105,000 VND", img: "image/Product_Menu/Burger_cá.png", category: "Burger" },
     { ID: 24, name: "Mì Ý Sốt Bò", price: "110,000 VND", img: "image/Product_Menu/Mì Ý Sốt Bò.png", category: "Mì Ý" },
     { ID: 25, name: "Bắp Cải Trộn (Vừa)", price: "115,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Vừa).png", category: "Bắp Cải" },
-    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cảii Trộn (Lớn).png", category: "Bắp Cải" },
+    { ID: 26, name: "Bắp Cải Trộn (Lớn)", price: "120,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Lớn).png", category: "Bắp Cải" },
     { ID: 27, name: "Bắp Cải Trộn (Đại)", price: "125,000 VND", img: "image/Product_Menu/Bắp Cải Trộn (Đại).png", category: "Bắp Cải" },
     { ID: 28, name: "Combo Gà Nướng", price: "130,000 VND", img: "image/Product_Menu/Combo Gà Nướn.png", category: "Combo" },
     { ID: 29, name: "Mì Ý Phi-Lê Gà Quay", price: "135,000 VND", img: "image/Product_Menu/Mì Ý Phi-Lê Gà Quay.png", category: "Mì Ý" },

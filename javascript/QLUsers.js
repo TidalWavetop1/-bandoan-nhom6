@@ -1,5 +1,5 @@
 maK = null;/*Dùng để biết mã khách đang chọn để sửa thông tin*/
-let listusers = JSON.parse(localStorage.getItem('listUsers')); /*Load danh sách khách hàng*/
+let listusers = JSON.parse(localStorage.getItem('userList')); /*Load danh sách khách hàng*/
 
 // form hiển thị người dùng cùng với các chức năng quản lí người dùng
 function displayusr(users = listusers) {
@@ -18,13 +18,13 @@ function displayusr(users = listusers) {
         const cell7 = document.createElement('td');
         const cell8 = document.createElement('td');
         
-        cell1.textContent = item.Manguoidung;
-        cell2.textContent = item.Tennguoidung;
-        cell3.textContent = item.SDT;
-        cell4.textContent = item.Email;
-        cell5.textContent = item.Diachi;
-        cell6.textContent = item.Chucvu;
-        cell7.textContent = item.Trangthai;
+        cell1.textContent = item.userId;
+        cell2.textContent = item.fullName;
+        cell3.textContent = item.phoneNumber;
+        cell4.textContent = item.email;
+        cell5.textContent = item.address;
+        cell6.textContent = item.role;
+        cell7.textContent = item.status;
         
         const editButton = document.createElement('button');
         editButton.textContent = 'Sửa';
@@ -34,9 +34,9 @@ function displayusr(users = listusers) {
         };
         
         const lockButton = document.createElement('button'); 
-        lockButton.textContent = item.Trangthai === "Hoạt động" ? 'Khóa' : 'Gỡ khóa'; 
+        lockButton.textContent = item.status === "Active" ? 'Khóa' : 'Gỡ khóa'; 
         lockButton.onclick = function() { 
-            toggleLockUser(item.Manguoidung, this); 
+            toggleLockUser(item.userId, this); 
         };
         lockButton.className = 'lock-btn';
 
@@ -56,7 +56,7 @@ function displayusr(users = listusers) {
 
 // Xóa người dùng khỏi data theo mã người dùng
 // function removeKhach(idkhach) {
-//     localStorage.setItem('listUsers', listusers.filter(khach => khach.Manguoidung != idkhach));
+//     localStorage.setItem('listUsers', listusers.filter(khach => khach.userId != idkhach));
 // }
 
 // Mở form sửa thông tin người dùng và hiển thị thông tin hiện tại của người dùng đang sửa
@@ -69,7 +69,7 @@ function openEditModal(khach) {
     const address = tr.getElementsByTagName('td')[4].textContent;
     const chucvu = tr.getElementsByTagName('td')[5].textContent;
 
-    const usr = listusers.find(user => parseInt(user.Manguoidung) === parseInt(id));
+    const usr = listusers.find(user => parseInt(user.userId) === parseInt(id));
    
     const password = usr.Password;
     
@@ -110,7 +110,7 @@ function saveUser() {
         flag = false;
     }
     else if(!email_regex.test(String(email))) {
-        alert("Xin hãy nhập đúng form của email. Email phải là abc@gmail.com");
+        alert("Xin hãy nhập đúng form của email. email phải là abc@gmail.com");
         flag = false;
     }
     else if(!isFinite(Number(sdt))) {
@@ -136,8 +136,8 @@ function saveUser() {
     
     if(flag) {
         listusers = listusers.map(khach => {
-            if (khach.Manguoidung == maK) {
-                return { ...khach, Tennguoidung: name, SDT: sdt, Email: email, Diachi: diachi, Chucvu: chucvu, Password: password };
+            if (khach.userId == maK) {
+                return { ...khach, fullName: name, phoneNumber: sdt, email: email, address: diachi, role: chucvu, Password: password };
             }
             return khach;
         });
@@ -177,7 +177,7 @@ function addUser() {
         flag = false;
     }
     else if(!email_regex.test(String(email))) {
-        alert("Xin hãy nhập đúng form của email. Email phải là abc@gmail.com");
+        alert("Xin hãy nhập đúng form của email. email phải là abc@gmail.com");
         flag = false;
     }
     else if(!isFinite(Number(sdt))) {
@@ -206,7 +206,7 @@ function addUser() {
     }
     else {
         listusers.forEach(us => {
-            if(String(us.Manguoidung) === String(id)) {
+            if(String(us.userId) === String(id)) {
                 alert("Mã người dùng đã tồn tại. Xin hãy nhập lại mã người dùng");
                 flag = false;
             }
@@ -214,7 +214,7 @@ function addUser() {
     }
 
     if(flag) {
-        const newKhach = {Manguoidung: id, Tennguoidung: name, SDT: sdt, Email: email, Diachi: diachi, Chucvu: chucvu, Trangthai: "Hoạt động", Username: usrname, Password: password, Chucvu: "Nhân viên"};
+        const newKhach = {userId: id, fullName: name, phoneNumber: sdt, email: email, address: diachi, role: chucvu, status: "Active", Username: usrname, Password: password, role: "Nhân viên"};
 
         listusers.push(newKhach);
         localStorage.setItem('listusers', JSON.stringify(listusers));
@@ -236,16 +236,16 @@ function closeAddUserModal() {
 }
 
 // Khóa, gỡ khóa người dùng và thay đổi trạng thái của nút theo tình trạng của người dùng
-function toggleLockUser(Manguoidung, button) { 
+function toggleLockUser(userId, button) { 
     listusers = listusers.map(khach => { 
-        if (khach.Manguoidung === Manguoidung) { 
-            if (khach.Trangthai === "Hoạt động") { 
+        if (khach.userId === userId) { 
+            if (khach.status === "Active") { 
                 button.textContent = 'Gỡ khóa'; 
-                return { ...khach, Trangthai: "Đã khóa" }; 
+                return { ...khach, status: "Locked" }; 
             } 
             else { 
                 button.textContent = 'Khóa'; 
-                return { ...khach, Trangthai: "Hoạt động" }; 
+                return { ...khach, status: "Active" }; 
             } 
         } 
         return khach; 
@@ -258,8 +258,8 @@ function toggleLockUser(Manguoidung, button) {
 function searchUser() {
     const searchcustomerKey = document.getElementById('searchCustomerKey').value.trim().toLowerCase();
     const customerList = listusers.filter(kh => 
-        kh.Manguoidung.toString().toLowerCase().includes(searchcustomerKey) || 
-        kh.Tennguoidung.toString().toLowerCase().includes(searchcustomerKey));
+        kh.userId.toString().toLowerCase().includes(searchcustomerKey) || 
+        kh.fullName.toString().toLowerCase().includes(searchcustomerKey));
 
     displayusr(customerList);
 }

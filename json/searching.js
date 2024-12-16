@@ -48,6 +48,7 @@ function displayCacSP(items, page) {
             <h3>${item.name}</h3>
             <p>${item.category || ''}</p>
             <p>${item.price}</p>
+            <a href="#" class="btn-order" data-product-name="${product.name}">Thêm</a>
         </div>
     `).join('');
 

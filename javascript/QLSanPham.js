@@ -1,9 +1,8 @@
 let MaSP = null; // Để xác định sản phẩm đang sửa
-let listSanPham = JSON.parse(localStorage.getItem('listSanPham')); //Load data của danh sách sản phẩm
-let listLoaiSP = JSON.parse(localStorage.getItem('listLoaiSP')); //Load data của danh sách loại sản phẩm
+let products = JSON.parse(localStorage.getItem('products')); //Load data của danh sách sản phẩm
 
 
-let filtered_products = listSanPham; //Sử dụng để số trang không bị restart khi tìm kiếm
+let filtered_products = products; //Sử dụng để số trang không bị restart khi tìm kiếm
 
 let currentPage = 1; // Trang hiện tại
 const productsPerPage = 6; // Số sản phẩm mỗi trang
@@ -17,12 +16,12 @@ function paginateProducts(products, page) {
 }
 
 // Hiển thị danh sách sản phẩm cùng với các chức năng quản lí sản phẩm
-function displayProducts(products = listSanPham, page = currentPage) {
+function displayProducts(Products = products, page = currentPage) {
     const productSection = document.getElementById('product-menu');
     productSection.innerHTML = '';
 
     // Chia danh sách sản phẩm thành các trang
-    const paginatedProducts = paginateProducts(products, page);
+    const paginatedProducts = paginateProducts(Products, page);
     // Hiển thị sản phẩm theo layout 3 sản phẩm mỗi hàng
     paginatedProducts.forEach((item, index) => {
         if (index % productsPerRow === 0) {
@@ -37,35 +36,31 @@ function displayProducts(products = listSanPham, page = currentPage) {
         const productRow = productSection.lastElementChild;
         productRow.innerHTML +=  ` 
         <div class="product"> 
-            <img onclick="detailProduct(${item.Masanpham})" src="${item.Anh}" alt="${item.Ten} Image" style="cursor: pointer;"> 
-            <h3 onclick="detailProduct(${item.Masanpham})" style="cursor: pointer;">${item.Ten}</h3> 
-            <p onclick="detailProduct(${item.Masanpham})" style="cursor: pointer;">Price: ${item.Gia}</p> 
-            <p onclick="detailProduct(${item.Masanpham})" style="cursor: pointer;">${item.Mota}</p> 
-            <button onclick="openEditProductModal(${item.Masanpham})" style="cursor: pointer;">Sửa</button>
-            <button onclick="deleteProduct(${item.Masanpham})" style="cursor: pointer;">Xóa</button>
+            <img onclick="detailProduct(${item.ID})" src="${item.img}" alt="${item.name} Image" style="cursor: pointer;"> 
+            <h3 onclick="detailProduct(${item.ID})" style="cursor: pointer;">${item.name}</h3> 
+            <p onclick="detailProduct(${item.ID})" style="cursor: pointer;">Price: ${item.price}</p> 
+            <p onclick="detailProduct(${item.ID})" style="cursor: pointer;">${item.description}</p> 
+            <button onclick="openEditProductModal(${item.ID})" style="cursor: pointer;">Sửa</button>
+            <button onclick="deleteProduct(${item.ID})" style="cursor: pointer;">Xóa</button>
         </div>`;
     });
     // Cập nhật các nút phân trang
-    updatePaginationButtons(products.length);
+    updatePaginationButtons(Products.length);
 }
 
 // Hiển thị thông tin chi tiết của sản phẩm
 function detailProduct(idproduct) { 
-    const product = listSanPham.find(item => item.Masanpham === parseInt(idproduct, 10)); 
+    const product = products.find(item => item.ID === parseInt(idproduct, 10)); 
     if (!product) 
         return; 
     console.log(idproduct); 
     
-    const loai = listLoaiSP.find(l => parseInt(l.Maloai, 10) === parseInt(product.Maloai, 10)); 
-    console.log(product.Maloai);
-    console.log(loai.Maloai);
-    document.getElementById('Masanpham').textContent = product.Masanpham; 
-    document.getElementById('Tensanpham').textContent = product.Ten; 
-    document.getElementById('Giasanpham').textContent = product.Gia; 
-    document.getElementById('Soluongsanpham').textContent = product.Soluong; 
-    document.getElementById('Maloaisanpham').textContent = product.Maloai; 
-    document.getElementById('Loaisanpham').textContent = loai ? loai.Tenloai : 'Unknown'; 
-    document.getElementById('Motasanpham').textContent = product.Mota; 
+    document.getElementById('ID').textContent = product.ID; 
+    document.getElementById('Tensanpham').textContent = product.name; 
+    document.getElementById('Giasanpham').textContent = product.price; 
+    document.getElementById('Soluongsanpham').textContent = product.quantity; 
+    document.getElementById('Loaisanpham').textContent = product.category; 
+    document.getElementById('Motasanpham').textContent = product.description; 
     
     const modal = document.getElementById('detailProductModal'); 
     modal.style.display = "block"; 
@@ -94,19 +89,19 @@ function openEditProductModal(idproduct) {
     const modal = document.getElementById('editProductModal');
     MaSP = parseInt(idproduct, 10);
 
-    const product = listSanPham.find(sp => sp.Masanpham === MaSP);
+    const product = products.find(sp => sp.ID === MaSP);
     if (product) {
-        document.getElementById('editProductName').value = product.Ten;
-        document.getElementById('editProductPrice').value = product.Gia;
-        document.getElementById('editProductQuantity').value = product.Soluong;
-        document.getElementById('editProductType').value = product.Maloai;
-        document.getElementById('editProductNote').value = product.Mota;
+        document.getElementById('editProductName').value = product.name;
+        document.getElementById('editProductPrice').value = product.price;
+        document.getElementById('editProductQuantity').value = product.quantity;
+        document.getElementById('editProductType').value = product.category;
+        document.getElementById('editProductNote').value = product.description;
 
         const imagePreview = document.getElementById('imageEditPreview');
         imagePreview.innerHTML = ''; // Clear any existing content
-        if (product.Anh && product.Anh !== 'image/no product.png') {
+        if (product.img && product.img !== 'image/no product.png') {
             const img = document.createElement('img');
-            img.src = product.Anh;
+            img.src = product.img;
             imagePreview.appendChild(img);
             imagePreview.appendChild(createRemoveButton());
         } else {
@@ -136,20 +131,20 @@ function removeCurrentImage() {
     imagePreview.innerHTML = '<span>Không có ảnh</span>'; // Thêm thông báo không có ảnh
 
     // Tìm sản phẩm hiện tại và cập nhật đường dẫn ảnh của nó
-    const product = listSanPham.find(sp => parseInt(sp.Masanpham, 10) === parseInt(MaSP, 10));
+    const product = products.find(sp => parseInt(sp.ID, 10) === parseInt(MaSP, 10));
     if (product) {
-        product.Anh = 'image/no product.png'; // Đánh dấu ảnh đã bị xóa
-        console.log(product.Anh);
+        product.img = 'image/no product.png'; // Đánh dấu ảnh đã bị xóa
+        console.log(product.img);
         // Cập nhật danh sách sản phẩm
-        listSanPham = listSanPham.map(item => {
-            if (parseInt(item.Masanpham, 10) === parseInt(MaSP, 10)) {
+        products = products.map(item => {
+            if (parseInt(item.ID, 10) === parseInt(MaSP, 10)) {
                 return { ...item, ...product };
             }
             return item;
         });
 
         // Lưu danh sách sản phẩm đã cập nhật vào localStorage
-        localStorage.setItem('listSanPham', JSON.stringify(listSanPham));
+        localStorage.setItem('products', JSON.stringify(products));
     }
 }
 
@@ -175,7 +170,7 @@ function addProduct() {
     let img = imgElement ? imgElement.src : '';
 
     // Use default image path if no image is selected
-    if (!img || img.includes('no_image.png')) {
+    if (!img || img.includes('no_image.jpg')) {
         img = "image/no product.png";
     }
 
@@ -186,6 +181,14 @@ function addProduct() {
     else if(!isFinite(Number(id))) {
         alert("Xin hãy nhập số vào mã sản phẩm");
         flag = false;
+    }
+    else if(flag === true) {
+        filtered_products.forEach(item => {
+            if(String(item.ID) === String(id)) {
+                alert("Mã sản phẩm đã tồn tại!");
+                flag =false
+            }
+        });
     }
     else if(name === null || name === '') {
         alert("Xin hãy nhập tên sản phẩm");
@@ -204,8 +207,8 @@ function addProduct() {
         flag = false;
     }
     else {
-        listSanPham.forEach(sp => {
-            if(String(sp.Masanpham) === String(id)) {
+        products.forEach(sp => {
+            if(String(sp.ID) === String(id)) {
                 alert("Mã sản phẩm đã tồn tại. Xin hãy nhập lại mã sản phẩm");
                 flag = false;
             }
@@ -214,16 +217,16 @@ function addProduct() {
 
     if(flag) {
         const newProduct = {
-            Masanpham: id,
-            Ten: name,
-            Gia: price,
-            Soluong: quantity,
-            Maloai: type,
-            Mota: description,
-            Anh: img
+            ID: id,
+            name: name,
+            price: price,
+            quantity: quantity,
+            category: type,
+            description: description,
+            img: img
         };
-        listSanPham.push(newProduct);
-        localStorage.setItem('listSanPham', JSON.stringify(listSanPham));
+        products.push(newProduct);
+        localStorage.setItem('products', JSON.stringify(products));
     
         searchProduct(); //Để làm mới lại số trang để hiển thị sản phẩm mới
         displayProducts(filtered_products);
@@ -269,8 +272,8 @@ function updateProduct() {
             };
             reader.readAsDataURL(imgElement);
         } else {
-            const existingProduct = listSanPham.find(item => item.Masanpham === MaSP);
-            const img = existingProduct.Anh ? existingProduct.Anh : 'image/no product.png';
+            const existingProduct = products.find(item => item.ID === MaSP);
+            const img = existingProduct.img ? existingProduct.img : 'image/no product.png';
             updateProductData(name, price, quantity, type, description, img);
         }
     }
@@ -278,25 +281,25 @@ function updateProduct() {
 
 // Cập nhật sản phẩm trong data
 function updateProductData(name, price, quantity, type, description, img) {
-    listSanPham = listSanPham.map(item => {
-        if (item.Masanpham === MaSP) {
-            return { ...item, Ten: name, Gia: price, Soluong: quantity, Maloai: type, Mota: description, Anh: img };
+    products = products.map(item => {
+        if (item.ID === MaSP) {
+            return { ...item, name: name, price: price, quantity: quantity, category: type, description: description, img: img };
         }
         return item;
     });
 
-    localStorage.setItem('listSanPham', JSON.stringify(listSanPham));
+    localStorage.setItem('products', JSON.stringify(products));
     searchProduct();
     displayProducts(filtered_products);
     closeEditProductModal();
 }
 
 // Xóa sản phẩm khỏi data
-function deleteProduct(Masanpham) { 
+function deleteProduct(ID) { 
     const confirmation = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
     if (confirmation) {
-        listSanPham = listSanPham.filter(item => item.Masanpham !== Masanpham); 
-        localStorage.setItem('listSanPham', JSON.stringify(listSanPham));
+        products = products.filter(item => item.ID !== ID); 
+        localStorage.setItem('products', JSON.stringify(products));
         searchProduct(); //Để làm mới lại số trang để hiển thị sau khi xóa trrong lúc tìm kiếm và chưa tìm kiếm
         displayProducts(filtered_products);
     }
@@ -339,7 +342,7 @@ function updatePaginationButtons(totalProducts) {
 
 // Hàm thay đổi trang
 function changePage(page) {
-    const totalPages = Math.ceil(listSanPham.length / productsPerPage);
+    const totalPages = Math.ceil(products.length / productsPerPage);
 
     // Nếu là nút "Trang trước"
     if (page === 'prev' && currentPage > 1) {
@@ -362,14 +365,14 @@ function changePage(page) {
 // Tìm kiếm sản phẩm
 function searchProduct() {
     const searchproductKey = document.getElementById('searchProductKey').value.trim().toLowerCase();
-    const productList = listSanPham.filter(sp => 
-        sp.Masanpham.toString().toLowerCase().includes(searchproductKey) ||
-        sp.Ten.toString().toLowerCase().includes(searchproductKey));
+    const productList = products.filter(sp => 
+        sp.ID.toString().toLowerCase().includes(searchproductKey) ||
+        sp.name.toString().toLowerCase().includes(searchproductKey));
     if(searchproductKey) {
         filtered_products = productList;
     }
     else {
-        filtered_products = listSanPham;
+        filtered_products = products;
     }
     currentPage = 1; // Đặt lại về trang đầu khi tìm kiếm
     displayProducts(productList);

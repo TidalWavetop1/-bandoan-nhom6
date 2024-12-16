@@ -1,44 +1,19 @@
 let listDonHang = JSON.parse(localStorage.getItem('listDonHang'));
 let isFiltered = false;
 
-// Sắp xếp theo quận
-function sortOrdersByDistrictName(orders) {
-    orders.sort((a, b) => {
-        const matchA = a.Diachi.match(/q\.(\d+|\w+)/);
-        const matchB = b.Diachi.match(/q\.(\d+|\w+)/);
-
-        if (matchA && matchB) {
-            const districtA = matchA[1];
-            const districtB = matchB[1];
-
-            if (!isNaN(districtA) && !isNaN(districtB)) {
-                // Nếu cả hai đều là số, so sánh số
-                return parseInt(districtA, 10) - parseInt(districtB, 10);
-            } else {
-                // Nếu một trong hai hoặc cả hai là chữ, so sánh chuỗi
-                return districtA.localeCompare(districtB);
-            }
-        }
-        return 0;
-    });
-}
-
 
 // Hiển thị danh sách hóa đơn và các chwucs năng của quản lí hóa đơn
 function displayOrders(filteredOrders = listDonHang) {
-    // let listnhanvien = JSON.parse(localStorage.getItem('listUsers'));
-    let listSanpham = JSON.parse(localStorage.getItem('listSanPham')); 
+    let listSanpham = JSON.parse(localStorage.getItem('products')); 
 
     const adminTableBody = document.getElementById('ordertable').getElementsByTagName('tbody')[0];
     adminTableBody.innerHTML = ''; // Clear existing rows
     
-    sortOrdersByDistrictName(filteredOrders);
-
     filteredOrders.forEach(order => {
         const row = adminTableBody.insertRow();
 
-        // const staff = listnhanvien.find(c => c.Manguoidung === order.Manhanvien);
-        const product = listSanpham.find(p => p.Masanpham === order.Masanpham);
+        // const staff = listnhanvien.find(c => c.userId === order.Manhanvien);
+        const product = listSanpham.find(p => p.ID === order.ID);
 
         const cell1 = document.createElement('td');
         const cell2 = document.createElement('td');
@@ -46,18 +21,20 @@ function displayOrders(filteredOrders = listDonHang) {
         const cell4 = document.createElement('td');
         const cell5 = document.createElement('td');
         const cell6 = document.createElement('td');
+        const cell7 = document.createElement('td');
 
         cell1.textContent = order.Madon;
         cell2.textContent = order.Makhach;
         cell3.textContent = order.Manhanvien;
         cell4.textContent = order.Thoigian;
-        cell5.textContent = order.Trangthai;
+        cell5.textContent = order.address;
+        cell6.textContent = order.status;
 
         const detailButton = document.createElement('button');
         detailButton.textContent = 'Xem';
         detailButton.className = 'view-btn';
         detailButton.onclick = function() {
-            detailOrder(order.Madon);
+            detailOrder(order.Madon, filteredOrders);
         };
 
         const statusSelect = document.createElement('select'); 
@@ -66,7 +43,7 @@ function displayOrders(filteredOrders = listDonHang) {
             const option = document.createElement('option'); 
             option.value = status; 
             option.textContent = status; 
-            if (status === order.Trangthai) { 
+            if (status === order.status) { 
                 option.selected = true; 
             } 
             statusSelect.appendChild(option);
@@ -76,8 +53,8 @@ function displayOrders(filteredOrders = listDonHang) {
         };
         statusSelect.className = 'confirm-status';
 
-        cell6.appendChild(detailButton);
-        cell6.appendChild(statusSelect);
+        cell7.appendChild(detailButton);
+        cell7.appendChild(statusSelect);
 
         row.appendChild(cell1);
         row.appendChild(cell2);
@@ -85,6 +62,7 @@ function displayOrders(filteredOrders = listDonHang) {
         row.appendChild(cell4);
         row.appendChild(cell5);
         row.appendChild(cell6);
+        row.appendChild(cell7);
     });
 }
 
@@ -92,7 +70,7 @@ function displayOrders(filteredOrders = listDonHang) {
 function updateOrderStatus(Madon, newStatus) { 
     listDonHang.forEach(order => {
         if (order.Madon === Madon) {
-            order.Trangthai = newStatus;
+            order.status = newStatus;
         }
     });
     localStorage.setItem('listDonHang', JSON.stringify(listDonHang));
@@ -100,14 +78,14 @@ function updateOrderStatus(Madon, newStatus) {
 }
 
 // Xem chi tiết hóa đơn
-function detailOrder(orderId) {
-    let listKhach = JSON.parse(localStorage.getItem('listUsers'));
-    let listSanpham = JSON.parse(localStorage.getItem('listSanPham')); 
+function detailOrder(orderId, filteredOrders) {
+    let listKhach = JSON.parse(localStorage.getItem('userList'));
+    let listSanpham = JSON.parse(localStorage.getItem('products')); 
 
-    const order = listDonHang.find(item => item.Madon === orderId);
+    const order = filteredOrders.find(item => item.Madon === orderId);
     if (!order) return;
 
-    const customer = listKhach.find(c => c.Manguoidung === order.Makhach);
+    const customer = listKhach.find(c => c.userId === order.Makhach);
 
     document.getElementById('Madon').textContent = order.Madon;
     document.getElementById('Makhach').textContent = order.Makhach;
@@ -115,19 +93,19 @@ function detailOrder(orderId) {
     document.getElementById('Thoigian').textContent = order.Thoigian;
     document.getElementById('Thanhtien').textContent = order.Thanhtien;
     document.getElementById('PTTT').textContent = order.PTTT;
-    document.getElementById('Diachi').textContent = order.Diachi;
+    document.getElementById('address').textContent = order.address;
 
     const sanPhamDiv = document.getElementById('sanPhamMua');
     sanPhamDiv.innerHTML = ''; // Clear previous content
 
     order.sanPhamMua.forEach(sp => {
-        const product = listSanpham.find(p => p.Masanpham === sp.Masanpham);
+        const product = listSanpham.find(p => p.ID === sp.ID);
         if (product) {
             const productInfo = document.createElement('div');
             productInfo.innerHTML = `
-                <p>Tên sản phẩm: ${product.Ten}</p>
+                <p>Tên sản phẩm: ${product.name}</p>
                 <p>Số lượng mua: ${sp.SLmua}</p>
-                <p>Tổng tiền: ${product.Gia * sp.SLmua} VND</p>
+                <p>Tổng tiền: ${product.price * sp.SLmua} VND</p>
                 <hr>
             `;
             sanPhamDiv.appendChild(productInfo);
@@ -152,6 +130,7 @@ function applyFilters() {
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
     const statusFilter = document.getElementById('statusFilter').value;
+    const districtFilter = document.getElementById('districtFilter').value;
 
     let filteredOrders = listDonHang;
 
@@ -159,12 +138,24 @@ function applyFilters() {
         if (startDate !== '' && endDate !== '') {
             filteredOrders = filteredOrders.filter(item => {
                 const orderDate = new Date(item.Thoigian);
-                return orderDate >= new Date(startDate) && orderDate <= new Date(endDate);
+                return orderDate >= new Date(startDate + "T00:00:00") && orderDate <= new Date(endDate + "T23:59:59");
             });
         }
 
         if (statusFilter !== '') {
-            filteredOrders = filteredOrders.filter(item => item.Trangthai === statusFilter);
+            filteredOrders = filteredOrders.filter(item => item.status === statusFilter);
+        }
+
+        if(districtFilter !== '') {
+            filteredOrders = filteredOrders.filter(item => {
+                const matchA = item.address.match(/q\.(\d+|\w+)/);
+
+                if (matchA) {
+                    const districtA = matchA[1];
+                    return districtA === districtFilter;
+                }
+                return 0;
+            })
         }
 
         isFiltered = true;

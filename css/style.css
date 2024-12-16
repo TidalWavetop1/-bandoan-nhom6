@@ -1465,7 +1465,6 @@ div ul {
 
 /* Order History Overlay */
 #orderHistoryOverlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1475,7 +1474,7 @@ div ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1003;
 }
 
 .order-history-container {

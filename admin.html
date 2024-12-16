@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Fast Food Store</title>
+    <title>Admin - Panic Fast Food</title>
     <link rel="stylesheet" type="text/css" href="css/admin-style.css">
 </head>
 <body onload="checkLoginFromURL()">
@@ -21,7 +21,7 @@
         <!-- Admin Header -->
         <header id="admin-header" class="admin-header">
             <div class="logo">
-                <img src="assets/images/admin-logo.png" alt="Admin Logo">
+                <img src="image/LOGOFASTFOOD.png" alt="Admin Logo">
             </div>
             <nav class="admin-navbar">
                 <ul>
@@ -113,7 +113,27 @@
                     <option value="Đã giao thành công">Đã giao thành công</option> 
                     <option value="Đã hủy">Đã hủy</option> 
                 </select> 
-                <button type="submit" id="filterButton" class="filter-button">Lọc</button> 
+                <label for="districtFilter">Order District:</label>
+                <select id="districtFilter" name="districtFilter">
+                    <option value="">All</option>
+                    <option value="1">Quận 1</option>
+                    <option value="3">Quận 3</option>
+                    <option value="4">Quận 4</option>
+                    <option value="5">Quận 5</option>
+                    <option value="6">Quận 6</option>
+                    <option value="7">Quận 7</option>
+                    <option value="8">Quận 8</option>
+                    <option value="10">Quận 10</option>
+                    <option value="11">Quận 11</option>
+                    <option value="12">Quận 12</option>
+                    <option value="Tân Bình">Quận Tân Bình</option>
+                    <option value="Tân Phú">Quận Tân Phú</option>
+                    <option value="Bình Tân">Quận Bình Tân</option>
+                    <option value="Bình Thạnh">Quận Bình Thạnh</option>
+                    <option value="Gò Vấp">Quận Gò Vấp</option>
+                    <option value="Phú Nhuận">Quận Phú Nhuận</option>
+                </select>
+                <button id="filterButton" class="filter-button" onclick="applyFilters()">Lọc</button> 
 
             </form>
             <table id="ordertable" class="admin-table">
@@ -123,6 +143,7 @@
                         <th>Mã khách hàng</th>
                         <th>Mã nhân viên</th>
                         <th>Ngày lập</th>
+                        <th>Địa chỉ</th>
                         <th>Tình trạng</th>
                         <th>Hành động</th>
                     </tr>
@@ -137,12 +158,40 @@
         <!-- Thống kê sản phẩm -->
         <section id="product-statistics" class="admin-section">
             <h2>Thống kê sản phẩm</h2>
+            <div id="selling-stats" class="modal-content">
+                <div>
+                    <label for="totalrevenue">Tổng doanh thu: </label>
+                    <span id="totalrevenue"></span>
+                </div>
+                <div>
+                    <label for="bestselling">Best-Selling: </label>
+                    <span id="bestselling"></span>
+                </div>
+                <div>
+                    <label for="leastselling">Least-Selling: </label>
+                    <span id="leastselling"></span>
+                </div>
+            </div>
             <label for="product_startDate">Từ ngày: </label>
             <input type="date" id="product_startDate">
             <label for="product_endDate">Đến ngày: </label>
             <input type="date" id="product_endDate">
             <button onclick="generateProductStatistics()">Thống kê</button>
-            <div id="product-stats"></div>
+            <table id="product-stats" class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng bán được</th>
+                        <th>Doanh thu</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Thêm các hàng khác -->
+                </tbody>
+            </table>
         </section>    
 
         <!-- Tạo cửa sổ nhỏ để hiển thị danh sách hóa đơn của từng mặt hàng trong thống kê sản phẩm -->
@@ -161,7 +210,21 @@
             <label for="customer_endDate">Đến ngày: </label> 
             <input type="date" id="customer_endDate"> 
             <button onclick="generateCustomerStatistics()">Thống kê</button> 
-            <div id="customer-stats"></div> 
+            <table id="customer-stats" class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng bán được</th>
+                        <th>Doanh thu</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Thêm các hàng khác -->
+                </tbody>
+            </table>
         </section>
         
         <!-- Tạo cửa sổ nhỏ để hiển thị danh sách hóa đơn của từng khách hàng trong thống kê khách hàng -->
@@ -242,11 +305,10 @@
                 <span class="close" onclick="closeDetailProduct()">&times;</span>
                 <h2 id="detailproductinfo">Chi tiết sản phẩm</h2>
                 <div>
-                    <div class="info-product-row"><label for="Masanpham">Mã sản phẩm: </label><span id="Masanpham"></span></div>
+                    <div class="info-product-row"><label for="ID">Mã sản phẩm: </label><span id="ID"></span></div>
                     <div class="info-product-row"><label for="Tensanpham">Tên sản phẩm: </label><span id="Tensanpham"></span></div>
                     <div class="info-product-row"><label for="Giasanpham">Giá sản phẩm: </label><span id="Giasanpham"></span></div>
                     <div class="info-product-row"><label for="Soluongsanpham">Số lượng sản phẩm: </label><span id="Soluongsanpham"></span></div>
-                    <div class="info-product-row"><label for="Maloaisanpham">Mã loại sản phẩm: </label><span id="Maloaisanpham"></span></div>
                     <div class="info-product-row"><label for="Loaisanpham">Loại sản phẩm: </label><span id="Loaisanpham"></span></div>
                     <div class="info-product-row"><label for="Motasanpham">Mô tả sản phẩm: </label><span id="Motasanpham"></span></div>
                     <div class="info-product-row"><label for="Anhsanpham">Ảnh sản phẩm</label><span id="Anhsanpham"></span></div>
@@ -267,8 +329,20 @@
                 <input type="number" id="addProductPrice"><br>
                 <label for="addProductQuantity">Số lượng sản phẩm: </label>
                 <input type="number" id="addProductQuantity"><br>
-                <label for="addProductType">Mã loại sản phẩm: </label>
-                <input type="number" id="addProductType"><br>
+                <div>
+                    <label for="addProductType">Loại sản phẩm: </label>
+                    <select id="addProductType">
+                        <option value="Burger">Burger</option>
+                        <option value="Mì Ý">Mì Ý</option>
+                        <option value="Gà">Gà</option>
+                        <option value="Combo">Combo</option>
+                        <option value="Khoai Tây">Khoai Tây</option>
+                        <option value="Cá">Cá</option>
+                        <option value="Bắp Cải">Bắp Cải</option>
+                        <option value="Phô Mai">Phô Mai</option>
+                        <option value="Salad">Salad</option>
+                    </select>
+                </div>
                 <label for="addProductNote">Mô tả sản phẩm: </label>
                 <input type="text" id="addProductNote"><br>
                 <input type="file" id="addProductImg" accept="image/*" onchange="previewImage()"> 
@@ -291,8 +365,20 @@
                 <input type="number" id="editProductPrice"><br>
                 <label for="editProductQuantity">Số lượng sản phẩm: </label>
                 <input type="number" id="editProductQuantity"><br>
-                <label for="editProductType">Mã loại sản phẩm: </label>
-                <input type="number" id="editProductType"><br>
+                <div>
+                    <label for="editdProductType">Loại sản phẩm: </label>
+                    <select id="editProductType">
+                        <option value="Burger">Burger</option>
+                        <option value="Mì Ý">Mì Ý</option>
+                        <option value="Gà">Gà</option>
+                        <option value="Combo">Combo</option>
+                        <option value="Khoai Tây">Khoai Tây</option>
+                        <option value="Cá">Cá</option>
+                        <option value="Bắp Cải">Bắp Cải</option>
+                        <option value="Phô Mai">Phô Mai</option>
+                        <option value="Salad">Salad</option>
+                    </select>
+                </div>
                 <label for="editProductNote">Mô tả sản phẩm: </label>
                 <input type="text" id="editProductNote"><br>
                 <label for="editProductImg">Hình ảnh sản phẩm: </label>
@@ -319,7 +405,7 @@
                     <div id="sanPhamMua"></div>
                     <div class="info-order-row"><label for="Thanhtien">Thành tiền: </label><span id="Thanhtien"></span></div>
                     <div class="info-order-row"><label for="PTTT">Phương thức thanh toán: </label><span id="PTTT"></span></div>
-                    <div class="info-order-row"><label for="Diachi">Địa chỉ giao: </label><span id="Diachi"></span></div>
+                    <div class="info-order-row"><label for="address">Địa chỉ giao: </label><span id="address"></span></div>
                 </div>
             </div>
         </div>
@@ -327,7 +413,7 @@
 
     <!-- Admin Footer -->
     <footer class="admin-footer">
-        <p>&copy; 2024 Admin Panel - Fast Food Store.</p>
+        <p>&copy; 2024 Admin Panel - Panic Fast Food - All rights reserved.</p>
     </footer>
     <script src="javascript\QLUsers.js"></script>
     <script src="javascript\QLDonHang.js"></script>
@@ -337,7 +423,7 @@
     <script src="javascript\ThongkeSanPham.js"></script>
     <script src="javascript\ThongkeKhachHang.js"></script>
     <script src="javascript\Login.js"></script>
-    <!-- <script src="javascript\LoadData.js"></script> -->
+    <!-- <script src="javascript\LoadData.js"></script>-->
 
 </body>
 </html>
